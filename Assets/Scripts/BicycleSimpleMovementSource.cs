@@ -2,17 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BicycleSimpleMovementSource : MonoBehaviour
+public class BicycleSimpleMovementSource : IBicycleMovementSource
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public float speed = 0;
+    public float GetHandlebarRotationDelta() { return 0; }
+    public float GetSpeed() { return this.speed; }
+    public void Update() { }
 }
