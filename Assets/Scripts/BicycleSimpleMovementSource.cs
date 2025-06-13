@@ -9,18 +9,28 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
 {
     public bool enable = true;
 
-    private float speed = 0;
-    private float handlebarRotation = 0;
+    private bool isMoving { get; set; }
+    private float speed { get; set;  }
+    private float handlebarRotation { get; set;  }
     private Vector3 defaultDir = Vector3.forward;
 
+    // interface
     public float GetHandlebarRotation() { return this.handlebarRotation; }
     public float GetSpeed() { return this.speed; }
-    public void Update() { }
     public void SetForwardDirection(Vector3 dir)
     {
         this.defaultDir.x = dir.x;
         this.defaultDir.y = dir.y;
         this.defaultDir.z = dir.z;
+    }
+
+    // monobehaviour
+    void Update() { } // no momento, desnecessaria
+
+    void Start()
+    {
+        this.speed = 0;
+        this.handlebarRotation = 0;
     }
 
     void OnMove(InputValue movementValue)
@@ -30,15 +40,21 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
             return;
         }
 
-        // calcular angulo do guidao a partir daqui. 
+        // calcular angulo do guidao e definir velocidade a partir daqui. 
         Vector2 movementVector2D = movementValue.Get<Vector2>(); // ja esta normalizado
+        if (movementVector2D.y == 0)
+        {
+            this.speed = 0;
+        } else
+        {
+            this.speed = 5;
+        }
+
         Vector3 movementVector = new Vector3(movementVector2D.x, 0, movementVector2D.y);
         float res = Vector3.SignedAngle(this.defaultDir, movementVector, Vector3.up);
 
-        Debug.Log(res);
+        res = Mathf.Clamp(res, -80.0f, 80.0f);
 
         this.handlebarRotation = res;
-
-        // atualizar defaultDir
     }
 }
