@@ -25,7 +25,9 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
     }
 
     // monobehaviour
-    void Update() { } // no momento, desnecessaria
+    void Update() {
+    
+    }
 
     void Start()
     {
@@ -33,6 +35,7 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
         this.handlebarRotation = 0;
     }
 
+    // FIX - estou usando o movementVector2D do jeito errado...
     void OnMove(InputValue movementValue)
     {
         if (!this.enable)
@@ -42,17 +45,17 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
 
         // calcular angulo do guidao e definir velocidade a partir daqui. 
         Vector2 movementVector2D = movementValue.Get<Vector2>(); // ja esta normalizado
+        Debug.Log(movementVector2D);
         if (movementVector2D.y == 0)
         {
             this.speed = 0;
         } else
         {
-            this.speed = 5;
+            this.speed = 1 * (movementVector2D.y > 0 ? 1 : -1); // velocidade constante, pois teclado.
         }
 
         Vector3 movementVector = new Vector3(movementVector2D.x, 0, movementVector2D.y);
         float res = Vector3.SignedAngle(this.defaultDir, movementVector, Vector3.up);
-
         res = Mathf.Clamp(res, -80.0f, 80.0f);
 
         this.handlebarRotation = res;

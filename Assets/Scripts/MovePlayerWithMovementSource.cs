@@ -8,8 +8,10 @@ using UnityEngine.InputSystem;
 public class MovePlayerWithMovementSource : MonoBehaviour
 {
     public GameObject movementSourceObject;
+    
     private IBicycleMovementSource movementSource;
-    // Start is called before the first frame update
+    private GameObject handlebar;
+
     void Start()
     {
         IBicycleMovementSource moveSource = this.movementSourceObject.GetComponent<IBicycleMovementSource>();
@@ -21,26 +23,28 @@ public class MovePlayerWithMovementSource : MonoBehaviour
         // definir vetor para frente logo no come�o
         moveSource.SetForwardDirection(this.transform.forward);
         this.movementSource = moveSource;
+        this.handlebar = this.transform.Find("HandlebarPivot").gameObject;
     }
 
-    // Update is called once per frame
     void Update()
     {
+        // se nao houver de onde pegar os movimentos, nn faz nada e segue a vida
         if (this.movementSource == null)
         {
             return;
         }
-        // mover bicicleta a partir das informa��es em moveSource aqui
-        // virar camera junto da bicicleta em um script separado para a pr�pria c�mera, mas tamb�m lembrar de permitir o movimento livre desta
+        // mover bicicleta a partir das informacoes em moveSource aqui
+        // virar camera junto da bicicleta em um script separado para a propria camera, mas tamb�m lembrar de permitir o movimento livre desta
 
         float speed = this.movementSource.GetSpeed();
-        float rotation = this.movementSource.GetHandlebarRotation(); 
+        float rotation = this.movementSource.GetHandlebarRotation();
 
-        GameObject handlebar = this.transform.GetChild(7).gameObject;
+        // this.handlebar.transform.Rotate();
+        Debug.Log(Time.deltaTime * rotation);
+        this.transform.Rotate(Time.deltaTime * rotation * Vector3.up);
+        this.transform.Translate(Time.deltaTime * speed * this.transform.forward);
 
-        // handlebar.transform.Rotate();
-
-        // atualizar dire��o para frente ao final
+        // atualizar direcao para frente ao final
         this.movementSource.SetForwardDirection(this.transform.forward);
     }
 }
