@@ -11,19 +11,21 @@ public class MovePlayerWithMovementSource : MonoBehaviour
     
     private IBicycleMovementSource movementSource;
     private GameObject handlebar;
+    private Rigidbody rb;
 
     void Start()
     {
+        this.rb = this.GetComponent<Rigidbody>();
         IBicycleMovementSource moveSource = this.movementSourceObject.GetComponent<IBicycleMovementSource>();
         if (moveSource == null)
         {
-            Debug.LogError("The assigned GameObject does not have a component which implements the interface IBicycleMovementSource.");
+            Debug.LogError("The assigned GameObject does not have a component which implements the IBicycleMovementSource interface.");
             return;
         }
         // definir vetor para frente logo no come�o
-        moveSource.SetForwardDirection(this.transform.forward);
+        //moveSource.SetForwardDirection(this.transform.forward);
         this.movementSource = moveSource;
-        this.handlebar = this.transform.Find("HandlebarPivot").gameObject;
+        //this.handlebar = this.transform.Find("HandlebarPivot").gameObject;
     }
 
     void Update()
@@ -41,9 +43,17 @@ public class MovePlayerWithMovementSource : MonoBehaviour
 
         // this.handlebar.transform.Rotate();
         //this.transform.Rotate(Time.deltaTime * rotation * Vector3.up);
-        this.transform.Translate(Time.deltaTime * speed * this.transform.forward);
+        //this.transform.Translate(Time.deltaTime * speed * this.transform.forward);
 
         // atualizar direcao para frente ao final
         this.movementSource.SetForwardDirection(this.transform.forward);
+    }
+
+    void FixedUpdate()
+    {
+        float speed = this.movementSource.GetSpeed();
+        rb.AddForce(speed * transform.forward);
+        rb.AddTorque(this.movementSource.GetHandlebarRotation() * Vector3.up);
+        rb.velocity = Vector3.ClampMagnitude(rb.velocity, speed);
     }
 }
