@@ -40,8 +40,7 @@ public class MovePlayerWithMovementSource : MonoBehaviour
         float rotation = this.movementSource.GetHandlebarRotation();
 
         // this.handlebar.transform.Rotate();
-        Debug.Log(Time.deltaTime * rotation);
-        this.transform.Rotate(Time.deltaTime * rotation * Vector3.up);
+        //this.transform.Rotate(Time.deltaTime * rotation * Vector3.up);
         this.transform.Translate(Time.deltaTime * speed * this.transform.forward);
 
         // atualizar direcao para frente ao final

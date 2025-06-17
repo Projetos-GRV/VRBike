@@ -1,15 +1,18 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.InputSystem; // fica mais facil de atualizar o movimento do jogador sem atrelar demais o código à classe MovePlayerWithMovementSource
 using UnityEngine;
+using UnityEngine.InputSystem; // fica mais facil de atualizar o movimento do jogador sem atrelar demais o código à classe MovePlayerWithMovementSource
 
 [Serializable]
 public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
 {
     public bool enable = true;
+    public float maxspeed = 1;
+    public float accel = 0.5f;
 
     private bool isMoving { get; set; }
+    private bool goingBackwards {  get; set; }
     private float speed { get; set;  }
     private float handlebarRotation { get; set;  }
     private Vector3 defaultDir = Vector3.forward;
@@ -26,13 +29,41 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
 
     // monobehaviour
     void Update() {
-    
+        float minspeed = 0;
+        float lMaxspeed = this.maxspeed;
+        float acc = 0;
+
+        if (isMoving)
+        {
+            acc = this.accel;
+            if (goingBackwards)
+            {
+                minspeed = -lMaxspeed;
+                acc = -this.accel;
+            }
+        } else
+        {
+            if (this.speed < 0)
+            {
+                minspeed = -lMaxspeed;
+                lMaxspeed = 0;
+                acc = this.accel;
+            } else if (this.speed > 0)
+            {
+                acc = -this.accel;
+            }
+        }
+
+        this.speed += (acc * Time.deltaTime);
+        this.speed = Mathf.Clamp(this.speed, minspeed, lMaxspeed);
     }
 
     void Start()
     {
         this.speed = 0;
+        this.accel = 0.5f;
         this.handlebarRotation = 0;
+        this.goingBackwards = false;
     }
 
     // FIX - estou usando o movementVector2D do jeito errado...
@@ -45,14 +76,20 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
 
         // calcular angulo do guidao e definir velocidade a partir daqui. 
         Vector2 movementVector2D = movementValue.Get<Vector2>(); // ja esta normalizado
-        Debug.Log(movementVector2D);
         if (movementVector2D.y == 0)
         {
-            this.speed = 0;
-        } else
-        {
-            this.speed = 1 * (movementVector2D.y > 0 ? 1 : -1); // velocidade constante, pois teclado.
+            this.isMoving = false;
+            this.goingBackwards = false;
+        } else if (movementVector2D.y > 0) {
+            this.isMoving = true;
+            this.goingBackwards = false;
         }
+        else if (movementVector2D.y == -1)
+        {
+            this.isMoving = true;
+            this.goingBackwards = true;
+        }
+
 
         Vector3 movementVector = new Vector3(movementVector2D.x, 0, movementVector2D.y);
         float res = Vector3.SignedAngle(this.defaultDir, movementVector, Vector3.up);
