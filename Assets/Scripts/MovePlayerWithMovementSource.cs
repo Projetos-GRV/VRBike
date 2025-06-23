@@ -52,8 +52,8 @@ public class MovePlayerWithMovementSource : MonoBehaviour
     void FixedUpdate()
     {
         float speed = this.movementSource.GetSpeed();
-        rb.AddForce(speed * transform.forward);
-        rb.AddTorque(this.movementSource.GetHandlebarRotation() * Vector3.up);
-        rb.velocity = Vector3.ClampMagnitude(rb.velocity, speed);
+        rb.AddForce(speed * transform.forward, ForceMode.VelocityChange);
+        rb.AddTorque(this.movementSource.GetHandlebarRotation() * Vector3.up, ForceMode.VelocityChange);
+        rb.velocity = Vector3.ClampMagnitude(rb.velocity, Mathf.Abs(speed));
     }
 }
