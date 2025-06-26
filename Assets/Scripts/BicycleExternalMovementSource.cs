@@ -11,10 +11,6 @@ public class BicycleExternalMovementSource : MonoBehaviour, IBicycleMovementSour
 
     public float GetHandlebarRotation() { return 0; }
     public float GetSpeed() { return 0; }
-    public void SetForwardDirection(Vector3 dir)
-    {
-        // definir vetor direcao (para frente)
-    }
 
     void Update() { } // provavelmente sera aqui onde os movimentos da bicicleta serao buscados e atualizados
 

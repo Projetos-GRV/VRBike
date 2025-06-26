@@ -8,24 +8,17 @@ using UnityEngine.InputSystem; // fica mais facil de atualizar o movimento do jo
 public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
 {
     public bool enable = true;
-    public float maxspeed = 1;
+    public float maxspeed = .7f;
     public float accel = 0.5f;
 
     private bool isMoving { get; set; }
-    private bool goingBackwards {  get; set; }
-    private float speed { get; set;  }
-    private float handlebarRotation { get; set;  }
-    private Vector3 defaultDir = Vector3.forward;
+    private bool goingBackwards { get; set; }
+    private float speed { get; set; }
+    private float handlebarRotation { get; set; }
 
     // interface
     public float GetHandlebarRotation() { return this.handlebarRotation; }
     public float GetSpeed() { return this.speed; }
-    public void SetForwardDirection(Vector3 dir)
-    {
-        this.defaultDir.x = dir.x;
-        this.defaultDir.y = dir.y;
-        this.defaultDir.z = dir.z;
-    }
 
     // monobehaviour
     void Update() {
