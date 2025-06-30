@@ -33,17 +33,13 @@ public class MovePlayerWithMovementSource : MonoBehaviour
         {
             return;
         }
-        // mover bicicleta a partir das informacoes em moveSource aqui
-        // virar camera junto da bicicleta em um script separado para a propria camera, mas tamb�m lembrar de permitir o movimento livre desta
+        // mover bicicleta a partir das informacoes em movementSource aqui
+        // virar camera junto da bicicleta em um script separado para a propria camera, mas tambem lembrar de permitir o movimento livre desta
 
         //float speed = this.movementSource.GetSpeed();
         //float rotation = this.movementSource.GetHandlebarRotation();
 
-        // this.handlebar.transform.Rotate();
-        //this.transform.Rotate(Time.deltaTime * rotation * Vector3.up);
-        //this.transform.Translate(Time.deltaTime * speed * this.transform.forward);
-
-        // atualizar direcao para frente ao final
+        //this.handlebar.transform.Rotate();
     }
 
     void FixedUpdate()
@@ -56,28 +52,38 @@ public class MovePlayerWithMovementSource : MonoBehaviour
         // quando aplicada no rigid body usando as medidas padrao das unidades da Unity (1 unidade = 1 metro).
         // Verificacao totalmente empirica. A constante provavelmente devera ser modificada no futuro para coincidir
         // com a escala da cidade.
-        float speed = this.movementSource.GetSpeed() / 5.8f;
-        rb.AddForce(speed* transform.forward, ForceMode.VelocityChange);
-        rb.velocity = Vector3.ClampMagnitude(rb.velocity, Mathf.Abs(speed));
+        float speed = this.movementSource.GetSpeed();
+
+
+
+        //Quaternion rotationToDir = Quaternion.LookRotation(Time.fixedDeltaTime * rotated, Vector3.up);
+        //rb.rotation = rotationToDir;
 
         Quaternion deltaRotation = Quaternion.Euler(
-            Time.fixedDeltaTime * 2 * new Vector3(
+            Time.fixedDeltaTime * speed * new Vector3(
                 0,
                 this.movementSource.GetHandlebarRotation(),
                 0
             )
         );
         rb.MoveRotation(rb.rotation * deltaRotation);
+
+        Vector3 forward = transform.forward;
+        Vector3 rotated = Quaternion.AngleAxis(this.movementSource.GetHandlebarRotation(), Vector3.up) * forward;
+        rb.MovePosition(transform.position + speed * Time.fixedDeltaTime * rotated);
+
+        //rb.AddForce(speed * transform.forward, ForceMode.VelocityChange);
+        //rb.velocity = Vector3.ClampMagnitude(rb.velocity, Mathf.Abs(speed));
     }
 
-    private float timer = 1;
-    void LateUpdate()
-    {
-        timer -= Time.deltaTime;
-        if (timer <= 0)
-        {
-            timer = 1;
-            Debug.Log(this.transform.position.z);
-        }
-    }
+    //private float timer = 1;
+    //void LateUpdate()
+    //{
+    //    timer -= Time.deltaTime;
+    //    if (timer <= 0)
+    //    {
+    //        timer = 1;
+    //        Debug.Log(this.transform.position.z);
+    //    }
+    //}
 }

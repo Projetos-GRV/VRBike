@@ -6,5 +6,6 @@ using UnityEngine;
 public interface IBicycleMovementSource
 {
     float GetHandlebarRotation();
+    Vector3 GetFrontWheelDirection();
     float GetSpeed();
 }

@@ -15,13 +15,16 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
     private bool goingBackwards { get; set; }
     private float speed { get; set; }
     private float handlebarRotation { get; set; }
+    private Vector3 direction { get; set; }
 
     // interface
     public float GetHandlebarRotation() { return this.handlebarRotation; }
+    public Vector3 GetFrontWheelDirection() { return this.direction; } // TODO - retornar um valor diferente? Atualizar conforme rotacao
     public float GetSpeed() { return this.speed; }
 
     // monobehaviour
     void Update() {
+        // Aceleracao... nao eh utilizado, mas pode ser se descomentares o codigo
         //float minspeed = 0;
         //float lMaxspeed = this.maxspeed;
         //float acc = 0;
@@ -57,6 +60,7 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
         this.accel = 0.5f;
         this.handlebarRotation = 0;
         this.goingBackwards = false;
+        this.direction = Vector3.zero;
     }
 
     void OnMove(InputValue movementValue)
@@ -66,8 +70,10 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
             return;
         }
 
-        // calcular angulo do guidao e definir velocidade a partir daqui. 
-        Vector2 movementVector2D = movementValue.Get<Vector2>(); // ja esta normalizado
+        // calcular angulo do guidao e definir velocidade a partir daqui.
+        Vector2 movementVector2D = movementValue.Get<Vector2>();
+        Debug.Log(movementVector2D.normalized);
+        this.direction = movementVector2D.normalized;
         if (movementVector2D.y == 0)
         {
             this.isMoving = false;
@@ -85,7 +91,6 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
             this.speed = -this.maxspeed;
         }
 
-        // FIX - movementVector2D nao considera direcao do objeto. Os vetores retornados sao sempre os mesmos pras mesmas sequencias de teclas pressionadas.
         movementVector2D.Normalize();
         Vector3 movementVector = new Vector3(movementVector2D.x, 0, movementVector2D.y);
         Vector3 forward = Vector3.forward;
