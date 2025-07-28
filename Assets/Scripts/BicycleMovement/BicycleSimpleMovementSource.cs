@@ -12,6 +12,7 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
     public float accel = 0.5f;
 
     private bool isMoving { get; set; }
+    // Bicicletas nao andam de re, mas enfim...
     private bool goingBackwards { get; set; }
     private float speed { get; set; }
     private float handlebarRotation { get; set; }
