@@ -72,7 +72,10 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
 
         // calcular angulo do guidao e definir velocidade a partir daqui.
         Vector2 movementVector2D = movementValue.Get<Vector2>();
-        Debug.Log(movementVector2D.normalized);
+        if (Debug.isDebugBuild)
+        {
+            Debug.Log(movementVector2D.normalized);
+        }
         this.direction = movementVector2D.normalized;
         if (movementVector2D.y == 0)
         {

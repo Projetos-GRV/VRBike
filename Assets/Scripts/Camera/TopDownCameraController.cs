@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+public class TopDownCameraController : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject bicycle;
@@ -11,13 +11,12 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
-        offset = this.transform.position - bicycle.transform.position;    
+        offset = this.transform.position - bicycle.transform.position;
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
         this.transform.position = bicycle.transform.position + offset;
-        this.transform.rotation = bicycle.transform.rotation;
     }
 }
