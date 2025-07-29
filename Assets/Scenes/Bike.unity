@@ -2791,9 +2791,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3cfe4e76dee48349a54cace1a25c086, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enable: 1
+  enableMovement: 1
+  simplerMovements: 0
   maxspeed: 3
   accel: 0.5
+  handlebarRotationIncrement: 10
 --- !u!1 &1528654838
 GameObject:
   m_ObjectHideFlags: 0
