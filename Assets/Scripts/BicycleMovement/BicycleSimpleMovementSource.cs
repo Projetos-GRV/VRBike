@@ -41,7 +41,7 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
         this.accel = 0.5f;
         this.handlebarRotation = 0;
         this.goingBackwards = false;
-        this.direction = Vector3.zero;
+        this.direction = Vector3.forward;
     }
 
     void OnMove(InputValue movementValue)
@@ -82,14 +82,22 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
             float res = this.handlebarRotation;
             if (movementVector2D.x > 0)
             {
-                res -= this.handlebarRotationIncrement;
-                //res = Mathf.Clamp(res, 80.0f, -80.0f);
+                res += this.handlebarRotationIncrement;
+                res = Mathf.Clamp(res, -80.0f, 80.0f);
             }
             else if (movementVector2D.x < 0)
             {
-                res += this.handlebarRotationIncrement;
-                //res = Mathf.Clamp(res, 80.0f, -80.0f);
+                res -= this.handlebarRotationIncrement;
+                res = Mathf.Clamp(res, -80.0f , 80.0f);
             }
+            Vector3 tmp = this.direction;
+            tmp = Quaternion.AngleAxis(res, Vector3.up) * tmp;
+            this.direction = tmp;
+            if (Debug.isDebugBuild)
+            {
+                Debug.Log(this.direction);
+            }
+
             this.handlebarRotation = res;
         }
     }
