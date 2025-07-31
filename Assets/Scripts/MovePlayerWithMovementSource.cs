@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 [Serializable]
 public class MovePlayerWithMovementSource : MonoBehaviour
 {
+    [Tooltip("Eh daqui que virao as informacoes que ditam como e para onde a bicicleta deve se movimentar.")]
     public GameObject movementSourceObject;
     
     private IBicycleMovementSource movementSource;
@@ -28,20 +29,10 @@ public class MovePlayerWithMovementSource : MonoBehaviour
 
     void Update()
     {
-        // se nao houver de onde pegar os movimentos, nn faz nada e segue a vida
-        if (this.movementSource == null)
-        {
-            return;
-        }
-        // mover bicicleta a partir das informacoes em movementSource aqui
-        // virar camera junto da bicicleta em um script separado para a propria camera, mas tambem lembrar de permitir o movimento livre desta
 
-        //float speed = this.movementSource.GetSpeed();
-        //float rotation = this.movementSource.GetHandlebarRotation();
-
-        //this.handlebar.transform.Rotate();
     }
 
+    // RigidBody
     void FixedUpdate()
     {
         if (this.movementSource == null)

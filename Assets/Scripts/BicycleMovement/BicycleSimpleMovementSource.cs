@@ -7,19 +7,20 @@ using UnityEngine.InputSystem; // fica mais facil de atualizar o movimento do jo
 [Serializable]
 public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
 {
-    public bool enableMovement = true;
     [Tooltip("Ativa/desativa movimentos simples, onde direcao e velocidade sofrem alteracoes instantaneas. A bicicleta tambem podera andar de re caso ativado, embora isso nao seja possivel na vida real.")]
     public bool simplerMovements = true;
     public float maxspeed = 0.7f;
     public float accel = 0.5f;
+    [Tooltip("Nao sera aplicado se Simpler Movements for habilitado.")]
     public float handlebarRotationIncrement = 1f;
 
-    private bool isMoving { get; set; }
+    private bool isBraking;
+    private bool isMoving;
     // Bicicletas nao andam de re, mas enfim...
-    private bool goingBackwards { get; set; }
-    private float speed { get; set; }
-    private float handlebarRotation { get; set; }
-    private Vector2 direction { get; set; }
+    private bool goingBackwards;
+    private float speed;
+    private float handlebarRotation;
+    private Vector2 direction;
 
     // interface
     public float GetHandlebarRotation() { return this.handlebarRotation; }
@@ -28,10 +29,6 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
 
     // monobehaviour
     void Update() {
-        if (!this.enableMovement)
-        {
-            return;
-        }
         HandleAccel();
     }
 
@@ -41,16 +38,12 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
         this.accel = 0.5f;
         this.handlebarRotation = 0;
         this.goingBackwards = false;
+        this.isBraking = false;
         this.direction = Vector3.forward;
     }
 
     void OnMove(InputValue movementValue)
     {
-        if (!this.enableMovement)
-        {
-            return;
-        }
-
         // calcular angulo do guidao e definir velocidade a partir daqui.
         Vector2 movementVector2D = movementValue.Get<Vector2>();
         if (simplerMovements)
@@ -64,8 +57,6 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
 
     private void AngleIncrementBasedMovement(Vector2 movementVector2D)
     {
-        Debug.Log("Moving!!");
-
         if (Debug.isDebugBuild)
         {
             //Debug.Log("Vector: " + movementVector2D);
@@ -73,23 +64,24 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
             //Debug.Log("Speed: " + this.speed);
         }
         this.goingBackwards = false;
-        if (movementVector2D.y <= 0)
+        if (movementVector2D.y == 0)
         {
             this.isMoving = false;
+            this.isBraking = false;
         } else if (movementVector2D.y > 0)
         {
             this.isMoving = true;
+            this.isBraking = false;
             float res = this.handlebarRotation;
             if (movementVector2D.x > 0)
             {
                 res += this.handlebarRotationIncrement;
-                res = Mathf.Clamp(res, -80.0f, 80.0f);
             }
             else if (movementVector2D.x < 0)
             {
                 res -= this.handlebarRotationIncrement;
-                res = Mathf.Clamp(res, -80.0f , 80.0f);
             }
+            res = Mathf.Clamp(res, -80.0f, 80.0f);
             Vector3 tmp = this.direction;
             tmp = Quaternion.AngleAxis(res, Vector3.up) * tmp;
             this.direction = tmp;
@@ -99,6 +91,10 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
             }
 
             this.handlebarRotation = res;
+        } else if (movementVector2D.y < 0)
+        {
+            this.isMoving = false;
+            this.isBraking = true;
         }
     }
 

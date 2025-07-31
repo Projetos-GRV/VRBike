@@ -1,0 +1,82 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class BicycleForwardMovementSource : MonoBehaviour, IBicycleMovementSource
+{
+    public float maxspeed = 3.0f;
+    public float accel = 0.5f;
+    public bool instantSpeed = false;
+
+    private bool isMoving;
+    private bool braking;
+    private float speed;
+
+    // interface
+    public float GetHandlebarRotation() { return 0; }
+    public Vector2 GetFrontWheelDirection() { return Vector2.up; }
+    public float GetSpeed() { return this.speed; }
+
+    // monobehaviour
+    void Start()
+    {
+        this.isMoving = false;
+        this.speed = 0f;
+        this.braking = false;
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        HandleAccel();
+    }
+
+    void OnMove(InputValue movementValue)
+    {
+        // Checar se esta se movendo para frente (e somente para frente)
+        Vector2 dir = movementValue.Get<Vector2>();
+        if (dir.y == 0)
+        {
+            this.isMoving = false;
+            this.braking = false;
+        }
+        else if (dir.y > 0)
+        {
+            this.isMoving = true;
+            this.braking = false;
+        } else if (dir.y < 0)
+        {
+            this.isMoving = false;
+            this.braking = true;
+        }
+    }
+
+    private void HandleAccel()
+    {
+        if (this.instantSpeed)
+        {
+            this.speed = this.isMoving ? this.maxspeed : 0;
+            return;
+        }
+        float minspeed = 0;
+        float lMaxspeed = this.maxspeed;
+        float acc = 0;
+
+        if (isMoving)
+        {
+            acc = this.accel;
+        }
+        else
+        {
+            acc = -this.accel;
+            if (this.braking)
+            {
+                acc = -5.0f;
+            }
+        }
+
+        this.speed += (acc * Time.deltaTime);
+        this.speed = Mathf.Clamp(this.speed, minspeed, lMaxspeed);
+    }
+}
