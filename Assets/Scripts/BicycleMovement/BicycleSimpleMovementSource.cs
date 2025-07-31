@@ -9,7 +9,8 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
 {
     [Tooltip("Ativa/desativa movimentos simples, onde direcao e velocidade sofrem alteracoes instantaneas. A bicicleta tambem podera andar de re caso ativado, embora isso nao seja possivel na vida real.")]
     public bool simplerMovements = true;
-    public float maxspeed = 0.7f;
+    public bool instantSpeed = false;
+    public float maxspeed = 3.0f;
     public float accel = 0.5f;
     [Tooltip("Nao sera aplicado se Simpler Movements for habilitado.")]
     public float handlebarRotationIncrement = 1f;
@@ -35,7 +36,6 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
     void Start()
     {
         this.speed = 0;
-        this.accel = 0.5f;
         this.handlebarRotation = 0;
         this.goingBackwards = false;
         this.isBraking = false;
@@ -72,30 +72,31 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
         {
             this.isMoving = true;
             this.isBraking = false;
-            float res = this.handlebarRotation;
-            if (movementVector2D.x > 0)
-            {
-                res += this.handlebarRotationIncrement;
-            }
-            else if (movementVector2D.x < 0)
-            {
-                res -= this.handlebarRotationIncrement;
-            }
-            res = Mathf.Clamp(res, -80.0f, 80.0f);
-            Vector3 tmp = this.direction;
-            tmp = Quaternion.AngleAxis(res, Vector3.up) * tmp;
-            this.direction = tmp;
-            if (Debug.isDebugBuild)
-            {
-                Debug.Log(this.direction);
-            }
-
-            this.handlebarRotation = res;
         } else if (movementVector2D.y < 0)
         {
             this.isMoving = false;
             this.isBraking = true;
         }
+
+        float res = this.handlebarRotation;
+        if (movementVector2D.x > 0)
+        {
+            res += this.handlebarRotationIncrement;
+        }
+        else if (movementVector2D.x < 0)
+        {
+            res -= this.handlebarRotationIncrement;
+        }
+        res = Mathf.Clamp(res, -80.0f, 80.0f);
+        Vector3 tmp = this.direction;
+        tmp = Quaternion.AngleAxis(res, Vector3.up) * tmp;
+        this.direction = tmp;
+        if (Debug.isDebugBuild)
+        {
+            Debug.Log(this.direction);
+        }
+
+        this.handlebarRotation = res;
     }
 
     private void SimpleVectorBasedMovement(Vector2 movementVector2D)
@@ -108,20 +109,20 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
         if (movementVector2D.y == 0)
         {
             this.isMoving = false;
-            this.goingBackwards = false;
-            this.speed = 0;
+            this.isBraking = false;
+            //this.speed = 0;
         }
         else if (movementVector2D.y > 0)
         {
             this.isMoving = true;
-            this.goingBackwards = false;
-            this.speed = this.maxspeed;
+            this.isBraking = false;
+            //this.speed = this.maxspeed;
         }
-        else if (movementVector2D.y == -1)
+        else if (movementVector2D.y < 0)
         {
-            this.isMoving = true;
-            this.goingBackwards = true;
-            this.speed = -this.maxspeed;
+            this.isMoving = false;
+            this.isBraking = true;
+            //this.speed = -this.maxspeed;
         }
 
         movementVector2D.Normalize();
@@ -147,8 +148,9 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
     // Pode nao executar se {simplerMovements} for true;
     private void HandleAccel()
     {
-        if (this.simplerMovements)
+        if (this.instantSpeed)
         {
+            this.speed = this.isMoving ? this.maxspeed : 0;
             return;
         }
         float minspeed = 0;
@@ -158,23 +160,13 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
         if (isMoving)
         {
             acc = this.accel;
-            if (goingBackwards)
-            {
-                minspeed = -lMaxspeed;
-                acc = -this.accel;
-            }
         }
         else
         {
-            if (this.speed < 0)
+            acc = -this.accel;
+            if (this.isBraking)
             {
-                minspeed = -lMaxspeed;
-                lMaxspeed = 0;
-                acc = this.accel;
-            }
-            else if (this.speed > 0)
-            {
-                acc = -this.accel;
+                acc = -5.0f;
             }
         }
 

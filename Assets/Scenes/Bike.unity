@@ -1046,7 +1046,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0081761357ac9cd4d88a7fe02e30f5df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSourceObject: {fileID: 824884807}
+  movementSourceObject: {fileID: 1334670711}
 --- !u!54 &262540039
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2872,8 +2872,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   simplerMovements: 0
-  maxspeed: 3
-  accel: 0.5
+  instantSpeed: 0
+  maxspeed: 5
+  accel: 1
   handlebarRotationIncrement: 10
 --- !u!1 &1528654838
 GameObject:

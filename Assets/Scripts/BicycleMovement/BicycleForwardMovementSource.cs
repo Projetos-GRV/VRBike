@@ -10,7 +10,7 @@ public class BicycleForwardMovementSource : MonoBehaviour, IBicycleMovementSourc
     public bool instantSpeed = false;
 
     private bool isMoving;
-    private bool braking;
+    private bool isBraking;
     private float speed;
 
     // interface
@@ -23,7 +23,7 @@ public class BicycleForwardMovementSource : MonoBehaviour, IBicycleMovementSourc
     {
         this.isMoving = false;
         this.speed = 0f;
-        this.braking = false;
+        this.isBraking = false;
     }
 
     // Update is called once per frame
@@ -39,16 +39,16 @@ public class BicycleForwardMovementSource : MonoBehaviour, IBicycleMovementSourc
         if (dir.y == 0)
         {
             this.isMoving = false;
-            this.braking = false;
+            this.isBraking = false;
         }
         else if (dir.y > 0)
         {
             this.isMoving = true;
-            this.braking = false;
+            this.isBraking = false;
         } else if (dir.y < 0)
         {
             this.isMoving = false;
-            this.braking = true;
+            this.isBraking = true;
         }
     }
 
@@ -70,7 +70,7 @@ public class BicycleForwardMovementSource : MonoBehaviour, IBicycleMovementSourc
         else
         {
             acc = -this.accel;
-            if (this.braking)
+            if (this.isBraking)
             {
                 acc = -5.0f;
             }
