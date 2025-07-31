@@ -9,9 +9,13 @@ public class MovePlayerWithMovementSource : MonoBehaviour
 {
     [Tooltip("Eh daqui que virao as informacoes que ditam como e para onde a bicicleta deve se movimentar.")]
     public GameObject movementSourceObject;
+    [Tooltip("Habilite somente se o objeto onde este script esta inserido seja o modelo da bicicleta azul (na pasta Sir_bike em assets)")]
+    public bool animate = false;
     
     private IBicycleMovementSource movementSource;
     private GameObject handlebar;
+    private GameObject backWheel;
+    private GameObject frontWheel;
     private Rigidbody rb;
 
     void Start()
@@ -24,7 +28,13 @@ public class MovePlayerWithMovementSource : MonoBehaviour
             return;
         }
         this.movementSource = moveSource;
-        //this.handlebar = this.transform.Find("HandlebarPivot").gameObject;
+        if (this.animate)
+        {
+            // mais facil de rotacionar o guidao e as rodas
+            this.handlebar = this.transform.Find("HandlebarPivot").gameObject;
+            this.backWheel = this.transform.Find("Wheel b").gameObject;
+            this.frontWheel = this.transform.Find("Wheel f").gameObject;
+        }
     }
 
     void Update()
