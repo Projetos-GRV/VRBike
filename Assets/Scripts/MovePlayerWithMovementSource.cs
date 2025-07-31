@@ -45,8 +45,6 @@ public class MovePlayerWithMovementSource : MonoBehaviour
         // com a escala da cidade.
         float speed = this.movementSource.GetSpeed();
 
-
-
         //Quaternion rotationToDir = Quaternion.LookRotation(Time.fixedDeltaTime * rotated, Vector3.up);
         //rb.rotation = rotationToDir;
 
@@ -67,6 +65,7 @@ public class MovePlayerWithMovementSource : MonoBehaviour
         //rb.velocity = Vector3.ClampMagnitude(rb.velocity, Mathf.Abs(speed));
     }
 
+    //usada para nada exceto verificar a velocidade do objeto em relacao a uma escala
     //private float timer = 1;
     //void LateUpdate()
     //{

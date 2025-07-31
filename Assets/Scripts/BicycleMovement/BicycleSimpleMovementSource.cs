@@ -18,7 +18,6 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
     private bool isBraking;
     private bool isMoving;
     // Bicicletas nao andam de re, mas enfim...
-    private bool goingBackwards;
     private float speed;
     private float handlebarRotation;
     private Vector2 direction;
@@ -37,7 +36,6 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
     {
         this.speed = 0;
         this.handlebarRotation = 0;
-        this.goingBackwards = false;
         this.isBraking = false;
         this.direction = Vector3.forward;
     }
@@ -63,7 +61,6 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
             //Debug.Log("Rotation: " + this.handlebarRotation);
             //Debug.Log("Speed: " + this.speed);
         }
-        this.goingBackwards = false;
         if (movementVector2D.y == 0)
         {
             this.isMoving = false;
