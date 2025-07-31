@@ -29,7 +29,10 @@ public class MovePlayerWithMovementSource : MonoBehaviour
 
     void Update()
     {
-
+        if (this.movementSource == null)
+        {
+            return;
+        }
     }
 
     // RigidBody
@@ -63,6 +66,12 @@ public class MovePlayerWithMovementSource : MonoBehaviour
 
         //rb.AddForce(speed * transform.forward, ForceMode.VelocityChange);
         //rb.velocity = Vector3.ClampMagnitude(rb.velocity, Mathf.Abs(speed));
+        if (Debug.isDebugBuild)
+        {
+            Vector2 dir = this.movementSource.GetFrontWheelDirection();
+            Debug.DrawLine(Vector3.zero, new Vector3(dir.x, 0, dir.y) * 10, Color.black, 15);
+            Debug.DrawLine(Vector3.zero + new Vector3(0, 2, 0), this.transform.forward.normalized * 10 + new Vector3(0, 2, 0), Color.red, 15);
+        }
     }
 
     //usada para nada exceto verificar a velocidade do objeto em relacao a uma escala

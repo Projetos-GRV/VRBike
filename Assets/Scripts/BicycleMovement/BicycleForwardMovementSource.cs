@@ -27,29 +27,9 @@ public class BicycleForwardMovementSource : MonoBehaviour, IBicycleMovementSourc
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         HandleAccel();
-    }
-
-    void OnMove(InputValue movementValue)
-    {
-        // Checar se esta se movendo para frente (e somente para frente)
-        Vector2 dir = movementValue.Get<Vector2>();
-        if (dir.y == 0)
-        {
-            this.isMoving = false;
-            this.isBraking = false;
-        }
-        else if (dir.y > 0)
-        {
-            this.isMoving = true;
-            this.isBraking = false;
-        } else if (dir.y < 0)
-        {
-            this.isMoving = false;
-            this.isBraking = true;
-        }
     }
 
     private void HandleAccel()
@@ -78,5 +58,25 @@ public class BicycleForwardMovementSource : MonoBehaviour, IBicycleMovementSourc
 
         this.speed += (acc * Time.deltaTime);
         this.speed = Mathf.Clamp(this.speed, minspeed, lMaxspeed);
+    }
+
+    void OnMove(InputValue movementValue)
+    {
+        // Checar se esta se movendo para frente (e somente para frente)
+        Vector2 dir = movementValue.Get<Vector2>();
+        if (dir.y == 0)
+        {
+            this.isMoving = false;
+            this.isBraking = false;
+        }
+        else if (dir.y > 0)
+        {
+            this.isMoving = true;
+            this.isBraking = false;
+        } else if (dir.y < 0)
+        {
+            this.isMoving = false;
+            this.isBraking = true;
+        }
     }
 }

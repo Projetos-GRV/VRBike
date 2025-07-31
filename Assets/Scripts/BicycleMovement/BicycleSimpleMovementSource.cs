@@ -37,72 +37,14 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
         this.speed = 0;
         this.handlebarRotation = 0;
         this.isBraking = false;
-        this.direction = Vector3.forward;
+        this.direction = Vector2.up;
     }
 
     void OnMove(InputValue movementValue)
     {
+        Debug.Log("OnMove: " + this.direction);
         // calcular angulo do guidao e definir velocidade a partir daqui.
         Vector2 movementVector2D = movementValue.Get<Vector2>();
-        if (simplerMovements)
-        {
-            SimpleVectorBasedMovement(movementVector2D);
-        } else
-        {
-            AngleIncrementBasedMovement(movementVector2D);
-        }
-    }
-
-    private void AngleIncrementBasedMovement(Vector2 movementVector2D)
-    {
-        if (Debug.isDebugBuild)
-        {
-            //Debug.Log("Vector: " + movementVector2D);
-            //Debug.Log("Rotation: " + this.handlebarRotation);
-            //Debug.Log("Speed: " + this.speed);
-        }
-        if (movementVector2D.y == 0)
-        {
-            this.isMoving = false;
-            this.isBraking = false;
-        } else if (movementVector2D.y > 0)
-        {
-            this.isMoving = true;
-            this.isBraking = false;
-        } else if (movementVector2D.y < 0)
-        {
-            this.isMoving = false;
-            this.isBraking = true;
-        }
-
-        float res = this.handlebarRotation;
-        if (movementVector2D.x > 0)
-        {
-            res += this.handlebarRotationIncrement;
-        }
-        else if (movementVector2D.x < 0)
-        {
-            res -= this.handlebarRotationIncrement;
-        }
-        res = Mathf.Clamp(res, -80.0f, 80.0f);
-        Vector3 tmp = this.direction;
-        tmp = Quaternion.AngleAxis(res, Vector3.up) * tmp;
-        this.direction = tmp;
-        if (Debug.isDebugBuild)
-        {
-            Debug.Log(this.direction);
-        }
-
-        this.handlebarRotation = res;
-    }
-
-    private void SimpleVectorBasedMovement(Vector2 movementVector2D)
-    {
-        if (Debug.isDebugBuild)
-        {
-            Debug.Log(movementVector2D.normalized);
-        }
-        //this.direction = movementVector2D.normalized;
         if (movementVector2D.y == 0)
         {
             this.isMoving = false;
@@ -122,24 +64,13 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
             //this.speed = -this.maxspeed;
         }
 
-        movementVector2D.Normalize();
-        Vector3 movementVector = new Vector3(movementVector2D.x, 0, movementVector2D.y);
-        Vector3 forward = Vector3.forward;
-        float res = Vector3.SignedAngle(forward, movementVector, Vector3.up);
-        if (Mathf.Abs(res) > 90)
+        if (simplerMovements)
         {
-            res = 0;
-        }
-        res = Mathf.Clamp(res, -80.0f, 80.0f);
-        Vector3 tmp = this.direction;
-        tmp = Quaternion.AngleAxis(res, Vector3.up) * tmp;
-        this.direction = tmp;
-        if (Debug.isDebugBuild)
+            SimpleVectorBasedMovement(movementVector2D);
+        } else
         {
-            Debug.Log(this.direction);
+            AngleIncrementBasedMovement(movementVector2D);
         }
-
-        this.handlebarRotation = res;
     }
 
     // Pode nao executar se {simplerMovements} for true;
@@ -169,5 +100,47 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
 
         this.speed += (acc * Time.deltaTime);
         this.speed = Mathf.Clamp(this.speed, minspeed, lMaxspeed);
+    }
+
+    private void AngleIncrementBasedMovement(Vector2 movementVector2D)
+    {
+        float res = this.handlebarRotation;
+        if (movementVector2D.x > 0)
+        {
+            res += this.handlebarRotationIncrement;
+        }
+        else if (movementVector2D.x < 0)
+        {
+            res -= this.handlebarRotationIncrement;
+        }
+        res = Mathf.Clamp(res, -80.0f, 80.0f);
+        Vector3 tmp = Vector3.forward;
+        tmp = Quaternion.AngleAxis(res, Vector3.up) * tmp;
+        //this.direction = tmp;
+        this.direction.x = tmp.x;
+        this.direction.y = tmp.z;
+
+        this.handlebarRotation = res;
+    }
+
+    private void SimpleVectorBasedMovement(Vector2 movementVector2D)
+    {
+        //this.direction = movementVector2D.normalized;
+        movementVector2D.Normalize();
+        Vector3 movementVector = new Vector3(movementVector2D.x, 0, movementVector2D.y);
+        Vector3 forward = Vector3.forward;
+        float res = Vector3.SignedAngle(forward, movementVector, Vector3.up);
+        if (Mathf.Abs(res) > 90)
+        {
+            res = 0;
+        }
+        res = Mathf.Clamp(res, -80.0f, 80.0f);
+        Vector3 tmp = Vector3.forward;
+        tmp = Quaternion.AngleAxis(res, Vector3.up) * tmp;
+        //this.direction = tmp;
+        this.direction.x = tmp.x;
+        this.direction.y = tmp.z;
+
+        this.handlebarRotation = res;
     }
 }
