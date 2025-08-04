@@ -10,14 +10,15 @@ public class MovePlayerWithMovementSource : MonoBehaviour
     [Tooltip("Eh daqui que virao as informacoes que ditam como e para onde a bicicleta deve se movimentar.")]
     public GameObject movementSourceObject;
 
-    public GameObject Handlebar;
-    public GameObject BackWheel;
-    public GameObject FrontWheel;
+    public Transform Handlebar;
+    public Transform BackWheel;
+    public Transform FrontWheel;
     [Tooltip("Habilite somente se o objeto onde este script esta inserido seja o modelo da bicicleta azul (na pasta Sir_bike em assets)")]
     public bool animate = false;
     
     private IBicycleMovementSource movementSource;
     private Rigidbody rb;
+    private Quaternion handlebarDefaultRotation;
 
     void Start()
     {
@@ -29,6 +30,10 @@ public class MovePlayerWithMovementSource : MonoBehaviour
             return;
         }
         this.movementSource = moveSource;
+        if (this.Handlebar != null)
+        {
+            this.handlebarDefaultRotation = this.Handlebar.rotation;
+        }
     }
 
     void Update()
@@ -90,25 +95,32 @@ public class MovePlayerWithMovementSource : MonoBehaviour
         }
     }
 
+    private bool turn;
+    private float currRot = Mathf.Infinity;
     private void Animate()
     {
         float speed = this.movementSource.GetSpeed();
         float angle = this.movementSource.GetHandlebarRotation();
         float wheelRadius = 0.5f; // um chute.
 
-        float rotSpeed = speed / (2.0f * Mathf.PI * wheelRadius);
+        float rotSpeed = speed / (2.0f * Mathf.PI * wheelRadius); // rotacoes por segundo
+        turn = (angle != currRot);
         if (this.Handlebar)
         {
-            Quaternion oldRot = this.Handlebar.transform.rotation;
-            this.Handlebar.transform.RotateAround(this.Handlebar.transform.position, this.Handlebar.transform.up, angle * Time.deltaTime);
+            // TODO - achar um jeito de virar o guidao somente uma vez caso o angulo nao tenha mudado
+            if (turn)
+            {
+                currRot = angle;
+                this.Handlebar.RotateAround(this.Handlebar.position, this.Handlebar.up, angle);
+            }
         }
         if (this.FrontWheel)
         {
-            this.FrontWheel.transform.RotateAround(this.FrontWheel.transform.position, this.FrontWheel.transform.right, 360 * rotSpeed * Time.deltaTime);
+            this.FrontWheel.RotateAround(this.FrontWheel.position, this.FrontWheel.right, 360 * rotSpeed * Time.deltaTime);
         }
         if (this.BackWheel)
         {
-            this.BackWheel.transform.RotateAround(this.BackWheel.transform.position, this.BackWheel.transform.right, 360 * rotSpeed * Time.deltaTime);
+            this.BackWheel.RotateAround(this.BackWheel.position, this.BackWheel.right, 360 * rotSpeed * Time.deltaTime);
         }
     }
 
