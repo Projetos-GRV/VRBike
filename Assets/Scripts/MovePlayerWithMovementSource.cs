@@ -9,13 +9,14 @@ public class MovePlayerWithMovementSource : MonoBehaviour
 {
     [Tooltip("Eh daqui que virao as informacoes que ditam como e para onde a bicicleta deve se movimentar.")]
     public GameObject movementSourceObject;
+
+    public GameObject Handlebar;
+    public GameObject BackWheel;
+    public GameObject FrontWheel;
     [Tooltip("Habilite somente se o objeto onde este script esta inserido seja o modelo da bicicleta azul (na pasta Sir_bike em assets)")]
     public bool animate = false;
     
     private IBicycleMovementSource movementSource;
-    private GameObject handlebar;
-    private GameObject backWheel;
-    private GameObject frontWheel;
     private Rigidbody rb;
 
     void Start()
@@ -28,13 +29,6 @@ public class MovePlayerWithMovementSource : MonoBehaviour
             return;
         }
         this.movementSource = moveSource;
-        if (this.animate)
-        {
-            // mais facil de rotacionar o guidao e as rodas
-            this.handlebar = this.transform.Find("HandlebarPivot").gameObject;
-            this.backWheel = this.transform.Find("Wheel b").gameObject;
-            this.frontWheel = this.transform.Find("Wheel f").gameObject;
-        }
     }
 
     void Update()
@@ -70,6 +64,7 @@ public class MovePlayerWithMovementSource : MonoBehaviour
         );
         rb.MoveRotation(rb.rotation * deltaRotation);
 
+        // ok
         Vector3 forward = transform.forward;
         Vector3 rotated = Quaternion.AngleAxis(this.movementSource.GetHandlebarRotation(), Vector3.up) * forward;
         rb.MovePosition(transform.position + speed * Time.fixedDeltaTime * rotated);
@@ -80,7 +75,40 @@ public class MovePlayerWithMovementSource : MonoBehaviour
         {
             Vector2 dir = this.movementSource.GetFrontWheelDirection();
             Debug.DrawLine(Vector3.zero, new Vector3(dir.x, 0, dir.y) * 10, Color.black, 15);
-            Debug.DrawLine(Vector3.zero + new Vector3(0, 2, 0), this.transform.forward.normalized * 10 + new Vector3(0, 2, 0), Color.red, 15);
+            Debug.DrawLine(Vector3.zero + new Vector3(0, 1, 0), rotated * 10 + new Vector3(0, 1, 0), Color.red, 15);
+            //float angle = Vector3.SignedAngle(rotated, Vector3.forward, Vector3.up);
+            //float handleAngle = this.movementSource.GetHandlebarRotation();
+            //Debug.Log("MSource angle: " + handleAngle + "\nThis angle: " + angle);
+        }
+    }
+
+    void LateUpdate()
+    {
+        if (this.animate)
+        {
+            Animate();
+        }
+    }
+
+    private void Animate()
+    {
+        float speed = this.movementSource.GetSpeed();
+        float angle = this.movementSource.GetHandlebarRotation();
+        float wheelRadius = 0.5f; // um chute.
+
+        float rotSpeed = speed / (2.0f * Mathf.PI * wheelRadius);
+        if (this.Handlebar)
+        {
+            Quaternion oldRot = this.Handlebar.transform.rotation;
+            this.Handlebar.transform.RotateAround(this.Handlebar.transform.position, this.Handlebar.transform.up, angle * Time.deltaTime);
+        }
+        if (this.FrontWheel)
+        {
+            this.FrontWheel.transform.RotateAround(this.FrontWheel.transform.position, this.FrontWheel.transform.right, 360 * rotSpeed * Time.deltaTime);
+        }
+        if (this.BackWheel)
+        {
+            this.BackWheel.transform.RotateAround(this.BackWheel.transform.position, this.BackWheel.transform.right, 360 * rotSpeed * Time.deltaTime);
         }
     }
 

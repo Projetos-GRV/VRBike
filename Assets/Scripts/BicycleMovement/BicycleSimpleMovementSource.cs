@@ -17,14 +17,13 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
 
     private bool isBraking;
     private bool isMoving;
-    // Bicicletas nao andam de re, mas enfim...
     private float speed;
     private float handlebarRotation;
     private Vector2 direction;
 
     // interface
     public float GetHandlebarRotation() { return this.handlebarRotation; }
-    public Vector2 GetFrontWheelDirection() { return this.direction; } // TODO - retornar um valor diferente? Atualizar conforme rotacao
+    public Vector2 GetFrontWheelDirection() { return this.direction; }
     public float GetSpeed() { return this.speed; }
 
     // monobehaviour
@@ -42,25 +41,21 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
 
     void OnMove(InputValue movementValue)
     {
-        // calcular angulo do guidao e definir velocidade a partir daqui.
         Vector2 movementVector2D = movementValue.Get<Vector2>();
-        if (movementVector2D.y == 0)
+        if (movementVector2D.y == 0) // parado
         {
             this.isMoving = false;
             this.isBraking = false;
-            //this.speed = 0;
         }
-        else if (movementVector2D.y > 0)
+        else if (movementVector2D.y > 0) // para frente
         {
             this.isMoving = true;
             this.isBraking = false;
-            //this.speed = this.maxspeed;
         }
-        else if (movementVector2D.y < 0)
+        else if (movementVector2D.y < 0) // para tras
         {
             this.isMoving = false;
             this.isBraking = true;
-            //this.speed = -this.maxspeed;
         }
 
         if (simplerMovements)
@@ -72,7 +67,6 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
         }
     }
 
-    // Pode nao executar se {simplerMovements} for true;
     private void HandleAccel()
     {
         if (this.instantSpeed)
@@ -93,7 +87,7 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
             acc = -this.accel;
             if (this.isBraking)
             {
-                acc = -5.0f;
+                acc = -10.0f;
             }
         }
 
@@ -104,18 +98,17 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
     private void AngleIncrementBasedMovement(Vector2 movementVector2D)
     {
         float res = this.handlebarRotation;
-        if (movementVector2D.x > 0)
+        if (movementVector2D.x > 0) // direita
         {
             res += this.handlebarRotationIncrement;
         }
-        else if (movementVector2D.x < 0)
+        else if (movementVector2D.x < 0) // esquerda
         {
             res -= this.handlebarRotationIncrement;
         }
         res = Mathf.Clamp(res, -80.0f, 80.0f);
         Vector3 tmp = Vector3.forward;
         tmp = Quaternion.AngleAxis(res, Vector3.up) * tmp;
-        //this.direction = tmp;
         this.direction.x = tmp.x;
         this.direction.y = tmp.z;
 
