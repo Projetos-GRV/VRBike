@@ -10,9 +10,10 @@ public class MovePlayerWithMovementSource : MonoBehaviour
     [Tooltip("Eh daqui que virao as informacoes que ditam como e para onde a bicicleta deve se movimentar.")]
     public GameObject movementSourceObject;
 
-    public Transform Handlebar;
-    public Transform BackWheel;
-    public Transform FrontWheel;
+    public Transform handlebar;
+    public Transform backWheel;
+    public Transform frontWheel;
+    public Transform pedals;
     [Tooltip("Habilite somente se o objeto onde este script esta inserido seja o modelo da bicicleta azul (na pasta Sir_bike em assets)")]
     public bool animate = false;
     
@@ -23,6 +24,11 @@ public class MovePlayerWithMovementSource : MonoBehaviour
     void Start()
     {
         this.rb = this.GetComponent<Rigidbody>();
+        if (this.rb == null)
+        {
+            Debug.LogError("This GameObject does not have a Rigidbody component.");
+            return;
+        }
         IBicycleMovementSource moveSource = this.movementSourceObject.GetComponent<IBicycleMovementSource>();
         if (moveSource == null)
         {
@@ -30,10 +36,11 @@ public class MovePlayerWithMovementSource : MonoBehaviour
             return;
         }
         this.movementSource = moveSource;
-        if (this.Handlebar != null)
+        if (this.handlebar != null)
         {
-            this.handlebarDefaultRotation = this.Handlebar.rotation;
+            StartCoroutine(RotateHandlebar());
         }
+        // enquanto uma solucao melhor/mais simples nao for encontrada...
     }
 
     void Update()
@@ -95,8 +102,8 @@ public class MovePlayerWithMovementSource : MonoBehaviour
         }
     }
 
-    private bool turn;
     private float currRot = Mathf.Infinity;
+    private bool turn = false;
     private void Animate()
     {
         float speed = this.movementSource.GetSpeed();
@@ -104,23 +111,45 @@ public class MovePlayerWithMovementSource : MonoBehaviour
         float wheelRadius = 0.5f; // um chute.
 
         float rotSpeed = speed / (2.0f * Mathf.PI * wheelRadius); // rotacoes por segundo
-        turn = (angle != currRot);
-        if (this.Handlebar)
+        Debug.Log(turn);
+        if (this.handlebar != null)
         {
-            // TODO - achar um jeito de virar o guidao somente uma vez caso o angulo nao tenha mudado
+            turn = (angle != currRot);
             if (turn)
             {
                 currRot = angle;
-                this.Handlebar.RotateAround(this.Handlebar.position, this.Handlebar.up, angle);
             }
         }
-        if (this.FrontWheel)
+        if (this.frontWheel != null)
         {
-            this.FrontWheel.RotateAround(this.FrontWheel.position, this.FrontWheel.right, 360 * rotSpeed * Time.deltaTime);
+            this.frontWheel.RotateAround(this.frontWheel.position, this.frontWheel.right, 360 * rotSpeed * Time.deltaTime);
         }
-        if (this.BackWheel)
+        if (this.backWheel != null)
         {
-            this.BackWheel.RotateAround(this.BackWheel.position, this.BackWheel.right, 360 * rotSpeed * Time.deltaTime);
+            this.backWheel.RotateAround(this.backWheel.position, this.backWheel.right, 360 * rotSpeed * Time.deltaTime);
+        }
+        if (this.pedals != null)
+        {
+            // 0,1943f, 0.02437f ~ valores aproximados do diametro da engrenagenzinha dos pedais (medição totalmente empirica)
+            float pedalSpeed = speed / (2.0f * Mathf.PI * 0.25f);
+            this.pedals.RotateAround(this.pedals.position, this.pedals.right, 360 * pedalSpeed * Time.deltaTime);
+            if (this.pedals.childCount > 0)
+            {
+                foreach (Transform cube in this.pedals)
+                {
+                    cube.RotateAround(cube.position, cube.right, -360 * pedalSpeed * Time.deltaTime);
+                }
+            }
+        }
+    }
+
+    IEnumerator RotateHandlebar()
+    {
+        while (true)
+        {
+            Debug.Log("Rotating...");
+            this.handlebar.RotateAround(this.handlebar.position, this.handlebar.up, this.movementSource.GetHandlebarRotation());
+            yield return new WaitUntil(() => turn);
         }
     }
 

@@ -4,16 +4,12 @@ using UnityEngine;
 
 public class CameraSwitcher : MonoBehaviour
 {
-    [Tooltip("A camera de índice 0 é considerada a câmera principal.")]
+    [Tooltip("A camera de indice 0 eh considerada a câmera principal.")]
     public Camera[] cameras;
-    private int camera_idx = 0;
+    private int cameraIdx = 0;
     // Start is called before the first frame update
     void Start()
     {
-        if (!cameras[0].enabled)
-        {
-            cameras[0].enabled = true;
-        }
         for (int i = 1; i < cameras.Length; i++)
         {
             if (cameras[i].enabled)
@@ -21,6 +17,7 @@ public class CameraSwitcher : MonoBehaviour
                 cameras[i].enabled = false;
             }
         }
+        cameras[0].enabled = true;
     }
 
     // Update is called once per frame
@@ -29,10 +26,10 @@ public class CameraSwitcher : MonoBehaviour
         // Simples. Da pro gasto
         if (Input.GetKeyDown(KeyCode.E))
         {
-            int tmp = (camera_idx + 1) % cameras.Length;
+            int tmp = (cameraIdx + 1) % cameras.Length;
             cameras[tmp].enabled = true;
-            cameras[camera_idx].enabled = false;
-            camera_idx = tmp;
+            cameras[cameraIdx].enabled = false;
+            cameraIdx = tmp;
         }
     }
 }
