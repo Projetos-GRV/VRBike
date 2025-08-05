@@ -19,7 +19,7 @@ public class MovePlayerWithMovementSource : MonoBehaviour
     
     private IBicycleMovementSource movementSource;
     private Rigidbody rb;
-    private Quaternion handlebarDefaultRotation;
+    private Vector3 handlebarDefaultRotation;
 
     void Start()
     {
@@ -38,9 +38,8 @@ public class MovePlayerWithMovementSource : MonoBehaviour
         this.movementSource = moveSource;
         if (this.handlebar != null)
         {
-            StartCoroutine(RotateHandlebar());
+            this.handlebarDefaultRotation = this.handlebar.transform.eulerAngles;
         }
-        // enquanto uma solucao melhor/mais simples nao for encontrada...
     }
 
     void Update()
@@ -81,8 +80,6 @@ public class MovePlayerWithMovementSource : MonoBehaviour
         Vector3 rotated = Quaternion.AngleAxis(this.movementSource.GetHandlebarRotation(), Vector3.up) * forward;
         rb.MovePosition(transform.position + speed * Time.fixedDeltaTime * rotated);
 
-        //rb.AddForce(speed * transform.forward, ForceMode.VelocityChange);
-        //rb.velocity = Vector3.ClampMagnitude(rb.velocity, Mathf.Abs(speed));
         if (Debug.isDebugBuild)
         {
             Vector2 dir = this.movementSource.GetFrontWheelDirection();
@@ -114,11 +111,9 @@ public class MovePlayerWithMovementSource : MonoBehaviour
         Debug.Log(turn);
         if (this.handlebar != null)
         {
-            turn = (angle != currRot);
-            if (turn)
-            {
-                currRot = angle;
-            }
+            Quaternion baseRot = Quaternion.Euler(this.handlebarDefaultRotation.x, this.handlebarDefaultRotation.y, this.handlebarDefaultRotation.z);
+            Quaternion turnRot = Quaternion.Euler(0.0f, angle, 0.0f);
+            this.handlebar.localRotation = baseRot * turnRot;
         }
         if (this.frontWheel != null)
         {
@@ -140,16 +135,6 @@ public class MovePlayerWithMovementSource : MonoBehaviour
                     cube.RotateAround(cube.position, cube.right, -360 * pedalSpeed * Time.deltaTime);
                 }
             }
-        }
-    }
-
-    IEnumerator RotateHandlebar()
-    {
-        while (true)
-        {
-            Debug.Log("Rotating...");
-            this.handlebar.RotateAround(this.handlebar.position, this.handlebar.up, this.movementSource.GetHandlebarRotation());
-            yield return new WaitUntil(() => turn);
         }
     }
 

@@ -1062,9 +1062,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSourceObject: {fileID: 1334670711}
-  Handlebar: {fileID: 2000019030}
-  BackWheel: {fileID: 764718674}
-  FrontWheel: {fileID: 368294144}
+  handlebar: {fileID: 2000019030}
+  backWheel: {fileID: 764718674}
+  frontWheel: {fileID: 368294144}
+  pedals: {fileID: 1117374266}
   animate: 1
 --- !u!54 &262540039
 Rigidbody:
@@ -2709,6 +2710,12 @@ Transform:
   - {fileID: 1275101627}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -46.712, z: 0}
+--- !u!4 &1117374266 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2510993130956297655, guid: abbea6fd91c4a9e41887bb90637dbfe6,
+    type: 3}
+  m_PrefabInstance: {fileID: 262540035}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1275101624
 GameObject:
   m_ObjectHideFlags: 0
@@ -2918,6 +2925,7 @@ GameObject:
   - component: {fileID: 1528654839}
   - component: {fileID: 1528654840}
   - component: {fileID: 1528654841}
+  - component: {fileID: 1528654842}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2998,9 +3006,22 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1528654838}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e1305bcc61e66bc47b39a08f1e22a292, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bicycle: {fileID: 262540036}
+--- !u!114 &1528654842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1528654838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a617f4631809584492a8199c93cbacb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   bicycle: {fileID: 262540036}
@@ -3136,7 +3157,7 @@ SceneRoots:
   - {fileID: 780696278}
   - {fileID: 957836549}
   - {fileID: 413405558}
-  - {fileID: 262540035}
   - {fileID: 1310629543}
+  - {fileID: 262540035}
   - {fileID: 1116649845}
   - {fileID: 551258793}

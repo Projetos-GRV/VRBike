@@ -7,7 +7,7 @@ using UnityEngine.InputSystem; // fica mais facil de atualizar o movimento do jo
 [Serializable]
 public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
 {
-    [Tooltip("Ativa/desativa movimentos simples, onde direcao e velocidade sofrem alteracoes instantaneas. A bicicleta tambem podera andar de re caso ativado, embora isso nao seja possivel na vida real.")]
+    [Tooltip("Ativa/desativa movimentos simples, onde direcao e velocidade sofrem alteracoes instantaneas.")]
     public bool simplerMovements = true;
     public bool instantSpeed = false;
     public float maxspeed = 3.0f;
