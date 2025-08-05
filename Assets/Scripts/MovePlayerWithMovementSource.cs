@@ -99,8 +99,6 @@ public class MovePlayerWithMovementSource : MonoBehaviour
         }
     }
 
-    private float currRot = Mathf.Infinity;
-    private bool turn = false;
     private void Animate()
     {
         float speed = this.movementSource.GetSpeed();
@@ -108,7 +106,6 @@ public class MovePlayerWithMovementSource : MonoBehaviour
         float wheelRadius = 0.5f; // um chute.
 
         float rotSpeed = speed / (2.0f * Mathf.PI * wheelRadius); // rotacoes por segundo
-        Debug.Log(turn);
         if (this.handlebar != null)
         {
             Quaternion baseRot = Quaternion.Euler(this.handlebarDefaultRotation.x, this.handlebarDefaultRotation.y, this.handlebarDefaultRotation.z);
