@@ -9,9 +9,20 @@ public class BicycleExternalMovementSource : MonoBehaviour, IBicycleMovementSour
 {
     public bool enable = true;
 
-    public float GetHandlebarRotation() { return 0; }
-    public Vector2 GetFrontWheelDirection() { return Vector2.zero; }
-    public float GetSpeed() { return 0; }
+    private float speed;
+    private float handlebarRotation;
+    private Vector2 direction;
+
+    public float GetHandlebarRotation() { return this.handlebarRotation; }
+    public Vector2 GetFrontWheelDirection() { return this.direction; }
+    public float GetSpeed() { return this.speed; }
+
+    void Start()
+    {
+        this.speed = 0;
+        this.handlebarRotation = 0;
+        this.direction = Vector2.zero;
+    }
 
     void Update() { } // provavelmente sera aqui onde os movimentos da bicicleta serao buscados e atualizados
 

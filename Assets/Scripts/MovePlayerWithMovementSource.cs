@@ -93,7 +93,7 @@ public class MovePlayerWithMovementSource : MonoBehaviour
 
     void LateUpdate()
     {
-        if (this.animate)
+        if (this.animate && this.movementSource != null)
         {
             Animate();
         }
@@ -122,7 +122,8 @@ public class MovePlayerWithMovementSource : MonoBehaviour
         }
         if (this.pedals != null)
         {
-            // 0,1943f, 0.02437f ~ valores aproximados do diametro da engrenagenzinha dos pedais (medição totalmente empirica)
+            // 0,.1943f, 0.02437f ~ valores aproximados do diametro da engrenagenzinha dos pedais (medição totalmente empírica)
+            // 0.25f ~ valor aproximado do diametro da circunferencia que os pedais formam quando se movem (medição também empírica)
             float pedalSpeed = speed / (2.0f * Mathf.PI * 0.25f);
             this.pedals.RotateAround(this.pedals.position, this.pedals.right, 360 * pedalSpeed * Time.deltaTime);
             if (this.pedals.childCount > 0)
