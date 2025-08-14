@@ -188,6 +188,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 201434209780947531, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 839801609190052218, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
+        type: 3}
+      propertyPath: accel
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 839801609190052218, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
+        type: 3}
+      propertyPath: maxspeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1277623123382523218, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
+        type: 3}
+      propertyPath: accel
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1277623123382523218, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
         type: 3}
       propertyPath: maxspeed
@@ -195,8 +215,50 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1277623123382523218, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
         type: 3}
+      propertyPath: simplerMovements
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1277623123382523218, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
+        type: 3}
       propertyPath: handlebarRotationIncrement
-      value: 10
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1826435400162772530, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2907597043881909420, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
+        type: 3}
+      propertyPath: m_Actions
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: 4154aa5b9003e6d428f2d350509c084d,
+        type: 3}
+    - target: {fileID: 2907597043881909420, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
+        type: 3}
+      propertyPath: m_DefaultActionMap
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4451328793245983034, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5890275083333693958, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
+        type: 3}
+      propertyPath: m_Actions
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: 4154aa5b9003e6d428f2d350509c084d,
+        type: 3}
+    - target: {fileID: 5890275083333693958, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5890275083333693958, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
+        type: 3}
+      propertyPath: m_DefaultActionMap
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8877309999387384984, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
         type: 3}
@@ -252,6 +314,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BicycleControllers
+      objectReference: {fileID: 0}
+    - target: {fileID: 9160176589043218222, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

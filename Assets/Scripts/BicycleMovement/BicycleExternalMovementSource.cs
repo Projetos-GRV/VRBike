@@ -7,8 +7,6 @@ using UnityEngine;
 [Serializable]
 public class BicycleExternalMovementSource : MonoBehaviour, IBicycleMovementSource
 {
-    public bool enable = true;
-
     private float speed;
     private float handlebarRotation;
     private Vector2 direction;
@@ -24,13 +22,15 @@ public class BicycleExternalMovementSource : MonoBehaviour, IBicycleMovementSour
         this.direction = Vector2.zero;
     }
 
-    void Update() { } // provavelmente sera aqui onde os movimentos da bicicleta serao buscados e atualizados
-
-    void OnMove(InputValue movementValue) // pode ser que nao seja necessario, ja que os movimentos virao de fora
+    // provavelmente sera aqui onde os movimentos da bicicleta serao buscados e atualizados
+    void Update()
     {
-        if (!this.enable)
-        {
-            return;
-        }
+        // buscar os dados da fonte, qualquer que seja essa fonte.
+    }
+
+    // essa funcao pode ser mais necessaria do que se pensava se os botoes de arcade forem utilizados
+    void OnMove(InputValue movementValue)
+    {
+        Debug.Log(movementValue.Get<Vector2>());
     }
 }

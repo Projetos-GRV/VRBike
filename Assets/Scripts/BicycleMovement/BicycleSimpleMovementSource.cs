@@ -7,8 +7,8 @@ using UnityEngine.InputSystem; // fica mais facil de atualizar o movimento do jo
 [Serializable]
 public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
 {
-    [Tooltip("Ativa/desativa movimentos simples, onde direcao e velocidade sofrem alteracoes instantaneas.")]
-    public bool simplerMovements = true;
+    [Tooltip("Quando ativado, o controle de curva sera instantaneo em vez de ser necessario pressionar a tecla de direcao multiplas vezes.")]
+    public bool simplerSteering = false;
     public bool instantSpeed = false;
     public float maxspeed = 3.0f;
     public float accel = 0.5f;
@@ -42,6 +42,8 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
     void OnMove(InputValue movementValue)
     {
         Vector2 movementVector2D = movementValue.Get<Vector2>();
+        movementVector2D.x = Mathf.Round(movementVector2D.x);
+        movementVector2D.y = Mathf.Round(movementVector2D.y);
         if (movementVector2D.y == 0) // parado
         {
             this.isMoving = false;
@@ -58,12 +60,12 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
             this.isBraking = true;
         }
 
-        if (simplerMovements)
+        if (simplerSteering)
         {
-            SimpleVectorBasedMovement(movementVector2D);
+            SimpleVectorBasedSteering(movementVector2D);
         } else
         {
-            AngleIncrementBasedMovement(movementVector2D);
+            AngleIncrementBasedSteering(movementVector2D);
         }
     }
 
@@ -95,7 +97,7 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
         this.speed = Mathf.Clamp(this.speed, minspeed, lMaxspeed);
     }
 
-    private void AngleIncrementBasedMovement(Vector2 movementVector2D)
+    private void AngleIncrementBasedSteering(Vector2 movementVector2D)
     {
         float res = this.handlebarRotation;
         if (movementVector2D.x > 0) // direita
@@ -115,7 +117,7 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
         this.handlebarRotation = res;
     }
 
-    private void SimpleVectorBasedMovement(Vector2 movementVector2D)
+    private void SimpleVectorBasedSteering(Vector2 movementVector2D)
     {
         //this.direction = movementVector2D.normalized;
         movementVector2D.Normalize();
@@ -126,7 +128,7 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
         {
             res = 0;
         }
-        res = Mathf.Clamp(res, -80.0f, 80.0f);
+        res = Mathf.Clamp(res, -15.0f, 15.0f);
         Vector3 tmp = Vector3.forward;
         tmp = Quaternion.AngleAxis(res, Vector3.up) * tmp;
         //this.direction = tmp;

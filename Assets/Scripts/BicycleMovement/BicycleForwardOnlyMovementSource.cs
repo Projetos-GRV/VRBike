@@ -5,9 +5,9 @@ using UnityEngine.InputSystem;
 
 public class BicycleForwardMovementSource : MonoBehaviour, IBicycleMovementSource
 {
+    public bool instantSpeed = false;
     public float maxspeed = 3.0f;
     public float accel = 0.5f;
-    public bool instantSpeed = false;
 
     private bool isMoving;
     private bool isBraking;
@@ -52,7 +52,7 @@ public class BicycleForwardMovementSource : MonoBehaviour, IBicycleMovementSourc
             acc = -this.accel;
             if (this.isBraking)
             {
-                acc = -5.0f;
+                acc = -10.0f;
             }
         }
 

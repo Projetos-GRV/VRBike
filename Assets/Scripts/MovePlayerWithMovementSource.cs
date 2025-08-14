@@ -122,8 +122,7 @@ public class MovePlayerWithMovementSource : MonoBehaviour
         }
         if (this.pedals != null)
         {
-            // 0,.1943f, 0.02437f ~ valores aproximados do diametro da engrenagenzinha dos pedais (medição totalmente empírica)
-            // 0.25f ~ valor aproximado do diametro da circunferencia que os pedais formam quando se movem (medição também empírica)
+            // 0.25f ~ valor aproximado do raio da circunferencia que os pedais formam quando rotacionam (medição também empírica)
             float pedalSpeed = speed / (2.0f * Mathf.PI * 0.25f);
             this.pedals.RotateAround(this.pedals.position, this.pedals.right, 360 * pedalSpeed * Time.deltaTime);
             if (this.pedals.childCount > 0)
@@ -135,16 +134,4 @@ public class MovePlayerWithMovementSource : MonoBehaviour
             }
         }
     }
-
-    //usada para nada exceto verificar a velocidade do objeto em relacao a uma escala
-    //private float timer = 1;
-    //void LateUpdate()
-    //{
-    //    timer -= Time.deltaTime;
-    //    if (timer <= 0)
-    //    {
-    //        timer = 1;
-    //        Debug.Log(this.transform.position.z);
-    //    }
-    //}
 }
