@@ -9,7 +9,6 @@ public class BicycleBetterMovementSource : MonoBehaviour, IBicycleMovementSource
 {
     public float maxspeed = 3.0f;
     public float accel = 0.5f;
-    [Tooltip("Nao sera aplicado se Simpler Movements for habilitado.")]
     public float handlebarRotationIncrement = 1f;
 
     private bool isBraking;
