@@ -39,8 +39,11 @@ public class BicycleBetterMovementSource : MonoBehaviour, IBicycleMovementSource
     {
         this.speed = 0;
         this.handlebarRotation = 0;
-        this.isBraking = false;
         this.direction = Vector2.up;
+        this.isBraking = false;
+        this.isMoving = false;
+        this.isTurning = false;
+        this.inputVec = Vector2.zero;
     }
 
     void OnMove(InputValue movementValue)

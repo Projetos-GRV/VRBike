@@ -22,8 +22,8 @@ public class BicycleForwardMovementSource : MonoBehaviour, IBicycleMovementSourc
     void Start()
     {
         this.isMoving = false;
-        this.speed = 0f;
         this.isBraking = false;
+        this.speed = 0f;
     }
 
     // Update is called once per frame
