@@ -5,11 +5,8 @@ using UnityEngine;
 using UnityEngine.InputSystem; // fica mais facil de atualizar o movimento do jogador sem atrelar demais o código à classe MovePlayerWithMovementSource
 
 [Serializable]
-public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
+public class BicycleBetterMovementSource : MonoBehaviour, IBicycleMovementSource
 {
-    [Tooltip("Quando ativado, o controle de curva sera instantaneo em vez de ser necessario pressionar a tecla de direcao multiplas vezes.")]
-    public bool simplerSteering = false;
-    public bool instantSpeed = false;
     public float maxspeed = 3.0f;
     public float accel = 0.5f;
     [Tooltip("Nao sera aplicado se Simpler Movements for habilitado.")]
@@ -17,6 +14,9 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
 
     private bool isBraking;
     private bool isMoving;
+    private bool isTurning;
+    private Vector2 inputVec;
+
     private float speed;
     private float handlebarRotation;
     private Vector2 direction;
@@ -29,6 +29,10 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
     // monobehaviour
     void Update() {
         HandleAccel();
+        if (this.isTurning)
+        {
+            AngleIncrementBasedSteering(this.inputVec);
+        }
     }
 
     void Start()
@@ -60,22 +64,12 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
             this.isBraking = true;
         }
 
-        if (simplerSteering)
-        {
-            SimpleVectorBasedSteering(movementVector2D);
-        } else
-        {
-            AngleIncrementBasedSteering(movementVector2D);
-        }
+        this.isTurning = movementVector2D.x != 0; // esta curvando!?!?
+        this.inputVec = movementVector2D;
     }
 
     private void HandleAccel()
     {
-        if (this.instantSpeed)
-        {
-            this.speed = this.isMoving ? this.maxspeed : 0;
-            return;
-        }
         float minspeed = 0;
         float lMaxspeed = this.maxspeed;
         float acc = 0;
@@ -102,36 +96,15 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
         float res = this.handlebarRotation;
         if (movementVector2D.x > 0) // direita
         {
-            res += this.handlebarRotationIncrement;
+            res += (this.handlebarRotationIncrement * Time.deltaTime);
         }
         else if (movementVector2D.x < 0) // esquerda
         {
-            res -= this.handlebarRotationIncrement;
+            res -= (this.handlebarRotationIncrement * Time.deltaTime);
         }
         res = Mathf.Clamp(res, -80.0f, 80.0f);
         Vector3 tmp = Vector3.forward;
         tmp = Quaternion.AngleAxis(res, Vector3.up) * tmp;
-        this.direction.x = tmp.x;
-        this.direction.y = tmp.z;
-
-        this.handlebarRotation = res;
-    }
-
-    private void SimpleVectorBasedSteering(Vector2 movementVector2D)
-    {
-        //this.direction = movementVector2D.normalized;
-        movementVector2D.Normalize();
-        Vector3 movementVector = new Vector3(movementVector2D.x, 0, movementVector2D.y);
-        Vector3 forward = Vector3.forward;
-        float res = Vector3.SignedAngle(forward, movementVector, Vector3.up);
-        if (Mathf.Abs(res) > 90)
-        {
-            res = 0;
-        }
-        res = Mathf.Clamp(res, -15.0f, 15.0f);
-        Vector3 tmp = Vector3.forward;
-        tmp = Quaternion.AngleAxis(res, Vector3.up) * tmp;
-        //this.direction = tmp;
         this.direction.x = tmp.x;
         this.direction.y = tmp.z;
 

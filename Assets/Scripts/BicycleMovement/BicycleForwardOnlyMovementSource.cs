@@ -52,7 +52,7 @@ public class BicycleForwardMovementSource : MonoBehaviour, IBicycleMovementSourc
             acc = -this.accel;
             if (this.isBraking)
             {
-                acc = -10.0f;
+                acc = -15.0f;
             }
         }
 
