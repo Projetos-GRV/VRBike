@@ -318,7 +318,7 @@ PrefabInstance:
     - target: {fileID: 9160176589043218222, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1409,7 +1409,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1576156678
 Transform:
   m_ObjectHideFlags: 0
@@ -1468,7 +1468,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5c76f91f958df34682b94e55ba2102f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  instantSpeed: 0
   maxspeed: 10
   accel: 5
   handlebarRotationIncrement: 40

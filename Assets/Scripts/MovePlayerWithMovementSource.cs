@@ -57,10 +57,6 @@ public class MovePlayerWithMovementSource : MonoBehaviour
         {
             return;
         }
-        // velocidade retornada parece ser equivalente a ela multiplicada por aproximadamente 5,8
-        // quando aplicada no rigid body usando as medidas padrao das unidades da Unity (1 unidade = 1 metro).
-        // Verificacao totalmente empirica. A constante provavelmente devera ser modificada no futuro para coincidir
-        // com a escala da cidade.
         float speed = this.movementSource.GetSpeed();
 
         //Quaternion rotationToDir = Quaternion.LookRotation(Time.fixedDeltaTime * rotated, Vector3.up);
