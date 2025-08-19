@@ -85,12 +85,13 @@ public class BicycleExternalMovementSource : MonoBehaviour, IBicycleMovementSour
         {
             string input = this.handlebarSensor.ReadLine();
             int value = int.Parse(Regex.Replace(input.Trim(), "[^0-9]", ""));
+            // center = 500, left = 860, right = 195
             dir = value / 100;
 
-            //float t = (dir - angleZero) / angleZero;
-            float t = (dir) / (2 * angleZero); // soh sei que parece funcionar
-            angle = -Mathf.Lerp(-maxHandlebarAngle, maxHandlebarAngle, t); // ta invertido
-            //angle = Map(-80, 80, 0, 1, t);
+            float t = (dir - angleZero) / angleZero;
+            //float t = (dir) / (2 * angleZero); // soh sei que parece funcionar
+            //angle = -Mathf.Lerp(-maxHandlebarAngle, maxHandlebarAngle, t); // ta invertido
+            angle = Map(-80, 80, -0.7f, 0.7f, -t);
             //Debug.Log(angle);
         }
         catch (System.TimeoutException e)
@@ -115,16 +116,17 @@ public class BicycleExternalMovementSource : MonoBehaviour, IBicycleMovementSour
         return 0.0f;
     }
 
-    // alternativa pro Lerp
-    //private float Map(float from, float to, float from2, float to2, float input)
-    //{
-    //    if (input <= from2)
-    //    {
-    //        return from;
-    //    } else if (input >= to2)
-    //    {
-    //        return to;
-    //    }
-    //    return (to - from) * ((input - from2) / (to2 - from2)) + from;
-    //}
+    //alternativa pro Lerp
+    private float Map(float from, float to, float from2, float to2, float input)
+    {
+        if (input <= from2)
+        {
+            return from;
+        }
+        else if (input >= to2)
+        {
+            return to;
+        }
+        return (to - from) * ((input - from2) / (to2 - from2)) + from;
+    }
 }
