@@ -7,8 +7,8 @@ using UnityEngine.InputSystem;
 [Serializable]
 public class MovePlayerWithMovementSource : MonoBehaviour
 {
-    [Tooltip("Eh daqui que virao as informacoes que ditam como e para onde a bicicleta deve se movimentar.")]
-    public GameObject movementSourceObject;
+    [Tooltip("O primeiro controlador filho eh escolhido como o objeto controlador. Eh daqui que virao as informacoes que ditam como e para onde a bicicleta deve se movimentar.")]
+    public GameObject bicycleControllersObject;
 
     public Transform handlebar;
     public Transform backWheel;
@@ -29,13 +29,25 @@ public class MovePlayerWithMovementSource : MonoBehaviour
             Debug.LogError("This GameObject does not have a Rigidbody component.");
             return;
         }
-        IBicycleMovementSource moveSource = this.movementSourceObject.GetComponent<IBicycleMovementSource>();
-        if (moveSource == null)
+        if (this.bicycleControllersObject != null)
         {
-            Debug.LogError("The assigned GameObject does not have a component which implements the IBicycleMovementSource interface.");
-            return;
+            GameObject movementSourceObject = null;
+            foreach (Transform child in this.bicycleControllersObject.transform)
+            {
+                if (child.gameObject.activeSelf)
+                {
+                    movementSourceObject = child.gameObject;
+                    break;
+                }
+            }
+            IBicycleMovementSource moveSource = movementSourceObject.GetComponent<IBicycleMovementSource>();
+            if (moveSource == null)
+            {
+                Debug.LogError("The assigned GameObject does not have a component which implements the IBicycleMovementSource interface.");
+                return;
+            }
+            this.movementSource = moveSource;
         }
-        this.movementSource = moveSource;
         if (this.handlebar != null)
         {
             this.handlebarDefaultRotation = this.handlebar.transform.eulerAngles;

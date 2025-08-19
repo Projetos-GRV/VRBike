@@ -304,7 +304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0081761357ac9cd4d88a7fe02e30f5df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSourceObject: {fileID: 0}
+  bicycleControllersObject: {fileID: 0}
   handlebar: {fileID: 7104902281763879652}
   backWheel: {fileID: 2510993130956297663}
   frontWheel: {fileID: 2510993130956297661}
@@ -330,7 +330,7 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Height: 2.6
+  m_Height: 2.5
   m_Direction: 2
   m_Center: {x: 0, y: 0.5, z: 0.15}
 --- !u!54 &2889019468824299187

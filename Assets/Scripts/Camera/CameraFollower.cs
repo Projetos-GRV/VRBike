@@ -11,7 +11,7 @@ public class CameraFollower : MonoBehaviour
 
     void Start()
     {
-        offset = this.transform.position - bicycle.transform.position;    
+        offset = this.transform.position - bicycle.transform.position;
     }
 
     // Update is called once per frame

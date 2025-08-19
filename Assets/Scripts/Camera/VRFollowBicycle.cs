@@ -11,7 +11,7 @@ public class VRFollowBicycle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        offset = this.transform.position - bicycle.transform.position;    
+        offset = this.transform.position - bicycle.transform.position;
     }
 
     // Update is called once per frame
