@@ -85,13 +85,13 @@ public class BicycleExternalMovementSource : MonoBehaviour, IBicycleMovementSour
         {
             string input = this.handlebarSensor.ReadLine();
             int value = int.Parse(Regex.Replace(input.Trim(), "[^0-9]", ""));
-            // center = 500, left = 860, right = 195
             dir = value / 100;
 
             float t = (dir - angleZero) / angleZero;
+            //Debug.Log(t);
             //float t = (dir) / (2 * angleZero); // soh sei que parece funcionar
             //angle = -Mathf.Lerp(-maxHandlebarAngle, maxHandlebarAngle, t); // ta invertido
-            angle = Map(-80, 80, -0.7f, 0.7f, -t);
+            angle = Map(-80.0f, 80.0f, -0.65f, 0.65f, -t); // t precisa ser invertido
             //Debug.Log(angle);
         }
         catch (System.TimeoutException e)
@@ -113,10 +113,13 @@ public class BicycleExternalMovementSource : MonoBehaviour, IBicycleMovementSour
 
     private float ReadSpeedSensor()
     {
-        return 0.0f;
+        return 2.0f;
     }
 
-    //alternativa pro Lerp
+    // alternativa pro Lerp. Retirada dos forums da Unity
+    // argumentos from e to == conversao destino (minimo e maximo, respectivamente)
+    // argumentos from2 e to2 == minimo e maximo que input pode ser
+    // argumento input == valor entre [from2, to2]
     private float Map(float from, float to, float from2, float to2, float input)
     {
         if (input <= from2)
