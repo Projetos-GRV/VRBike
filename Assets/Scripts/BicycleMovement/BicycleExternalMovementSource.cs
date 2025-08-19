@@ -53,7 +53,10 @@ public class BicycleExternalMovementSource : MonoBehaviour, IBicycleMovementSour
         if (this.handlebarSensor != null && this.handlebarSensor.IsOpen)
         {
             this.handlebarSensor.Close();
-            Debug.Log("Porta serial fechada.");
+            if (Debug.isDebugBuild)
+            {
+                Debug.Log("Porta serial fechada.");
+            }
         }
     }
 
@@ -65,9 +68,13 @@ public class BicycleExternalMovementSource : MonoBehaviour, IBicycleMovementSour
             return;
         }
 
-        this.handlebarRotation = (ReadHandlebarSensor());
-        this.speed = 3;
-
+        this.handlebarRotation = ReadHandlebarSensor();
+        this.speed = ReadSpeedSensor();
+        
+        Vector3 tmp = Vector3.forward;
+        tmp = Quaternion.AngleAxis(this.handlebarRotation, Vector3.up) * tmp;
+        this.direction.x = tmp.x;
+        this.direction.y = tmp.z;
     }
 
     private float ReadHandlebarSensor()
@@ -80,11 +87,11 @@ public class BicycleExternalMovementSource : MonoBehaviour, IBicycleMovementSour
             int value = int.Parse(Regex.Replace(input.Trim(), "[^0-9]", ""));
             dir = value / 100;
 
-            // float t = (dir - angleZero) / angleZero;
+            //float t = (dir - angleZero) / angleZero;
             float t = (dir) / (2 * angleZero); // soh sei que parece funcionar
             angle = -Mathf.Lerp(-maxHandlebarAngle, maxHandlebarAngle, t); // ta invertido
             //angle = Map(-80, 80, 0, 1, t);
-            Debug.Log(angle);
+            //Debug.Log(angle);
         }
         catch (System.TimeoutException e)
         {
@@ -103,6 +110,11 @@ public class BicycleExternalMovementSource : MonoBehaviour, IBicycleMovementSour
         return angle;
     }
 
+    private float ReadSpeedSensor()
+    {
+        return 0.0f;
+    }
+
     // alternativa pro Lerp
     //private float Map(float from, float to, float from2, float to2, float input)
     //{
@@ -115,9 +127,4 @@ public class BicycleExternalMovementSource : MonoBehaviour, IBicycleMovementSour
     //    }
     //    return (to - from) * ((input - from2) / (to2 - from2)) + from;
     //}
-
-    // essa funcao pode ser mais necessaria do que se pensava se os botoes de arcade forem utilizados
-    void OnMove(InputValue movementValue)
-    {
-    }
 }

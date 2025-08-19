@@ -93,7 +93,7 @@ public class BicycleBetterMovementSource : MonoBehaviour, IBicycleMovementSource
         this.speed = Mathf.Clamp(this.speed, minspeed, lMaxspeed);
     }
 
-    private void AngleIncrementBasedSteering(Vector2 movementVector2D)
+    private void AngleIncrementBasedSteering(Vector2 movementVector2D)  
     {
         float res = this.handlebarRotation;
         if (movementVector2D.x > 0) // direita
