@@ -43,8 +43,8 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
     void OnMove(InputValue movementValue)
     {
         Vector2 movementVector2D = movementValue.Get<Vector2>();
-        movementVector2D.x = Mathf.Round(movementVector2D.x);
-        movementVector2D.y = Mathf.Round(movementVector2D.y);
+//        movementVector2D.x = Mathf.Round(movementVector2D.x);
+ //       movementVector2D.y = Mathf.Round(movementVector2D.y);
         if (movementVector2D.y == 0) // parado
         {
             this.isMoving = false;
@@ -129,7 +129,7 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
         {
             res = 0;
         }
-        res = Mathf.Clamp(res, -15.0f, 15.0f);
+        res = Mathf.Clamp(res, -80.0f, 80.0f);
         Vector3 tmp = Vector3.forward;
         tmp = Quaternion.AngleAxis(res, Vector3.up) * tmp;
         //this.direction = tmp;

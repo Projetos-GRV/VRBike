@@ -1467,6 +1467,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1277623123382523218, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
+        type: 3}
+      propertyPath: simplerSteering
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1826435400162772530, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
         type: 3}
       propertyPath: m_IsActive
