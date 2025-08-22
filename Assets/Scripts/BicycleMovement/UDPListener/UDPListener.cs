@@ -11,8 +11,8 @@ namespace UDPListener
 {
     public class UDPDataListener
     {
-        private int listenPortSpeed;
-        private int listenPortAngle;
+        private readonly int listenPortSpeed;
+        private readonly int listenPortAngle;
 
         private UdpClient speedClient;
         private UdpClient angleClient;
@@ -25,7 +25,6 @@ namespace UDPListener
         private string angles; // x;y;z
         private string speed;
 
-        // Start is called before the first frame update
         public UDPDataListener(int listenPortSpeed, int listenPortAngle)
         {
             this.angles = "0;0;0";
@@ -81,7 +80,7 @@ namespace UDPListener
                     byte[] bytes = listener.Receive(ref EP);
                     outputStr = Encoding.ASCII.GetString(bytes, 0, bytes.Length);
                 }
-                catch (SocketException e)
+                catch (SocketException)
                 {
                 }
             }

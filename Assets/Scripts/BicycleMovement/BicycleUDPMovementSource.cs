@@ -42,6 +42,8 @@ public class BicycleUDPMovementSource : MonoBehaviour, IBicycleMovementSource
     {
         string angleStr = this.dataSource.GetAngleData();
         string speedStr = this.dataSource.GetSpeedData();
+        Debug.Log(angleStr);
+        Debug.Log(speedStr);
 
         string[] gyroValuesS = angleStr.Trim().Split(';');
         float[] gyroValuesF = new float[gyroValuesS.Length];
