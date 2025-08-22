@@ -7,14 +7,18 @@ using UnityEngine.InputSystem;
 [Serializable]
 public class MovePlayerWithMovementSource : MonoBehaviour
 {
-    [Tooltip("O primeiro controlador filho eh escolhido como o objeto controlador. Eh daqui que virao as informacoes que ditam como e para onde a bicicleta deve se movimentar.")]
+    [Tooltip("O primeiro controlador filho eh escolhido como o objeto controlador. Eh daqui que serao retirados ambos angulo do guidao e velocidade usados para movimentar a bicicleta. Todos os GameObjects filhos devem conter um script que implemente a interface IBicycleMovementSource.")]
     public GameObject bicycleControllersObject;
 
+    [Tooltip("Opcional. Pode ser nulo.")]
     public Transform handlebar;
+    [Tooltip("Opcional. Pode ser nulo.")]
     public Transform backWheel;
+    [Tooltip("Opcional. Pode ser nulo.")]
     public Transform frontWheel;
+    [Tooltip("Opcional. Pode ser nulo.")]
     public Transform pedals;
-    [Tooltip("Habilite somente se o objeto onde este script esta inserido seja o modelo da bicicleta azul (na pasta Sir_bike em assets)")]
+    [Tooltip("Caso habilitado, havera uma tentativa de animar os Transforms correspondentes a diferentes partes da bicicleta (ex.: as rodas). Sugere-se habilitar animacoes somente quando for utilizado o modelo de bicicleta azul (na pasta Sir_bike em assets)")]
     public bool animate = false;
     
     private IBicycleMovementSource movementSource;
@@ -54,14 +58,6 @@ public class MovePlayerWithMovementSource : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        if (this.movementSource == null)
-        {
-            return;
-        }
-    }
-
     // RigidBody
     void FixedUpdate()
     {
@@ -70,24 +66,21 @@ public class MovePlayerWithMovementSource : MonoBehaviour
             return;
         }
         float speed = this.movementSource.GetSpeed();
-
+        float rotation = this.movementSource.GetHandlebarRotation();
         //Quaternion rotationToDir = Quaternion.LookRotation(Time.fixedDeltaTime * rotated, Vector3.up);
         //rb.rotation = rotationToDir;
 
         Quaternion deltaRotation = Quaternion.Euler(
-            Time.fixedDeltaTime * speed * new Vector3(
-                0,
-                this.movementSource.GetHandlebarRotation(),
-                0
-            )
+            Time.fixedDeltaTime * speed * new Vector3(0, rotation, 0)
         );
         rb.MoveRotation(rb.rotation * deltaRotation);
 
         // ok
         Vector3 forward = transform.forward;
-        Vector3 rotated = Quaternion.AngleAxis(this.movementSource.GetHandlebarRotation(), Vector3.up) * forward;
+        Vector3 rotated = Quaternion.AngleAxis(rotation, Vector3.up) * forward;
         rb.MovePosition(transform.position + speed * Time.fixedDeltaTime * rotated);
 
+        // so para confirmar se o vetor de direcao do guidao no movementSource esta correto
         if (Debug.isDebugBuild)
         {
             Vector2 dir = this.movementSource.GetFrontWheelDirection();
@@ -130,7 +123,7 @@ public class MovePlayerWithMovementSource : MonoBehaviour
         }
         if (this.pedals != null)
         {
-            // 0.25f ~ valor aproximado do raio da circunferencia que os pedais formam quando rotacionam (medição também empírica)
+            // 0.25f ~ valor aproximado do raio da circunferencia que os pedais formam quando rotacionam (medicao tambem empirica)
             float pedalSpeed = speed / (2.0f * Mathf.PI * 0.25f);
             this.pedals.RotateAround(this.pedals.position, this.pedals.right, 360 * pedalSpeed * Time.deltaTime);
             if (this.pedals.childCount > 0)

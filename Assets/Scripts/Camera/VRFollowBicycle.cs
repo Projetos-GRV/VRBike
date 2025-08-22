@@ -15,7 +15,7 @@ public class VRFollowBicycle : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         this.transform.position = bicycle.transform.position + offset;
         this.transform.rotation = bicycle.transform.rotation;

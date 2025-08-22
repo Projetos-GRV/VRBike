@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO.Ports;
 using System.Text.RegularExpressions;
 using UnityEngine;
-using UnityEngine.InputSystem; // provavelmente sera desnecessario.... ja que o movimento não virá de um controle.......
+using UnityEngine.InputSystem; // provavelmente sera desnecessario.... ja que o movimento nï¿½o virï¿½ de um controle.......
 
 [Serializable]
 public class BicycleExternalMovementSource : MonoBehaviour, IBicycleMovementSource
@@ -113,7 +113,7 @@ public class BicycleExternalMovementSource : MonoBehaviour, IBicycleMovementSour
 
     private float ReadSpeedSensor()
     {
-        return 2.0f;
+        return 0.0f;
     }
 
     // alternativa pro Lerp. Retirada dos forums da Unity

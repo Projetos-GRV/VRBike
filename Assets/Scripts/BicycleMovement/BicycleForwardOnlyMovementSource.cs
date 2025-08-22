@@ -40,7 +40,6 @@ public class BicycleForwardMovementSource : MonoBehaviour, IBicycleMovementSourc
             return;
         }
         float minspeed = 0;
-        float lMaxspeed = this.maxspeed;
         float acc = 0;
 
         if (isMoving)
@@ -57,7 +56,7 @@ public class BicycleForwardMovementSource : MonoBehaviour, IBicycleMovementSourc
         }
 
         this.speed += (acc * Time.deltaTime);
-        this.speed = Mathf.Clamp(this.speed, minspeed, lMaxspeed);
+        this.speed = Mathf.Clamp(this.speed, minspeed, this.maxspeed);
     }
 
     void OnMove(InputValue movementValue)

@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem; // fica mais facil de atualizar o movimento do jogador sem atrelar demais o código à classe MovePlayerWithMovementSource
+using UnityEngine.InputSystem; // fica mais facil de atualizar o movimento do jogador sem atrelar demais o cï¿½digo ï¿½ classe MovePlayerWithMovementSource
 
 [Serializable]
 public class BicycleBetterMovementSource : MonoBehaviour, IBicycleMovementSource
@@ -25,12 +25,11 @@ public class BicycleBetterMovementSource : MonoBehaviour, IBicycleMovementSource
     public Vector2 GetFrontWheelDirection() { return this.direction; }
     public float GetSpeed() { return this.speed; }
 
-    // monobehaviour
     void Update() {
         HandleAccel();
         if (this.isTurning)
         {
-            AngleIncrementBasedSteering(this.inputVec);
+            SteerBike(this.inputVec);
         }
     }
 
@@ -48,6 +47,7 @@ public class BicycleBetterMovementSource : MonoBehaviour, IBicycleMovementSource
     void OnMove(InputValue movementValue)
     {
         Vector2 movementVector2D = movementValue.Get<Vector2>();
+        // nao lembro por que eh necessario arredondar as componentes do vetor. favor manter assim
         movementVector2D.x = Mathf.Round(movementVector2D.x);
         movementVector2D.y = Mathf.Round(movementVector2D.y);
         if (movementVector2D.y == 0) // parado
@@ -73,7 +73,6 @@ public class BicycleBetterMovementSource : MonoBehaviour, IBicycleMovementSource
     private void HandleAccel()
     {
         float minspeed = 0;
-        float lMaxspeed = this.maxspeed;
         float acc = 0;
 
         if (isMoving)
@@ -90,10 +89,10 @@ public class BicycleBetterMovementSource : MonoBehaviour, IBicycleMovementSource
         }
 
         this.speed += (acc * Time.deltaTime);
-        this.speed = Mathf.Clamp(this.speed, minspeed, lMaxspeed);
+        this.speed = Mathf.Clamp(this.speed, minspeed, this.maxspeed);
     }
 
-    private void AngleIncrementBasedSteering(Vector2 movementVector2D)  
+    private void SteerBike(Vector2 movementVector2D)  
     {
         float res = this.handlebarRotation;
         if (movementVector2D.x > 0) // direita

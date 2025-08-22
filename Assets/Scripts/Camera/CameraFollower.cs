@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CameraFollower : MonoBehaviour
 {
-    // Start is called before the first frame update
     public GameObject bicycle;
 
     private Vector3 offset;

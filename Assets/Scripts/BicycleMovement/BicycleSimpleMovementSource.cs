@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem; // fica mais facil de atualizar o movimento do jogador sem atrelar demais o código à classe MovePlayerWithMovementSource
+using UnityEngine.InputSystem; // fica mais facil de atualizar o movimento do jogador sem atrelar demais o cï¿½digo ï¿½ classe MovePlayerWithMovementSource
 
 [Serializable]
 public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
@@ -12,7 +12,7 @@ public class BicycleSimpleMovementSource : MonoBehaviour, IBicycleMovementSource
     public bool instantSpeed = false;
     public float maxspeed = 3.0f;
     public float accel = 0.5f;
-    [Tooltip("Nao sera aplicado se Simpler Movements for habilitado.")]
+    [Tooltip("Nao sera aplicado se Simpler Steering estiver habilitado.")]
     public float handlebarRotationIncrement = 1f;
 
     private bool isBraking;

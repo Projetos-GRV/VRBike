@@ -53,11 +53,6 @@ namespace UDPListener
                 this.speedEP = new IPEndPoint(IPAddress.Any, listenPortSpeed);
                 this.angleEP = new IPEndPoint(IPAddress.Any, listenPortAngle);
 
-                this.speedThread = new Thread(() => Run(this.speedClient, this.speedEP, out this.speed));
-                this.speedThread.Start();
-                this.angleThread = new Thread(() => Run(this.angleClient, this.angleEP, out this.angles));
-                this.angleThread.Start();
-
                 success = true;
 
             }
@@ -67,6 +62,14 @@ namespace UDPListener
                 {
                     Debug.Log(e);
                 }
+                success = false;
+            }
+
+            if (success) {
+                this.speedThread = new Thread(() => Run(this.speedClient, this.speedEP, out this.speed));
+                this.speedThread.Start();
+                this.angleThread = new Thread(() => Run(this.angleClient, this.angleEP, out this.angles));
+                this.angleThread.Start();
             }
             return success;
         }
@@ -78,11 +81,10 @@ namespace UDPListener
                 try
                 {
                     byte[] bytes = listener.Receive(ref EP);
-                    outputStr = Encoding.ASCII.GetString(bytes, 0, bytes.Length);
+                    outputStr = Encoding.ASCII.GetString(bytes, 0, bytes.Length).Trim();
                 }
                 catch (SocketException)
-                {
-                }
+                {}
             }
         }
     }

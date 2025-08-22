@@ -24,8 +24,8 @@ public class BicycleUDPMovementSource : MonoBehaviour, IBicycleMovementSource
     void Start()
     {
         this.speed = 0;
-        this.direction = Vector2.zero;
         this.handlebarRotation = 0;
+        this.direction = Vector2.zero;
         this.dataSource = new UDPDataListener(this.listenPortSpeed, this.listenPortAngle);
         bool success = this.dataSource.Init();
         if (!success)
