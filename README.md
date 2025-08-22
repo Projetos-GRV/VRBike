@@ -30,7 +30,7 @@ será necessário pressionar repetidas vezes os botões direcionais para alterar
 
 Recomenda-se habilitar `simplerSteering` ao testar a bicicleta com controles analógicos (este controlador lida melhor com analógicos).
 
-### BicycleExternamMovementSource.cs [incompleto]
+### BicycleExternalMovementSource.cs [incompleto]
 
 Deveria controla tanto a direção quanto a velocidade, mas este controlador encontra-se incompleto (não é utilizado).
 
