@@ -26,6 +26,7 @@ public class BicycleUDPMovementSource : MonoBehaviour, IBicycleMovementSource
         this.speed = 0;
         this.handlebarRotation = 0;
         this.direction = Vector2.zero;
+        //this.direction = Vector2.forward;
         this.dataSource = new UDPDataListener(this.listenPortSpeed, this.listenPortAngle);
         bool success = this.dataSource.Init();
         if (!success)
@@ -45,13 +46,16 @@ public class BicycleUDPMovementSource : MonoBehaviour, IBicycleMovementSource
         Debug.Log(angleStr);
         Debug.Log(speedStr);
 
-        string[] gyroValuesS = angleStr.Trim().Split(';');
-        float[] gyroValuesF = new float[gyroValuesS.Length];
+        string[] gyroValuesStr = angleStr.Trim().Split(';');
+        float[] gyroValues = new float[gyroValuesStr.Length];
 
-        for (int i = 0; i < gyroValuesS.Length; i++)
+        // talvez só um eixo seja relevante.... 
+        for (int i = 0; i < gyroValuesStr.Length; i++)
         {
-            gyroValuesF[i] = float.Parse(gyroValuesS[i]);
+            gyroValues[i] = float.Parse(gyroValuesStr[i]);
         }
+
+        //float deltaDist = gyroValues[0] * this.dataSource.GetAngleTime();
 
         this.handlebarRotation = 0;
         this.speed = float.Parse(speedStr.Trim());

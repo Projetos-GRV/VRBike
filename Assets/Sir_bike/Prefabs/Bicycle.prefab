@@ -309,7 +309,7 @@ MonoBehaviour:
   backWheel: {fileID: 2510993130956297663}
   frontWheel: {fileID: 2510993130956297661}
   pedals: {fileID: 2510993130956297655}
-  animate: 0
+  animate: 1
 --- !u!136 &4149755664384337393
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -25,16 +26,22 @@ namespace UDPListener
         private string angles; // x;y;z
         private string speed;
 
+        private float angleTime;
+        private Stopwatch stopwatch;
+
         public UDPDataListener(int listenPortSpeed, int listenPortAngle)
         {
             this.angles = "0;0;0";
             this.speed = "0";
+            this.angleTime = 0;
+            this.stopwatch = new Stopwatch();
             this.listenPortSpeed = listenPortSpeed;
             this.listenPortAngle = listenPortAngle;
         }
 
         public string GetAngleData() { return this.angles; }
         public string GetSpeedData() { return this.speed; }
+        public float GetAngleTime() { return 0; }
 
         public void Halt()
         {
@@ -56,12 +63,12 @@ namespace UDPListener
                 success = true;
 
             }
-            catch (System.Exception e)
+            catch (System.Exception)
             {
-                if (Debug.isDebugBuild)
-                {
-                    Debug.Log(e);
-                }
+                //if (Debug.isDebugBuild)
+                //{
+                //    Debug.Log(e);
+                //}
                 success = false;
             }
 
@@ -71,6 +78,7 @@ namespace UDPListener
                 this.angleThread = new Thread(() => Run(this.angleClient, this.angleEP, out this.angles));
                 this.angleThread.Start();
             }
+            this.stopwatch.Start();
             return success;
         }
 
@@ -82,6 +90,11 @@ namespace UDPListener
                 {
                     byte[] bytes = listener.Receive(ref EP);
                     outputStr = Encoding.ASCII.GetString(bytes, 0, bytes.Length).Trim();
+                    this.stopwatch.Stop();
+                    long elapsed = this.stopwatch.ElapsedMilliseconds;
+                    this.angleTime = elapsed;
+                    this.stopwatch.Restart();
+                    this.stopwatch.Start();
                 }
                 catch (SocketException)
                 {}

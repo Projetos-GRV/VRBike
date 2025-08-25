@@ -616,12 +616,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 309385032}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &506573872 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2162296850283445104, guid: a9d9775af1ee8f94b9009c9d01e07a3e,
-    type: 3}
-  m_PrefabInstance: {fileID: 4328991799265360578}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &510302870
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -719,6 +713,12 @@ Transform:
   - {fileID: 967515290}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &569697849 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9111155519951986677, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
+    type: 3}
+  m_PrefabInstance: {fileID: 860248343}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &839054922 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: d34e8533c8de8ec45869f9144584d929,
@@ -1427,6 +1427,89 @@ MonoBehaviour:
     m_Reference: {fileID: 7779212132400271959, guid: c348712bda248c246b8c49b3db54643f,
       type: 3}
   m_ButtonPressPoint: 0.5
+--- !u!1001 &860248343
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 201434209780947531, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1826435400162772530, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8877309999387384984, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8877309999387384984, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8877309999387384984, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8877309999387384984, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8877309999387384984, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8877309999387384984, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8877309999387384984, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8877309999387384984, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8877309999387384984, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8877309999387384984, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9111155519951986677, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
+        type: 3}
+      propertyPath: m_Name
+      value: BicycleControllers
+      objectReference: {fileID: 0}
+    - target: {fileID: 9160176589043218222, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f, type: 3}
 --- !u!4 &967515290 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: d34e8533c8de8ec45869f9144584d929,
@@ -1850,17 +1933,17 @@ PrefabInstance:
         type: 3}
       propertyPath: movementSourceObject
       value: 
-      objectReference: {fileID: 9160176589119928530}
+      objectReference: {fileID: 0}
     - target: {fileID: 2749841267075577737, guid: abbea6fd91c4a9e41887bb90637dbfe6,
         type: 3}
       propertyPath: bicycleControllerObject
       value: 
-      objectReference: {fileID: 506573872}
+      objectReference: {fileID: 0}
     - target: {fileID: 2749841267075577737, guid: abbea6fd91c4a9e41887bb90637dbfe6,
         type: 3}
       propertyPath: bicycleControllersObject
       value: 
-      objectReference: {fileID: 506573872}
+      objectReference: {fileID: 569697849}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2885,97 +2968,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bicycle: {fileID: 258632257}
---- !u!1001 &4328991799265360578
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2035485237259367577, guid: a9d9775af1ee8f94b9009c9d01e07a3e,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2035485237259367577, guid: a9d9775af1ee8f94b9009c9d01e07a3e,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2035485237259367577, guid: a9d9775af1ee8f94b9009c9d01e07a3e,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2035485237259367577, guid: a9d9775af1ee8f94b9009c9d01e07a3e,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2035485237259367577, guid: a9d9775af1ee8f94b9009c9d01e07a3e,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2035485237259367577, guid: a9d9775af1ee8f94b9009c9d01e07a3e,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2035485237259367577, guid: a9d9775af1ee8f94b9009c9d01e07a3e,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2035485237259367577, guid: a9d9775af1ee8f94b9009c9d01e07a3e,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2035485237259367577, guid: a9d9775af1ee8f94b9009c9d01e07a3e,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2035485237259367577, guid: a9d9775af1ee8f94b9009c9d01e07a3e,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2162296850283445104, guid: a9d9775af1ee8f94b9009c9d01e07a3e,
-        type: 3}
-      propertyPath: m_Name
-      value: BicycleControllers
-      objectReference: {fileID: 0}
-    - target: {fileID: 2169001767495677897, guid: a9d9775af1ee8f94b9009c9d01e07a3e,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5777945821831387113, guid: a9d9775af1ee8f94b9009c9d01e07a3e,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: a9d9775af1ee8f94b9009c9d01e07a3e, type: 3}
---- !u!1 &9160176589119928530 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5777945821831387113, guid: a9d9775af1ee8f94b9009c9d01e07a3e,
-    type: 3}
-  m_PrefabInstance: {fileID: 4328991799265360578}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1554842315}
   - {fileID: 1490857177}
-  - {fileID: 4328991799265360578}
+  - {fileID: 860248343}
   - {fileID: 522400280}
   - {fileID: 1416891771}
   - {fileID: 1241307971}
