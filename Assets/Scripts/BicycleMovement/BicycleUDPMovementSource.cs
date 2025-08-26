@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Net.Sockets;
 using UnityEngine;
 
 using UDPListener;
@@ -52,12 +51,12 @@ public class BicycleUDPMovementSource : MonoBehaviour, IBicycleMovementSource
         // talvez só um eixo seja relevante.... 
         for (int i = 0; i < gyroValuesStr.Length; i++)
         {
-            gyroValues[i] = float.Parse(gyroValuesStr[i]);
+            gyroValues[i] = float.Parse(gyroValuesStr[i]) * Mathf.Rad2Deg;
         }
 
         //float deltaDist = gyroValues[0] * this.dataSource.GetAngleTime();
 
-        this.handlebarRotation = 0;
+        this.handlebarRotation += gyroValues[1] * this.dataSource.GetAngleTime();
         this.speed = float.Parse(speedStr.Trim());
     }
 }

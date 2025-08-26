@@ -41,7 +41,7 @@ namespace UDPListener
 
         public string GetAngleData() { return this.angles; }
         public string GetSpeedData() { return this.speed; }
-        public float GetAngleTime() { return 0; }
+        public float GetAngleTime() { return this.angleTime; }
 
         public void Halt()
         {
@@ -75,10 +75,10 @@ namespace UDPListener
             if (success) {
                 this.speedThread = new Thread(() => Run(this.speedClient, this.speedEP, out this.speed));
                 this.speedThread.Start();
+                this.stopwatch.Start();
                 this.angleThread = new Thread(() => Run(this.angleClient, this.angleEP, out this.angles));
                 this.angleThread.Start();
             }
-            this.stopwatch.Start();
             return success;
         }
 

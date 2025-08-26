@@ -615,9 +615,84 @@ PrefabInstance:
       objectReference: {fileID: 288362072}
     - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
+      propertyPath: blockSize
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
       propertyPath: floorConcrete
       value: 
       objectReference: {fileID: 100000, guid: d34e8533c8de8ec45869f9144584d929, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: commercialBuildings.Array.size
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: commercialBuildings.Array.data[0]
+      value: 
+      objectReference: {fileID: 100000, guid: 246bcb60ae5be3744a4ea86bab749f44, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: commercialBuildings.Array.data[1]
+      value: 
+      objectReference: {fileID: 100000, guid: 0064eb002f3790247969e12119bbf9d2, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: commercialBuildings.Array.data[2]
+      value: 
+      objectReference: {fileID: 100000, guid: 1682119d19a954f4a8020f36112606ed, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: commercialBuildings.Array.data[3]
+      value: 
+      objectReference: {fileID: 100000, guid: 5dd9f8de2583df543859013bcdc56639, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: commercialBuildings.Array.data[4]
+      value: 
+      objectReference: {fileID: 100000, guid: e1d9101af5d96d94ca99efe2de0bac21, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: commercialBuildings.Array.data[5]
+      value: 
+      objectReference: {fileID: 100000, guid: 0c7bcaa85c9494849bc7a0a18b7f3324, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: commercialBuildings.Array.data[6]
+      value: 
+      objectReference: {fileID: 100000, guid: 8b3eca4c34b9e1148a3c4d42a48dd5b8, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: commercialBuildings.Array.data[7]
+      value: 
+      objectReference: {fileID: 100000, guid: 4c14ffc6a7f79e942885227ac141590c, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: commercialBuildings.Array.data[8]
+      value: 
+      objectReference: {fileID: 100000, guid: 65abb0f1b521f834bae80ea4c9d93734, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: commercialBuildings.Array.data[9]
+      value: 
+      objectReference: {fileID: 100000, guid: 3667b1c4d7f532647b9156782c0c80f0, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: commercialBuildings.Array.data[10]
+      value: 
+      objectReference: {fileID: 100000, guid: 121f662ea65e2cf40a50c66470757a9e, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: commercialBuildings.Array.data[11]
+      value: 
+      objectReference: {fileID: 100000, guid: 260808cfd9b21994d8c3007a7bc9934c, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: commercialBuildings.Array.data[12]
+      value: 
+      objectReference: {fileID: 100000, guid: 260808cfd9b21994d8c3007a7bc9934c, type: 3}
     - target: {fileID: 4315321456427786485, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
       propertyPath: m_Name
