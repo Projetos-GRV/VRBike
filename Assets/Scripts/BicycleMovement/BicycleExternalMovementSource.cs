@@ -11,6 +11,7 @@ using UnityEngine.InputSystem; // provavelmente sera desnecessario.... ja que o 
 public class BicycleExternalMovementSource : MonoBehaviour, IBicycleMovementSource
 {
     public float maxHandlebarAngle = 80.0f;
+    public float wheelRadius = 0;
 
     private const int baudRate = 9600;      // tenho nem ideia
     private const string portName = "COM3";      // Porta serial
@@ -91,7 +92,7 @@ public class BicycleExternalMovementSource : MonoBehaviour, IBicycleMovementSour
             float angleIn = float.Parse(inputs[1], CultureInfo.InvariantCulture);
 
             float t = angleIn;
-            angle = Map(-90.0f, 90.0f, 0, 1023, t); // t NAO precisa mais ser invertido
+            angle = Map(-this.maxHandlebarAngle, this.maxHandlebarAngle, 0, 1023, t); // t NAO precisa mais ser invertido
             speed = speedIn;
         }
         catch (System.TimeoutException e)

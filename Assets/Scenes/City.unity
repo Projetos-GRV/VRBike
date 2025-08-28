@@ -219,6 +219,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9034424188837672923, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
+        type: 3}
+      propertyPath: gyroAxis
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 9111155519951986677, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
         type: 3}
       propertyPath: m_Name
