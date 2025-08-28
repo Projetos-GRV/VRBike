@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO.Ports;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -68,8 +69,9 @@ public class BicycleExternalMovementSource : MonoBehaviour, IBicycleMovementSour
             return;
         }
 
-        this.handlebarRotation = ReadHandlebarSensor();
-        this.speed = ReadSpeedSensor();
+        ReadSensors();
+        Debug.Log(this.handlebarRotation);
+        Debug.Log(this.speed);
         
         Vector3 tmp = Vector3.forward;
         tmp = Quaternion.AngleAxis(this.handlebarRotation, Vector3.up) * tmp;
@@ -77,22 +79,20 @@ public class BicycleExternalMovementSource : MonoBehaviour, IBicycleMovementSour
         this.direction.y = tmp.z;
     }
 
-    private float ReadHandlebarSensor()
+    private float ReadSensors()
     {
-        int dir = 0;
         float angle = 0;
+        float speed = 0;
         try
         {
-            string input = this.handlebarSensor.ReadLine();
-            int value = int.Parse(Regex.Replace(input.Trim(), "[^0-9]", ""));
-            dir = value / 100;
+            string[] inputs = Regex.Replace(this.handlebarSensor.ReadLine(), "[^0-9;]", "").Split(";");
+         
+            float speedIn = float.Parse(inputs[0], CultureInfo.InvariantCulture);
+            float angleIn = float.Parse(inputs[1], CultureInfo.InvariantCulture);
 
-            float t = (dir - angleZero) / angleZero;
-            //Debug.Log(t);
-            //float t = (dir) / (2 * angleZero); // soh sei que parece funcionar
-            //angle = -Mathf.Lerp(-maxHandlebarAngle, maxHandlebarAngle, t); // ta invertido
-            angle = Map(-80.0f, 80.0f, -0.65f, 0.65f, -t); // t precisa ser invertido
-            //Debug.Log(angle);
+            float t = angleIn;
+            angle = Map(-90.0f, 90.0f, 0, 1023, t); // t NAO precisa mais ser invertido
+            speed = speedIn;
         }
         catch (System.TimeoutException e)
         {
@@ -108,6 +108,8 @@ public class BicycleExternalMovementSource : MonoBehaviour, IBicycleMovementSour
                 Debug.Log(e.Message);
             }
         }
+        this.handlebarRotation = angle;
+        this.speed = speed * 5.0f;
         return angle;
     }
 
