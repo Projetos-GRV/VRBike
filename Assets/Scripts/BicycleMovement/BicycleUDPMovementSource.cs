@@ -56,7 +56,7 @@ public class BicycleUDPMovementSource : MonoBehaviour, IBicycleMovementSource
 
         //float deltaDist = gyroValues[0] * this.dataSource.GetAngleTime();
 
-        this.handlebarRotation += gyroValues[1] * this.dataSource.GetAngleTime();
+        this.handlebarRotation += Mathf.Max(gyroValues) * this.dataSource.GetAngleTime();
         this.speed = float.Parse(speedStr.Trim());
     }
 }
