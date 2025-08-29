@@ -49,8 +49,11 @@ public class BicycleUDPMovementSource : MonoBehaviour, IBicycleMovementSource
     {
         string angleStr = this.dataSource.GetAngleData();
         string speedStr = this.dataSource.GetSpeedData();
-        Debug.Log(angleStr);
-        Debug.Log(speedStr);
+        if (Debug.isDebugBuild)
+        {
+            Debug.Log(angleStr);
+            Debug.Log(speedStr);
+        }
 
         string[] gyroValuesStr = angleStr.Trim().Split(';');
         float[] gyroValues = new float[gyroValuesStr.Length];
@@ -64,7 +67,7 @@ public class BicycleUDPMovementSource : MonoBehaviour, IBicycleMovementSource
         //float deltaDist = gyroValues[0] * this.dataSource.GetAngleTime();
 
         this.handlebarRotation = -gyroValues[this.gyroAxis - 1]; // TODO - considerar momentos em que o eixo parece zerar sem motivo aparente.
-        this.speed = float.Parse(speedStr.Trim());
+        this.speed = float.Parse(speedStr.Trim()); // TODO - considerar que a velocidade virá em pulsos (0 - 1). Considerar intervalo entre pulsos.
 
         Vector3 tmp = Vector3.forward;
         tmp = Quaternion.AngleAxis(this.handlebarRotation, Vector3.up) * tmp;

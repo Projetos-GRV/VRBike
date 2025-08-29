@@ -71,8 +71,11 @@ public class BicycleExternalMovementSource : MonoBehaviour, IBicycleMovementSour
         }
 
         ReadSensors();
-        Debug.Log(this.handlebarRotation);
-        Debug.Log(this.speed);
+        if (Debug.isDebugBuild)
+        {
+            Debug.Log(this.handlebarRotation);
+            Debug.Log(this.speed);
+        }
         
         Vector3 tmp = Vector3.forward;
         tmp = Quaternion.AngleAxis(this.handlebarRotation, Vector3.up) * tmp;
@@ -112,11 +115,6 @@ public class BicycleExternalMovementSource : MonoBehaviour, IBicycleMovementSour
         this.handlebarRotation = angle;
         this.speed = speed * 5.0f;
         return angle;
-    }
-
-    private float ReadSpeedSensor()
-    {
-        return 0.0f;
     }
 
     // alternativa pro Lerp. Retirada dos forums da Unity

@@ -611,13 +611,18 @@ PrefabInstance:
     - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
       propertyPath: height
-      value: 10
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 288362072}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: infinite
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
       propertyPath: blockSize

@@ -8,7 +8,12 @@ public class CityGenerator : MonoBehaviour
     public int width = 50;
     [Tooltip("Largura e \"Altura\" (comprimento) deve levar em consideração o tamanho de cada tile (as estradas e concreto, por exemplo, possuem tamanho 20x20).")]
     public int height = 50;
-    public int blockSize = 2;
+    public bool infinite = false;
+
+    public int chunkRadius = 3;
+
+    private int blockSize = 2;
+
     public Transform player;
 
     public GameObject laneRegular;
@@ -27,12 +32,21 @@ public class CityGenerator : MonoBehaviour
     private (int X1, int Y1, int X2, int Y2)[] commercialZone;
 
     private Transform cityParentTransform;
+    private Dictionary<Vector3, GameObject> generatedChunks = new Dictionary<Vector3, GameObject>();
     // Start is called before the first frame update
     void Start()
     {
         cityMatrix = new GameObject[width, height];
         cityParentTransform = new GameObject("CityParent").transform;
-        StartCoroutine(GenCity()); // evitar congelamentos caso largura X altura seja mt grande
+        // evitar congelamentos caso largura X altura seja mt grande
+        if (infinite)
+        {
+            StartCoroutine(GenInfinite());
+        }
+        else
+        {
+            StartCoroutine(GenCity());
+        }
     }
 
     // Update is called once per frame
@@ -40,6 +54,46 @@ public class CityGenerator : MonoBehaviour
     {
         // caso usada geracao um pouco mais procedural, usar transform do jogador para atualizar chunks
     }
+
+    // um bloco central. os outros sao gerados no etorno... ou pelo menos deveriam... por enquanto nada
+    IEnumerator GenInfinite()
+    {
+        // chunk do meio
+        Vector3 playerPos = player.position;
+        for (int cc = 0; cc < 1; cc++) // quantidade de chunks para gerar. posicionar depois
+        {
+            GameObject chunkParent = new GameObject(string.Format("Chunk{0}", cc));
+            chunkParent.transform.parent = cityParentTransform;
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    Quaternion rotationQ = Quaternion.identity;
+                    GameObject prefab = laneRegular;
+                    if (i % (blockSize + 1) != 0 && j % (blockSize + 1) != 0) // bloco. onde ficam as construcoes tais como casas, lojas e predios.
+                    {
+                        // considerar zona
+                        //bool isCommercial = CheckIfCommercialZone(j, i) || true;
+                        bool isResidential = CheckIfResidentialZone(j, i) && false;
+                        InstantiateBuilding(j, i, isResidential ? false : true, chunkParent.transform);
+                        prefab = floorConcrete;
+                        Instantiate(prefab, new Vector3(j * 20, 0, i * 20), rotationQ, chunkParent.transform);
+                    }
+                    yield return null;
+                }
+            }
+            generatedChunks.Add(new Vector3(0, 0, 0), chunkParent);
+        }
+    }
+
+    // TODO - caso se deseje gerar a cidade novamente
+    IEnumerator DestroyAndRegenerate()
+    {
+        yield return null;
+    }
+
+    // TODO - caso haja atualizacao dinamica dos blocos para melhorar desempenho
+    IEnumerator UpdateChunks() { yield return null; }
 
     IEnumerator GenCity()
     {
@@ -60,7 +114,6 @@ public class CityGenerator : MonoBehaviour
                 {
                     if (i != 0 && i != height - 1 && j != 0 && j != width - 1)
                     {
-                        //rotationQ = Quaternion.identity;
                         prefab = laneIntersection;
                     }
                     else
@@ -83,9 +136,9 @@ public class CityGenerator : MonoBehaviour
                 else if (i % (blockSize + 1) != 0 && j % (blockSize + 1) != 0)
                 {
                     // considerar zona
-                    bool isCommercial = CheckIfCommercialZone(j, i) || true;
-                    //bool isResidential = CheckIfResidentialZone(j, i);
-                    InstantiateBuilding(j, i, isCommercial);
+                    //bool isCommercial = CheckIfCommercialZone(j, i) || true;
+                    bool isResidential = CheckIfResidentialZone(j, i) && false;
+                    InstantiateBuilding(j, i, isResidential ? false : true, cityParentTransform);
                     prefab = floorConcrete;
                 }
                 else // vias normais
@@ -95,10 +148,6 @@ public class CityGenerator : MonoBehaviour
                     {
                         rotationQ = Quaternion.AngleAxis(90, Vector3.up);
                     }
-                    //else
-                    //{
-                    //    rotationQ = Quaternion.identity;
-                    //}
                 }
                 cityMatrix[j, i] = Instantiate(prefab, new Vector3(j * 20, 0, i * 20), rotationQ, cityParentTransform);
                 yield return null;
@@ -106,19 +155,10 @@ public class CityGenerator : MonoBehaviour
         }
     }
 
-    // TODO - caso se deseje gerar a cidade novamente
-    IEnumerator DestroyAndRegenerate()
-    {
-        yield return null;
-    }
-
-    // TODO - caso haja atualizacao dinamica dos blocos para melhorar desempenho
-    IEnumerator UpdateChunks() { yield return null; }
-
     // TODO - verificar se ja foi posta no bloco, talvez? evitar haverem multiplas construcoes num bloco
-    private void InstantiateBuilding(float x, float y, bool commercial)
+    private GameObject InstantiateBuilding(float x, float y, bool isCommercial, Transform parentObject)
     {
-        GameObject[] objects = commercial ? commercialBuildings : residentialBuildings;
+        GameObject[] objects = isCommercial ? commercialBuildings : residentialBuildings;
         int idx = Random.Range(0, objects.Length - 1);
         float angle = 90;
         if ((x - 1) % 3 == 0)
@@ -133,7 +173,8 @@ public class CityGenerator : MonoBehaviour
             else
                 x = ((x * 20) + 2.5f) / 20;
         }
-        Instantiate(objects[idx], new Vector3(x * 20, 0, y * 20), Quaternion.AngleAxis(angle, Vector3.up), cityParentTransform);
+        Instantiate(objects[idx], new Vector3(x * 20, 0, y * 20), Quaternion.AngleAxis(angle, Vector3.up), parentObject);
+        return objects[idx];
     }
 
     private bool CheckIfCommercialZone(int x, int y)
