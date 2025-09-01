@@ -630,8 +630,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
+      propertyPath: floorGrass
+      value: 
+      objectReference: {fileID: 100000, guid: b74c48c2e73e17c418c9394124b75daf, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
       propertyPath: chunkRadius
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
