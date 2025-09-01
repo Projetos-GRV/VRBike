@@ -117,47 +117,7 @@ public class CityGenerator : MonoBehaviour
             y = Mathf.RoundToInt(playerPos.z / stride)
         };
         int cnt = 0;
-        // for (int dx = -1; dx <= 1; dx++)
-        // {
-        //     for (int dy = -1; dy <= 1; dy++)
-        //     {
-        //         GameObject streets = new GameObject(string.Format("Lane{0}", cnt++));
-        //         streets.transform.parent = this.cityParentTransform;
-        //         streets.transform.position = new Vector3(0, -10, 0);
-        //         Instantiate(laneRegular, new Vector3(dx * stride, 0, dy * blockSize), Quaternion.identity, streets.transform);
-        //         Instantiate(laneRegular, new Vector3(dx * blockSize, 0, dy * stride), Quaternion.AngleAxis(90, Vector3.up), streets.transform);
-        //         if (dx < 1)
-        //         {
-        //             // Instantiate(laneRegular, new Vector3((dx + 1) * stride, 0, dy * stride), Quaternion.identity, streets.transform);
-        //         }
-        //         streetsRelativeToPlayer[new Vector2Int(dx, dy)] = streets;
-        //     }
-        // }
-        Instantiate(laneIntersection, new Vector3(-1 * stride, 0, -1 * stride), Quaternion.identity);
-        Instantiate(laneRegular, new Vector3(-1 * stride, 0, -1 * (stride - blockSize)), Quaternion.identity);
-        Instantiate(laneRegular, new Vector3(-1 * stride, 0, -1 * (stride - (blockSize * 2))), Quaternion.identity);
 
-        Instantiate(laneIntersection, new Vector3(0 * stride, 0, -1 * stride), Quaternion.identity);
-        Instantiate(laneRegular, new Vector3(0 * stride, 0, -1 * (stride - blockSize)), Quaternion.identity);
-        Instantiate(laneRegular, new Vector3(0 * stride, 0, -1 * (stride - (blockSize * 2))), Quaternion.identity);
-
-        Instantiate(laneIntersection, new Vector3(1 * stride, 0, -1 * stride), Quaternion.identity);
-        Instantiate(laneRegular, new Vector3(1 * stride, 0, -1 * (stride - blockSize)), Quaternion.identity);
-        Instantiate(laneRegular, new Vector3(1 * stride, 0, -1 * (stride - (blockSize * 2))), Quaternion.identity);
-
-
-
-        Instantiate(laneIntersection, new Vector3(-1 * stride, 0, 0 * stride), Quaternion.identity);
-
-        Instantiate(laneIntersection, new Vector3(0 * stride, 0, 0 * stride), Quaternion.identity);
-
-        Instantiate(laneIntersection, new Vector3(1 * stride, 0, 0 * stride), Quaternion.identity);
-
-
-
-        Instantiate(laneIntersection, new Vector3(-1 * stride, 0, 1 * stride), Quaternion.identity);
-        Instantiate(laneIntersection, new Vector3(0 * stride, 0, 1 * stride), Quaternion.identity);
-        Instantiate(laneIntersection, new Vector3(1 * stride, 0, 1 * stride), Quaternion.identity);
         for (int dx = -chunkRadius; dx <= chunkRadius; dx++) // quantidade de chunks para gerar. posicionar depois
         {
             for (int dy = -chunkRadius; dy <= chunkRadius; dy++)
@@ -181,6 +141,18 @@ public class CityGenerator : MonoBehaviour
     {
         GameObject chunkParent = new GameObject(name);
         chunkParent.transform.parent = cityParentTransform;
+        GameObject lanes = new GameObject("Lanes");
+        lanes.transform.parent = chunkParent.transform;
+
+        Instantiate(laneRegular, new Vector3(0, 0, -1 * (stride - blockSize)), Quaternion.identity, lanes.transform);
+        Instantiate(laneRegular, new Vector3(0, 0, -1 * (stride - (blockSize * 2))), Quaternion.identity, lanes.transform);
+
+        Instantiate(laneRegular, new Vector3((stride - blockSize), 0, 0), Quaternion.AngleAxis(90, Vector3.up), lanes.transform);
+        Instantiate(laneRegular, new Vector3((stride - (blockSize * 2)), 0, 0), Quaternion.AngleAxis(90, Vector3.up), lanes.transform);
+
+        Instantiate(laneIntersection, new Vector3(0, 0, 0), Quaternion.identity, lanes.transform);
+
+        lanes.transform.position = new Vector3(0, 0, stride);
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
