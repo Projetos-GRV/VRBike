@@ -38,6 +38,7 @@ public class CityGenerator : MonoBehaviour
     private bool generatingCity = true;
     private Transform cityParentTransform;
     private Dictionary<Vector3, GameObject> loadedCunks = new Dictionary<Vector3, GameObject>();
+    private Dictionary<Vector2Int, GameObject> streetsRelativeToPlayer = new Dictionary<Vector2Int, GameObject>();
     // Start is called before the first frame update
     void Start()
     {
@@ -80,7 +81,7 @@ public class CityGenerator : MonoBehaviour
                     needed.Add(cc);
                     if (!loadedCunks.ContainsKey(cc))
                     {
-                        GameObject chunk = GenerateChunk(string.Format("Chunk{0}", this.chunks++), cc);
+                        GameObject chunk = GenerateChunk(string.Format("Chunk{0}", this.chunks++), cc, new Vector2Int(dx, dy));
                         chunk.transform.position = new Vector3(cc.x * stride, 0, cc.z * stride);
                         loadedCunks.Add(cc, chunk);
                     }
@@ -115,12 +116,54 @@ public class CityGenerator : MonoBehaviour
             x = Mathf.RoundToInt(playerPos.x / stride),
             y = Mathf.RoundToInt(playerPos.z / stride)
         };
+        int cnt = 0;
+        // for (int dx = -1; dx <= 1; dx++)
+        // {
+        //     for (int dy = -1; dy <= 1; dy++)
+        //     {
+        //         GameObject streets = new GameObject(string.Format("Lane{0}", cnt++));
+        //         streets.transform.parent = this.cityParentTransform;
+        //         streets.transform.position = new Vector3(0, -10, 0);
+        //         Instantiate(laneRegular, new Vector3(dx * stride, 0, dy * blockSize), Quaternion.identity, streets.transform);
+        //         Instantiate(laneRegular, new Vector3(dx * blockSize, 0, dy * stride), Quaternion.AngleAxis(90, Vector3.up), streets.transform);
+        //         if (dx < 1)
+        //         {
+        //             // Instantiate(laneRegular, new Vector3((dx + 1) * stride, 0, dy * stride), Quaternion.identity, streets.transform);
+        //         }
+        //         streetsRelativeToPlayer[new Vector2Int(dx, dy)] = streets;
+        //     }
+        // }
+        Instantiate(laneIntersection, new Vector3(-1 * stride, 0, -1 * stride), Quaternion.identity);
+        Instantiate(laneRegular, new Vector3(-1 * stride, 0, -1 * (stride - blockSize)), Quaternion.identity);
+        Instantiate(laneRegular, new Vector3(-1 * stride, 0, -1 * (stride - (blockSize * 2))), Quaternion.identity);
+
+        Instantiate(laneIntersection, new Vector3(0 * stride, 0, -1 * stride), Quaternion.identity);
+        Instantiate(laneRegular, new Vector3(0 * stride, 0, -1 * (stride - blockSize)), Quaternion.identity);
+        Instantiate(laneRegular, new Vector3(0 * stride, 0, -1 * (stride - (blockSize * 2))), Quaternion.identity);
+
+        Instantiate(laneIntersection, new Vector3(1 * stride, 0, -1 * stride), Quaternion.identity);
+        Instantiate(laneRegular, new Vector3(1 * stride, 0, -1 * (stride - blockSize)), Quaternion.identity);
+        Instantiate(laneRegular, new Vector3(1 * stride, 0, -1 * (stride - (blockSize * 2))), Quaternion.identity);
+
+
+
+        Instantiate(laneIntersection, new Vector3(-1 * stride, 0, 0 * stride), Quaternion.identity);
+
+        Instantiate(laneIntersection, new Vector3(0 * stride, 0, 0 * stride), Quaternion.identity);
+
+        Instantiate(laneIntersection, new Vector3(1 * stride, 0, 0 * stride), Quaternion.identity);
+
+
+
+        Instantiate(laneIntersection, new Vector3(-1 * stride, 0, 1 * stride), Quaternion.identity);
+        Instantiate(laneIntersection, new Vector3(0 * stride, 0, 1 * stride), Quaternion.identity);
+        Instantiate(laneIntersection, new Vector3(1 * stride, 0, 1 * stride), Quaternion.identity);
         for (int dx = -chunkRadius; dx <= chunkRadius; dx++) // quantidade de chunks para gerar. posicionar depois
         {
             for (int dy = -chunkRadius; dy <= chunkRadius; dy++)
             {
                 Vector3 cc = new Vector3(pChunk.x + dx, 0, pChunk.y + dy);
-                GameObject chunk = GenerateChunk(string.Format("Chunk{0}", chunks++), cc);
+                GameObject chunk = GenerateChunk(string.Format("Chunk{0}", chunks++), cc, new Vector2Int(dx, dy));
                 chunk.transform.position = new Vector3(cc.x * stride, 0, cc.z * stride);
                 loadedCunks.Add(cc, chunk);
                 // yield return null;
@@ -128,6 +171,72 @@ public class CityGenerator : MonoBehaviour
             }
         }
         generatingCity = false;
+    }
+
+    // Chunks geradas por essa funcao tem sua posicao definida como (0,0,0).
+    // A posicao desta deve ser definida por fora
+    // intendedGridCoords serve apenas para verificar se o chunk se encontra em uma 
+    // zona residencial.
+    private GameObject GenerateChunk(string name, Vector3 intendedGridCoords, Vector2Int vectorFromPlayer)
+    {
+        GameObject chunkParent = new GameObject(name);
+        chunkParent.transform.parent = cityParentTransform;
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                if (i % (chunkSize + 1) != 0 && j % (chunkSize + 1) != 0) // bloco. onde ficam as construcoes tais como casas, lojas e predios.
+                {
+                    // considerar zona
+                    //bool isCommercial = CheckIfCommercialZone(j, i) || true;
+                    bool isResidential = CheckIfResidentialZone((int)intendedGridCoords.x, (int)intendedGridCoords.z);
+                    InstantiateBuilding(j, i, isResidential, chunkParent.transform);
+                    Instantiate(this.floorConcrete, new Vector3(j * 20, 0, i * 20), Quaternion.identity, chunkParent.transform);
+                }
+            }
+        }
+
+        return chunkParent;
+    }
+
+    // TODO - verificar se ja foi posta no bloco, talvez? evitar haverem multiplas construcoes num bloco?
+    private GameObject InstantiateBuilding(float x, float y, bool isResidential, Transform parentObject)
+    {
+        GameObject[] objects = isResidential ? residentialBuildings : commercialBuildings;
+        int idx = Random.Range(0, objects.Length - 1);
+        float angle = 90;
+        if (((int)x - 1) % 3 == 0)
+        {
+            angle = 270;
+        }
+        // deslocar o posto de gasolina soh um pouquinho para nao ficar em cima da calcada
+        if ("Building_Gas Station".IndexOf(objects[idx].name) >= 0)
+        {
+            if (angle == 90)
+                x = ((x * 20) - 2.5f) / 20;
+            else
+                x = ((x * 20) + 2.5f) / 20;
+        }
+        Instantiate(objects[idx], new Vector3(x * 20, 0, y * 20), Quaternion.AngleAxis(angle, Vector3.up), parentObject);
+        return objects[idx];
+    }
+
+    private bool CheckIfResidentialZone(int x, int y)
+    {
+        if (this.residentialZones == null)
+        {
+            return false;
+        }
+        for (int i = 0; i < this.residentialZones.Length; i += 2)
+        {
+            Vector2Int p1 = this.residentialZones[i];
+            Vector2Int p2 = this.residentialZones[i + 1];
+            if (x >= p1.x && x <= p2.x && y >= p1.y && y <= p2.y)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     IEnumerator GenCity()
@@ -188,73 +297,5 @@ public class CityGenerator : MonoBehaviour
                 yield return null;
             }
         }
-    }
-
-    // Chunks geradas por essa funcao tem sua posicao definida como (0,0,0).
-    // A posicao desta deve ser definida por fora
-    // intendedGridCoords serve apenas para verificar se o chunk se encontra em uma 
-    // zona residencial.
-    private GameObject GenerateChunk(string name, Vector3 intendedGridCoords)
-    {
-        GameObject chunkParent = new GameObject(name);
-        chunkParent.transform.parent = cityParentTransform;
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 4; j++)
-            {
-                Quaternion rotationQ = Quaternion.identity;
-                GameObject prefab = laneRegular;
-                if (i % (chunkSize + 1) != 0 && j % (chunkSize + 1) != 0) // bloco. onde ficam as construcoes tais como casas, lojas e predios.
-                {
-                    // considerar zona
-                    //bool isCommercial = CheckIfCommercialZone(j, i) || true;
-                    bool isResidential = CheckIfResidentialZone((int)intendedGridCoords.x, (int)intendedGridCoords.z);
-                    InstantiateBuilding(j, i, isResidential, chunkParent.transform);
-                    prefab = floorConcrete;
-                    Instantiate(prefab, new Vector3(j * 20, 0, i * 20), rotationQ, chunkParent.transform);
-                }
-            }
-        }
-        return chunkParent;
-    }
-
-    // TODO - verificar se ja foi posta no bloco, talvez? evitar haverem multiplas construcoes num bloco?
-    private GameObject InstantiateBuilding(float x, float y, bool isResidential, Transform parentObject)
-    {
-        GameObject[] objects = isResidential ? residentialBuildings : commercialBuildings;
-        int idx = Random.Range(0, objects.Length - 1);
-        float angle = 90;
-        if (((int)x - 1) % 3 == 0)
-        {
-            angle = 270;
-        }
-        // deslocar o posto de gasolina soh um pouquinho para nao ficar em cima da calcada
-        if ("Building_Gas Station".IndexOf(objects[idx].name) >= 0)
-        {
-            if (angle == 90)
-                x = ((x * 20) - 2.5f) / 20;
-            else
-                x = ((x * 20) + 2.5f) / 20;
-        }
-        Instantiate(objects[idx], new Vector3(x * 20, 0, y * 20), Quaternion.AngleAxis(angle, Vector3.up), parentObject);
-        return objects[idx];
-    }
-
-    private bool CheckIfResidentialZone(int x, int y)
-    {
-        if (this.residentialZones == null)
-        {
-            return false;
-        }
-        for (int i = 0; i < this.residentialZones.Length; i += 2)
-        {
-            Vector2Int p1 = this.residentialZones[i];
-            Vector2Int p2 = this.residentialZones[i + 1];
-            if (x >= p1.x && x <= p2.x && y >= p1.y && y <= p2.y)
-            {
-                return true;
-            }
-        }
-        return false;
     }
 }
