@@ -626,6 +626,11 @@ PrefabInstance:
     - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
       propertyPath: blockSize
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: chunkRadius
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
@@ -635,8 +640,38 @@ PrefabInstance:
       objectReference: {fileID: 100000, guid: d34e8533c8de8ec45869f9144584d929, type: 3}
     - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
+      propertyPath: residentialZones.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
       propertyPath: commercialBuildings.Array.size
       value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: residentialBuildings.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: residentialZones.Array.data[0].x
+      value: -8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: residentialZones.Array.data[0].y
+      value: -5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: residentialZones.Array.data[1].x
+      value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: residentialZones.Array.data[1].y
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
@@ -703,6 +738,51 @@ PrefabInstance:
       propertyPath: commercialBuildings.Array.data[12]
       value: 
       objectReference: {fileID: 100000, guid: 260808cfd9b21994d8c3007a7bc9934c, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: residentialBuildings.Array.data[0]
+      value: 
+      objectReference: {fileID: 100000, guid: 66131d8838f42f545a30ce8606ce5365, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: residentialBuildings.Array.data[1]
+      value: 
+      objectReference: {fileID: 100000, guid: 1f284b42849610642bfb5d418a57840b, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: residentialBuildings.Array.data[2]
+      value: 
+      objectReference: {fileID: 100000, guid: 92dcd407350173049ab8c86482fadf42, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: residentialBuildings.Array.data[3]
+      value: 
+      objectReference: {fileID: 100000, guid: 142c9543c08ae014bad9d177ad54a989, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: residentialBuildings.Array.data[4]
+      value: 
+      objectReference: {fileID: 100000, guid: 8c3b216cc2b6dc04496d15009bc913cd, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: residentialBuildings.Array.data[5]
+      value: 
+      objectReference: {fileID: 100000, guid: 3a0bc997d3424474696ad8d2e7d684ab, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: residentialBuildings.Array.data[6]
+      value: 
+      objectReference: {fileID: 100000, guid: 11c264ca1bac5d74d883c776435fa684, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: residentialBuildings.Array.data[7]
+      value: 
+      objectReference: {fileID: 100000, guid: e2ffb9183a7dce445adfb3d2d4d7bfd6, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: residentialBuildings.Array.data[8]
+      value: 
+      objectReference: {fileID: 100000, guid: 2dbee28eacba7dd42845e0153c4da642, type: 3}
     - target: {fileID: 4315321456427786485, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
       propertyPath: m_Name
