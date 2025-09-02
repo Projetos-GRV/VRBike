@@ -645,9 +645,69 @@ PrefabInstance:
       objectReference: {fileID: 100000, guid: d34e8533c8de8ec45869f9144584d929, type: 3}
     - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
+      propertyPath: vehicles.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: vehicles.Array.data[0]
+      value: 
+      objectReference: {fileID: 100000, guid: a119eb0fa059db34bbaef286c1af1696, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: vehicles.Array.data[1]
+      value: 
+      objectReference: {fileID: 100000, guid: 81835658bbd378143a0f525b8552f557, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: vehicles.Array.data[2]
+      value: 
+      objectReference: {fileID: 100000, guid: c98da428142c39c42bb62c454958cd1f, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: vehicles.Array.data[3]
+      value: 
+      objectReference: {fileID: 100000, guid: d20839e362efa3d4baa3d2ce1b4f2df4, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: vehicles.Array.data[4]
+      value: 
+      objectReference: {fileID: 100000, guid: 05aec82adc02f16409639716322b1673, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: vehicles.Array.data[5]
+      value: 
+      objectReference: {fileID: 100000, guid: 9500f0cdde0097a4aac35ced7c1935d7, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: vehicles.Array.data[6]
+      value: 
+      objectReference: {fileID: 100000, guid: 1af0a2c8773f85c40bdb120f32cd8a8a, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: sidewalkObjects.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
       propertyPath: residentialZones.Array.size
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: sidewalkObjects.Array.data[0]
+      value: 
+      objectReference: {fileID: 100000, guid: 8b680e0f7699a254c84ed6737b7eb53d, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: sidewalkObjects.Array.data[1]
+      value: 
+      objectReference: {fileID: 100000, guid: b8ee657c6800ab849bb30b4375d02323, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: sidewalkObjects.Array.data[2]
+      value: 
+      objectReference: {fileID: 100000, guid: 2857b989c828950448ead142ca28e4a3, type: 3}
     - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
       propertyPath: commercialBuildings.Array.size
@@ -677,6 +737,21 @@ PrefabInstance:
         type: 3}
       propertyPath: residentialZones.Array.data[1].y
       value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: residentialZones.Array.data[2].x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: residentialZones.Array.data[3].x
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: residentialZones.Array.data[3].y
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}

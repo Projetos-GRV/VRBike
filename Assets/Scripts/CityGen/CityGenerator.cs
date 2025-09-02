@@ -159,12 +159,17 @@ public class CityGenerator : MonoBehaviour
                     // considerar zona
                     //bool isCommercial = CheckIfCommercialZone(j, i) || true;
                     bool isResidential = CheckIfResidentialZone((int)intendedGridCoords.x, (int)intendedGridCoords.z);
-                    InstantiateBuilding(j, i, isResidential, chunkParent.transform, addedBuildings);
-                    Instantiate(isResidential ? this.floorGrass : this.floorConcrete, new Vector3(j * 20, 0, i * 20), Quaternion.identity, chunkParent.transform);
+                    GameObject building = InstantiateBuilding(j, i, isResidential, chunkParent.transform, addedBuildings);
+                    GameObject floor = (GameObject) Instantiate(isResidential ? this.floorGrass : this.floorConcrete, new Vector3(j * 20, 0, i * 20), Quaternion.identity, chunkParent.transform);
+
+                    if (building.name.Contains("Gas"))
+                    {
+                        Instantiate(vehicles[0], floor.transform.position + new Vector3(building.transform.eulerAngles.y == 90 ? 6.5f : -6.5f, 0, 0), Quaternion.identity, floor.transform);
+                    }
                 }
             }
         }
-        // veiculos B) (TODO - randomizar um pouco e posicionar de maneira mais... esparsa)
+        // veiculos B)
         // vias "verticais"
         float carSpawnChance = 0.5f;
         if (Random.value < carSpawnChance)
@@ -182,7 +187,7 @@ public class CityGenerator : MonoBehaviour
         }
         if (Random.value < carSpawnChance)
         {
-            Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(-1 * (stride - blockSize), 0, -4.6f + stride), Quaternion.AngleAxis(90, Vector3.up), chunkParent.transform);
+            Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(-1 * (stride - blockSize) + stride, 0, -4.6f + stride), Quaternion.AngleAxis(90, Vector3.up), chunkParent.transform);
         }
         return chunkParent;
     }
@@ -204,10 +209,7 @@ public class CityGenerator : MonoBehaviour
                 x = ((x * 20) - 2.5f) / 20;
             else
                 x = ((x * 20) + 2.5f) / 20;
-        }
-        else if (objects[idx].name.Contains("Gas"))
-        {
-            Debug.Log("gas!! gas!! gas!!");
+            
         }
 
         if (!isResidential && !Regex.IsMatch(objects[idx].name, "Building_Residential.*"))
@@ -218,8 +220,7 @@ public class CityGenerator : MonoBehaviour
             }
         }
         addedBuildings.Add(objects[idx].name);
-        Instantiate(objects[idx], new Vector3(x * 20, 0, y * 20), Quaternion.AngleAxis(angle, Vector3.up), parentObject);
-        return objects[idx];
+        return (GameObject) Instantiate(objects[idx], new Vector3(x * 20, 0, y * 20), Quaternion.AngleAxis(angle, Vector3.up), parentObject);
     }
 
     private bool CheckIfResidentialZone(int x, int y)
