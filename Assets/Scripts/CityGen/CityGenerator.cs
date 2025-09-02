@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UnityEngine;
 
+// q bagunça.....
 public class CityGenerator : MonoBehaviour
 {
     public int chunkRadius = 3;
@@ -22,6 +24,8 @@ public class CityGenerator : MonoBehaviour
 
     public GameObject[] commercialBuildings;
     public GameObject[] residentialBuildings;
+    public GameObject[] sidewalkObjects;
+    public GameObject[] vehicles;
 
     public Vector2Int[] residentialZones;
     private (int X1, int Y1, int X2, int Y2)[] commercialZone;
@@ -44,9 +48,16 @@ public class CityGenerator : MonoBehaviour
 
         Instantiate(laneRegular, new Vector3(0, 0, -1 * (stride - blockSize)), Quaternion.identity, surroundingLanes.transform);
         Instantiate(laneRegular, new Vector3(0, 0, -1 * (stride - (blockSize * 2))), Quaternion.identity, surroundingLanes.transform);
+        // postes de luz (nao emitem luz alguma, mas existem)
+        Instantiate(sidewalkObjects[1], new Vector3(52.0f, 0, -1 * (stride - blockSize) - 11.5f), Quaternion.AngleAxis(90, Vector3.up), surroundingLanes.transform);
+        Instantiate(sidewalkObjects[1], new Vector3(52.0f, 0, -1 * (stride - blockSize) - 11.5f), Quaternion.identity, surroundingLanes.transform);
+        Instantiate(sidewalkObjects[1], new Vector3(8.5f, 0, -1 * (stride - (blockSize * 2)) + 11.5f), Quaternion.AngleAxis(-180, Vector3.up), surroundingLanes.transform);
+        Instantiate(sidewalkObjects[1], new Vector3(8.5f, 0, -1 * (stride - (blockSize * 2)) + 11.5f), Quaternion.AngleAxis(-90, Vector3.up), surroundingLanes.transform);
 
         Instantiate(laneRegular, new Vector3((stride - blockSize), 0, 0), Quaternion.AngleAxis(90, Vector3.up), surroundingLanes.transform);
         Instantiate(laneRegular, new Vector3((stride - (blockSize * 2)), 0, 0), Quaternion.AngleAxis(90, Vector3.up), surroundingLanes.transform);
+        // arvrinha :3
+        Instantiate(sidewalkObjects[0], new Vector3((stride - blockSize) + 11.5f, 0, -8.5f), Quaternion.identity, surroundingLanes.transform);
 
         Instantiate(laneIntersection, new Vector3(0, 0, 0), Quaternion.identity, surroundingLanes.transform);
 
@@ -62,6 +73,7 @@ public class CityGenerator : MonoBehaviour
     {
         // caso usada geracao um pouco mais procedural, usar transform do jogador para atualizar chunks
         Vector3 playerPos = player.position;
+        // chunk onde o jogador se encontra... aproximadamente
         Vector2Int pChunk = new Vector2Int(0, 0)
         {
             x = Mathf.RoundToInt(playerPos.x / stride),
@@ -70,6 +82,7 @@ public class CityGenerator : MonoBehaviour
 
         if (!generatingCity)
         {
+            // guarda as chunks proximas ao jogador
             HashSet<Vector3> needed = new HashSet<Vector3>();
             // geracao de chunks proximas ao jogador
             for (int dx = -chunkRadius; dx <= chunkRadius; dx++)
@@ -92,11 +105,11 @@ public class CityGenerator : MonoBehaviour
                 }
             }
 
-            // List<Vector3> toRemove = new List<Vector3>();
             foreach (var pair in this.loadedCunks)
             {
                 if (!needed.Contains(pair.Key))
                 {
+                    //Desativa em vez de remover. Determinismo
                     pair.Value.SetActive(false);
                 }
             }
@@ -151,7 +164,26 @@ public class CityGenerator : MonoBehaviour
                 }
             }
         }
-
+        // veiculos B) (TODO - randomizar um pouco e posicionar de maneira mais... esparsa)
+        // vias "verticais"
+        float carSpawnChance = 0.5f;
+        if (Random.value < carSpawnChance)
+        {
+            Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(4.6f, 0, 1 * (stride - (blockSize * 2))), Quaternion.identity, chunkParent.transform);
+        }
+        if (Random.value < carSpawnChance)
+        {
+            Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(-4.6f, 0, 1 * (stride - blockSize)), Quaternion.AngleAxis(180, Vector3.up), chunkParent.transform);
+        }
+        // vias "horizontais"
+        if (Random.value < carSpawnChance)
+        {
+            Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(1 * (stride - blockSize), 0, 4.6f + stride), Quaternion.AngleAxis(-90, Vector3.up), chunkParent.transform);
+        }
+        if (Random.value < carSpawnChance)
+        {
+            Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(-1 * (stride - blockSize), 0, -4.6f + stride), Quaternion.AngleAxis(90, Vector3.up), chunkParent.transform);
+        }
         return chunkParent;
     }
 
