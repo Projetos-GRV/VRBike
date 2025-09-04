@@ -62,6 +62,19 @@ public class BicycleExternalMovementSource : MonoBehaviour, IBicycleMovementSour
         }
     }
 
+    // para teste com o oculus de realidade virtual caso nao seja possivel pegar a velocidade pela bicicleta
+    public void SetSpeed(float speed)
+    {
+        if (speed == 0)
+        {
+            this.speed = 0;
+        }
+        else
+        {
+            this.speed += speed;
+        }
+    }
+
     // provavelmente sera aqui onde os movimentos da bicicleta serao buscados e atualizados
     void Update()
     {

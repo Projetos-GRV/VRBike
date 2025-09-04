@@ -318,6 +318,11 @@ PrefabInstance:
       propertyPath: bicycleControllersObject
       value: 
       objectReference: {fileID: 858870944}
+    - target: {fileID: 2889019468824299187, guid: abbea6fd91c4a9e41887bb90637dbfe6,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -645,6 +650,11 @@ PrefabInstance:
       objectReference: {fileID: 100000, guid: d34e8533c8de8ec45869f9144584d929, type: 3}
     - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
+      propertyPath: carSpawnChance
+      value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
       propertyPath: vehicles.Array.size
       value: 7
       objectReference: {fileID: 0}
@@ -711,7 +721,7 @@ PrefabInstance:
     - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
       propertyPath: commercialBuildings.Array.size
-      value: 13
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
@@ -817,7 +827,17 @@ PrefabInstance:
         type: 3}
       propertyPath: commercialBuildings.Array.data[12]
       value: 
-      objectReference: {fileID: 100000, guid: 260808cfd9b21994d8c3007a7bc9934c, type: 3}
+      objectReference: {fileID: 100000, guid: 22106dc63dce41746ad234a91af2d657, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: commercialBuildings.Array.data[13]
+      value: 
+      objectReference: {fileID: 100000, guid: bc532b78ce09f234ea01da2deecfe035, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: commercialBuildings.Array.data[14]
+      value: 
+      objectReference: {fileID: 100000, guid: bc532b78ce09f234ea01da2deecfe035, type: 3}
     - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
       propertyPath: residentialBuildings.Array.data[0]

@@ -10,6 +10,8 @@ public class CityGenerator : MonoBehaviour
 {
     public int chunkRadius = 3;
     public int blockSize = 20;
+    public float carSpawnChance = 0.5f;
+
     private int chunkSize = 2;
     private int stride;
     private long chunks = 0;
@@ -164,14 +166,13 @@ public class CityGenerator : MonoBehaviour
 
                     if (building.name.Contains("Gas"))
                     {
-                        Instantiate(vehicles[0], floor.transform.position + new Vector3(building.transform.eulerAngles.y == 90 ? 6.5f : -6.5f, 0, 0), Quaternion.identity, floor.transform);
+                        Instantiate(vehicles[Random.Range(0, 2)], floor.transform.position + new Vector3(building.transform.eulerAngles.y == 90 ? 6.5f : -6.5f, 0, 0), Quaternion.identity, floor.transform);
                     }
                 }
             }
         }
         // veiculos B)
         // vias "verticais"
-        float carSpawnChance = 0.5f;
         if (Random.value < carSpawnChance)
         {
             Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(4.6f, 0, 1 * (stride - (blockSize * 2))), Quaternion.identity, chunkParent.transform);

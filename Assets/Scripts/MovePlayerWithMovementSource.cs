@@ -28,6 +28,9 @@ public class MovePlayerWithMovementSource : MonoBehaviour
     void Start()
     {
         this.rb = this.GetComponent<Rigidbody>();
+        // TODO - considerar se isso deve ser feito ou nao... evita que a bicicleta rotacione ao colidir com algo
+        rb.inertiaTensor = Vector3.zero;
+        rb.inertiaTensorRotation = Quaternion.Euler(0, 0, 0);
         if (this.rb == null)
         {
             Debug.LogError("This GameObject does not have a Rigidbody component.");
