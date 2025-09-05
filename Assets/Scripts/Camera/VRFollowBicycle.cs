@@ -7,17 +7,41 @@ public class VRFollowBicycle : MonoBehaviour
     public GameObject bicycle;
 
     private Vector3 offset;
+    private Rigidbody rb;
+    private Rigidbody otherrb;
 
     // Start is called before the first frame update
     void Start()
     {
-        offset = this.transform.position - bicycle.transform.position;
+        this.rb = GetComponent<Rigidbody>();
+        this.otherrb = bicycle.GetComponent<Rigidbody>();
+        offset = this.rb.position - this.otherrb.position;
     }
 
     // Update is called once per frame
-    void LateUpdate()
+    void FixedUpdate()
     {
-        this.transform.position = bicycle.transform.position + offset;
-        this.transform.rotation = bicycle.transform.rotation;
+        Vector3 followVelocity = Vector3.zero;
+        Vector3 desiredPos = this.otherrb.position + offset;
+        //this.transform.position = Vector3.SmoothDamp(
+        //    this.transform.position,
+        //    desiredPos,
+        //    ref followVelocity,
+        //    0.05f
+        //);
+        //this.transform.position = Vector3.Lerp(this.transform.position, desiredPos, 30f * Time.deltaTime);
+        this.rb.MovePosition(Vector3.Lerp(this.rb.position, desiredPos, 30f * Time.fixedDeltaTime));
+
+        Quaternion desiredRot = this.otherrb.rotation;
+        //this.transform.rotation = SmoothDampRotation(
+        //    this.transform.rotation,
+        //    desiredRot,
+        //    0.05f
+        //);
+        //this.transform.rotation = Quaternion.Slerp(this.transform.rotation, desiredRot, 30f * Time.deltaTime);    
+        this.rb.MoveRotation(Quaternion.Slerp(this.rb.rotation, desiredRot, 30f * Time.fixedDeltaTime));
+
+        //this.transform.position = bicycle.transform.position + offset;
+        //this.transform.rotation = bicycle.transform.rotation;
     }
 }
