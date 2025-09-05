@@ -43,6 +43,8 @@ public class CityGenerator : MonoBehaviour
     {
         stride = chunkSize * blockSize + blockSize;
         cityParentTransform = new GameObject("CityParent").transform;
+        //cityParentTransform.parent = this.transform;
+        cityParentTransform.SetParent(this.transform, false);
 
         // cria as vias em um canto pra instanciar numa unica chamada de funcao depois em GenerateChunk
         surroundingLanes = new GameObject("Lanes");
@@ -148,7 +150,7 @@ public class CityGenerator : MonoBehaviour
     private GameObject GenerateChunk(string name, Vector3 intendedGridCoords)
     {
         GameObject chunkParent = new GameObject(name);
-        chunkParent.transform.parent = cityParentTransform;
+        chunkParent.transform.SetParent(cityParentTransform, false);
 
         Instantiate(surroundingLanes, new Vector3(0, 0, stride), Quaternion.identity, chunkParent.transform);
         HashSet<string> addedBuildings = new HashSet<string>();
