@@ -7,6 +7,11 @@ Para poder movimentar a bicicleta, adicionar o script MovePlaferWithMovementSour
 adicionar o conjunto de controladores que se deseja utilizar ao componente (mesmo que se deseje utilizar um só, o controlador deverá ser
 um objeto filho de outro objeto).
 
+> [!NOTE]: o script pode ser adicionado a qualquer objeto se assim desejar. Nesta branch, na cena FullSetup, ele foi
+> adicionado ao objeto `XR Origin (XR Rig)` (e o script VrFollowBicycle foi adicionado à bicicleta) para que não
+> haja _jittering_ no modelo da bicicleta e para que o movimento do jogador seja tão suave quanto possível (
+> fica meio "travado" quando o jogador "segue" a bicicleta).
+
 A escolha de qual controlador utilizar se dá pela busca do primeiro que estiver ativo durante a execução. Outros
 controladores ativos serão ignorados.
 
