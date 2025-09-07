@@ -5,15 +5,15 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UnityEngine;
 
-// q bagunça.....
+// q bagunï¿½a.....
 public class CityGenerator : MonoBehaviour
 {
     public int chunkRadius = 3;
-    public int blockSize = 20;
+    public float blockSize = 20;
     public float carSpawnChance = 0.5f;
 
-    private int chunkSize = 2;
-    private int stride;
+    private float chunkSize = 2;
+    private float stride;
     private long chunks = 0;
 
     public Transform player;
@@ -41,27 +41,32 @@ public class CityGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        stride = chunkSize * blockSize + blockSize;
+        stride = (chunkSize * blockSize + blockSize) * this.transform.localScale.x;
+        this.blockSize *= this.transform.localScale.x;
+        Debug.Log(stride);
+        Debug.Log(this.transform.localScale.x);
+        Debug.Log((chunkSize * blockSize + blockSize));
         cityParentTransform = new GameObject("CityParent").transform;
         //cityParentTransform.parent = this.transform;
         cityParentTransform.SetParent(this.transform, false);
 
         // cria as vias em um canto pra instanciar numa unica chamada de funcao depois em GenerateChunk
         surroundingLanes = new GameObject("Lanes");
-        surroundingLanes.transform.parent = cityParentTransform;
+        // surroundingLanes.transform.parent = cityParentTransform;
+        surroundingLanes.transform.SetParent(cityParentTransform, false);
 
         Instantiate(laneRegular, new Vector3(0, 0, -1 * (stride - blockSize)), Quaternion.identity, surroundingLanes.transform);
         Instantiate(laneRegular, new Vector3(0, 0, -1 * (stride - (blockSize * 2))), Quaternion.identity, surroundingLanes.transform);
         // postes de luz (nao emitem luz alguma, mas existem)
-        Instantiate(sidewalkObjects[1], new Vector3(52.0f, 0, -1 * (stride - blockSize) - 11.5f), Quaternion.AngleAxis(90, Vector3.up), surroundingLanes.transform);
-        Instantiate(sidewalkObjects[1], new Vector3(52.0f, 0, -1 * (stride - blockSize) - 11.5f), Quaternion.identity, surroundingLanes.transform);
-        Instantiate(sidewalkObjects[1], new Vector3(8.5f, 0, -1 * (stride - (blockSize * 2)) + 11.5f), Quaternion.AngleAxis(-180, Vector3.up), surroundingLanes.transform);
-        Instantiate(sidewalkObjects[1], new Vector3(8.5f, 0, -1 * (stride - (blockSize * 2)) + 11.5f), Quaternion.AngleAxis(-90, Vector3.up), surroundingLanes.transform);
+        Instantiate(sidewalkObjects[1], new Vector3(52.0f * this.transform.localScale.x, 0, -1 * (stride - blockSize) - 11.5f * this.transform.localScale.x), Quaternion.AngleAxis(90, Vector3.up), surroundingLanes.transform);
+        Instantiate(sidewalkObjects[1], new Vector3(52.0f * this.transform.localScale.x, 0, -1 * (stride - blockSize) - 11.5f * this.transform.localScale.x), Quaternion.identity, surroundingLanes.transform);
+        Instantiate(sidewalkObjects[1], new Vector3(8.5f * this.transform.localScale.x, 0, -1 * (stride - (blockSize * 2)) + 11.5f * this.transform.localScale.x), Quaternion.AngleAxis(-180, Vector3.up), surroundingLanes.transform);
+        Instantiate(sidewalkObjects[1], new Vector3(8.5f * this.transform.localScale.x, 0, -1 * (stride - (blockSize * 2)) + 11.5f * this.transform.localScale.x), Quaternion.AngleAxis(-90, Vector3.up), surroundingLanes.transform);
 
         Instantiate(laneRegular, new Vector3((stride - blockSize), 0, 0), Quaternion.AngleAxis(90, Vector3.up), surroundingLanes.transform);
         Instantiate(laneRegular, new Vector3((stride - (blockSize * 2)), 0, 0), Quaternion.AngleAxis(90, Vector3.up), surroundingLanes.transform);
         // arvrinha :3
-        Instantiate(sidewalkObjects[0], new Vector3((stride - blockSize) + 11.5f, 0, -8.5f), Quaternion.identity, surroundingLanes.transform);
+        Instantiate(sidewalkObjects[0], new Vector3((stride - blockSize) + 11.5f * this.transform.localScale.x, 0, -8.5f * this.transform.localScale.x), Quaternion.identity, surroundingLanes.transform);
 
         Instantiate(laneIntersection, new Vector3(0, 0, 0), Quaternion.identity, surroundingLanes.transform);
 
@@ -164,11 +169,11 @@ public class CityGenerator : MonoBehaviour
                     //bool isCommercial = CheckIfCommercialZone(j, i) || true;
                     bool isResidential = CheckIfResidentialZone((int)intendedGridCoords.x, (int)intendedGridCoords.z);
                     GameObject building = InstantiateBuilding(j, i, isResidential, chunkParent.transform, addedBuildings);
-                    GameObject floor = (GameObject) Instantiate(isResidential ? this.floorGrass : this.floorConcrete, new Vector3(j * 20, 0, i * 20), Quaternion.identity, chunkParent.transform);
+                    GameObject floor = (GameObject) Instantiate(isResidential ? this.floorGrass : this.floorConcrete, new Vector3(j * 20, 0, i * 20) * this.transform.localScale.x, Quaternion.identity, chunkParent.transform);
 
                     if (building.name.Contains("Gas"))
                     {
-                        Instantiate(vehicles[Random.Range(0, 2)], floor.transform.position + new Vector3(building.transform.eulerAngles.y == 90 ? 6.5f : -6.5f, 0, 0), Quaternion.identity, floor.transform);
+                        Instantiate(vehicles[Random.Range(0, 2)], floor.transform.position + new Vector3((building.transform.eulerAngles.y == 90 ? 6.5f : -6.5f) * this.transform.localScale.x, 0, 0), Quaternion.identity, floor.transform);
                     }
                 }
             }
@@ -177,20 +182,20 @@ public class CityGenerator : MonoBehaviour
         // vias "verticais"
         if (Random.value < carSpawnChance)
         {
-            Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(4.6f, 0, 1 * (stride - (blockSize * 2))), Quaternion.identity, chunkParent.transform);
+            Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(4.6f * this.transform.localScale.x, 0, 1 * (stride - (blockSize * 2))), Quaternion.identity, chunkParent.transform);
         }
         if (Random.value < carSpawnChance)
         {
-            Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(-4.6f, 0, 1 * (stride - blockSize)), Quaternion.AngleAxis(180, Vector3.up), chunkParent.transform);
+            Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(-4.6f * this.transform.localScale.x, 0, 1 * (stride - blockSize)), Quaternion.AngleAxis(180, Vector3.up), chunkParent.transform);
         }
         // vias "horizontais"
         if (Random.value < carSpawnChance)
         {
-            Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(1 * (stride - blockSize), 0, 4.6f + stride), Quaternion.AngleAxis(-90, Vector3.up), chunkParent.transform);
+            Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(1 * (stride - blockSize), 0, 4.6f * this.transform.localScale.x + stride), Quaternion.AngleAxis(-90, Vector3.up), chunkParent.transform);
         }
         if (Random.value < carSpawnChance)
         {
-            Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(-1 * (stride - blockSize) + stride, 0, -4.6f + stride), Quaternion.AngleAxis(90, Vector3.up), chunkParent.transform);
+            Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(-1 * (stride - blockSize) + stride, 0, -4.6f * this.transform.localScale.x + stride), Quaternion.AngleAxis(90, Vector3.up), chunkParent.transform);
         }
         return chunkParent;
     }
@@ -223,7 +228,7 @@ public class CityGenerator : MonoBehaviour
             }
         }
         addedBuildings.Add(objects[idx].name);
-        return (GameObject) Instantiate(objects[idx], new Vector3(x * 20, 0, y * 20), Quaternion.AngleAxis(angle, Vector3.up), parentObject);
+        return (GameObject) Instantiate(objects[idx], new Vector3(x * 20, 0, y * 20) * this.transform.localScale.x, Quaternion.AngleAxis(angle, Vector3.up), parentObject);
     }
 
     private bool CheckIfResidentialZone(int x, int y)

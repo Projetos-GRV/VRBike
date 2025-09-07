@@ -264,6 +264,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1106720277}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &211123554
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 211123555}
+  m_Layer: 0
+  m_Name: Chunk41
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &211123555
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211123554}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &232929204
 GameObject:
   m_ObjectHideFlags: 0
@@ -2000,6 +2031,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CityGenerator
+      objectReference: {fileID: 0}
+    - target: {fileID: 8431953022651722976, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8431953022651722976, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8431953022651722976, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8431953022651722976, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
@@ -3974,3 +4020,4 @@ SceneRoots:
   - {fileID: 1359938289}
   - {fileID: 439946493}
   - {fileID: 1106720277}
+  - {fileID: 211123555}
