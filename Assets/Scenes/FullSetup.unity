@@ -3982,6 +3982,7 @@ MonoBehaviour:
   frontWheel: {fileID: 335858732}
   pedals: {fileID: 582220452}
   animate: 1
+  speedMultiplier: 0.675
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

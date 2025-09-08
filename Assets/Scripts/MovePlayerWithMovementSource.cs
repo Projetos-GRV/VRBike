@@ -20,6 +20,8 @@ public class MovePlayerWithMovementSource : MonoBehaviour
     public Transform pedals;
     [Tooltip("Caso habilitado, havera uma tentativa de animar os Transforms correspondentes a diferentes partes da bicicleta (ex.: as rodas). Sugere-se habilitar animacoes somente quando for utilizado o modelo de bicicleta azul (na pasta Sir_bike em assets)")]
     public bool animate = false;
+    [Tooltip("Multiplicador de velocidade. Serve para aumentar/reduzir a velocidade da bicicleta para que coincida com a escala do mundo/da bicicleta.")]
+    public float speedMultiplier = 1f;
     
     private IBicycleMovementSource movementSource;
     private Rigidbody rb;
@@ -68,7 +70,7 @@ public class MovePlayerWithMovementSource : MonoBehaviour
         {
             return;
         }
-        float speed = this.movementSource.GetSpeed();
+        float speed = this.movementSource.GetSpeed() * this.speedMultiplier;
         float rotation = this.movementSource.GetHandlebarRotation();
         //Quaternion rotationToDir = Quaternion.LookRotation(Time.fixedDeltaTime * rotated, Vector3.up);
         //rb.rotation = rotationToDir;
@@ -105,7 +107,7 @@ public class MovePlayerWithMovementSource : MonoBehaviour
 
     private void Animate()
     {
-        float speed = this.movementSource.GetSpeed();
+        float speed = this.movementSource.GetSpeed() * this.speedMultiplier;
         float angle = this.movementSource.GetHandlebarRotation();
         float wheelRadius = 0.5f; // um chute.
 
@@ -127,7 +129,8 @@ public class MovePlayerWithMovementSource : MonoBehaviour
         if (this.pedals != null)
         {
             // 0.25f ~ valor aproximado do raio da circunferencia que os pedais formam quando rotacionam (medicao tambem empirica)
-            float pedalSpeed = speed / (2.0f * Mathf.PI * 0.25f);
+            // float pedalSpeed = speed / (2.0f * Mathf.PI * 0.25f);
+            float pedalSpeed = rotSpeed;
             this.pedals.RotateAround(this.pedals.position, this.pedals.right, 360 * pedalSpeed * Time.deltaTime);
             if (this.pedals.childCount > 0)
             {
