@@ -1569,17 +1569,17 @@ PrefabInstance:
     - target: {fileID: 2510993130956297639, guid: abbea6fd91c4a9e41887bb90637dbfe6,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.1
+      value: 0.69
       objectReference: {fileID: 0}
     - target: {fileID: 2510993130956297639, guid: abbea6fd91c4a9e41887bb90637dbfe6,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.1
+      value: 0.69
       objectReference: {fileID: 0}
     - target: {fileID: 2510993130956297639, guid: abbea6fd91c4a9e41887bb90637dbfe6,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.1
+      value: 0.69
       objectReference: {fileID: 0}
     - target: {fileID: 2510993130956297639, guid: abbea6fd91c4a9e41887bb90637dbfe6,
         type: 3}
@@ -2048,17 +2048,17 @@ PrefabInstance:
     - target: {fileID: 8431953022651722976, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.2
+      value: 0.675
       objectReference: {fileID: 0}
     - target: {fileID: 8431953022651722976, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.2
+      value: 0.675
       objectReference: {fileID: 0}
     - target: {fileID: 8431953022651722976, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.2
+      value: 0.675
       objectReference: {fileID: 0}
     - target: {fileID: 8431953022651722976, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
@@ -3897,7 +3897,7 @@ MonoBehaviour:
   m_OriginBaseGameObject: {fileID: 1807026341}
   m_CameraFloorOffsetObject: {fileID: 960081866}
   m_RequestedTrackingOriginMode: 1
-  m_CameraYOffset: 1.9
+  m_CameraYOffset: 1.7
 --- !u!4 &1807026345
 Transform:
   m_ObjectHideFlags: 0
