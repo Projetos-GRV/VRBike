@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 [Serializable]
 public class MovePlayerWithMovementSource : MonoBehaviour
 {
-    [Tooltip("O primeiro controlador filho eh escolhido como o objeto controlador. Eh daqui que serao retirados ambos angulo do guidao e velocidade usados para movimentar a bicicleta. Todos os GameObjects filhos devem conter um script que implemente a interface IBicycleMovementSource.")]
+    [Tooltip("O primeiro controlador filho eh escolhido como o objeto controlador. Os outros serao desativados. Eh daqui que serao retirados ambos angulo do guidao e velocidade usados para movimentar a bicicleta. Todos os GameObjects filhos devem conter um script que implemente a interface IBicycleMovementSource.")]
     public GameObject bicycleControllersObject;
 
     [Tooltip("Opcional. Pode ser nulo.")]
@@ -44,10 +44,13 @@ public class MovePlayerWithMovementSource : MonoBehaviour
             GameObject movementSourceObject = null;
             foreach (Transform child in this.bicycleControllersObject.transform)
             {
-                if (child.gameObject.activeSelf)
+                if (movementSourceObject != null)
+                {
+                    child.gameObject.SetActive(false);
+                }
+                else if (child.gameObject.activeSelf)
                 {
                     movementSourceObject = child.gameObject;
-                    break;
                 }
             }
             IBicycleMovementSource moveSource = movementSourceObject.GetComponent<IBicycleMovementSource>();
