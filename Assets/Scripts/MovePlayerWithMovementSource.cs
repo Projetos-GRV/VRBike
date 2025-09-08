@@ -22,7 +22,8 @@ public class MovePlayerWithMovementSource : MonoBehaviour
     public bool animate = false;
     [Tooltip("Multiplicador de velocidade. Serve para aumentar/reduzir a velocidade da bicicleta para que coincida com a escala do mundo/da bicicleta.")]
     public float speedMultiplier = 1f;
-    
+    [Tooltip("Velocidade maxima que a bicicleta podera percorrer. Para regular o conforto da experiencia.")]
+    public float maxSpeed = Mathf.Infinity;
     private IBicycleMovementSource movementSource;
     private Rigidbody rb;
     private Vector3 handlebarDefaultRotation;
@@ -70,7 +71,7 @@ public class MovePlayerWithMovementSource : MonoBehaviour
         {
             return;
         }
-        float speed = this.movementSource.GetSpeed() * this.speedMultiplier;
+        float speed = Mathf.Min(this.maxSpeed, this.movementSource.GetSpeed()) * this.speedMultiplier;
         float rotation = this.movementSource.GetHandlebarRotation();
         //Quaternion rotationToDir = Quaternion.LookRotation(Time.fixedDeltaTime * rotated, Vector3.up);
         //rb.rotation = rotationToDir;
