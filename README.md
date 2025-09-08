@@ -5,7 +5,7 @@ Versão Unity: 2022.3.5f1
 
 > [!NOTE]
 > Para alterar o tamanho da cidade, basta alterar a escala no Transform do gerador da cidade (CityGenerator). Isso deve redimensionar a cidade inteira,
-> incluindo carros, postes, árvores e os prédios/casas.
+> incluindo carros, postes, árvores e os prédios/casas. Embora só a escala do eixo X seja relevante no código, favor, redimensionar os três eixo igualmente.
 
 Para poder movimentar a bicicleta, adicionar o script MovePlaferWithMovementSource a esta. Em seguida, deve-se
 adicionar o conjunto de controladores que se deseja utilizar ao componente (mesmo que se deseje utilizar um só, o controlador deverá ser
