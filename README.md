@@ -3,12 +3,16 @@ Bicicleta VR
 
 Versão Unity: 2022.3.5f1
 
+> [!NOTE]
+> Para alterar o tamanho da cidade, basta alterar a escala no Transform do gerador da cidade (CityGenerator). Isso deve redimensionar a cidade inteira,
+> incluindo carros, postes, árvores e os prédios/casas.
+
 Para poder movimentar a bicicleta, adicionar o script MovePlaferWithMovementSource a esta. Em seguida, deve-se
 adicionar o conjunto de controladores que se deseja utilizar ao componente (mesmo que se deseje utilizar um só, o controlador deverá ser
 um objeto filho de outro objeto).
 
 > [!NOTE]
-> O script pode ser adicionado a qualquer objeto se assim desejar. Nesta branch, na cena FullSetup, ele foi
+> O script pode ser adicionado a qualquer objeto se assim desejar. Na cena FullSetup, ele foi
 > adicionado ao objeto `XR Origin (XR Rig)` (e o script VrFollowBicycle foi adicionado à bicicleta) para que não
 > haja _jittering_ no modelo da bicicleta e para que o movimento do jogador seja tão suave quanto possível (
 > fica meio "travado" quando o jogador "segue" a bicicleta).
