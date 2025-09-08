@@ -262,37 +262,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1106720277}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &211123554
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 211123555}
-  m_Layer: 0
-  m_Name: Chunk41
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &211123555
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 211123554}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &232929204
@@ -1452,12 +1421,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!4 &484981465 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8431953022651722976, guid: 21231be6d89b11f4a858cc33bee8babf,
-    type: 3}
-  m_PrefabInstance: {fileID: 579501607}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &494325973
 GameObject:
   m_ObjectHideFlags: 0
@@ -1601,7 +1564,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1106720277}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2510993130956297639, guid: abbea6fd91c4a9e41887bb90637dbfe6,
         type: 3}
@@ -1765,8 +1728,13 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1106720277}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: tree
+      value: 
+      objectReference: {fileID: 100000, guid: 8b680e0f7699a254c84ed6737b7eb53d, type: 3}
     - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
       propertyPath: width
@@ -1804,9 +1772,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
+      propertyPath: streetLight
+      value: 
+      objectReference: {fileID: 100000, guid: b8ee657c6800ab849bb30b4375d02323, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: trafficLight
+      value: 
+      objectReference: {fileID: 100000, guid: 2857b989c828950448ead142ca28e4a3, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
       propertyPath: floorConcrete
       value: 
       objectReference: {fileID: 100000, guid: d34e8533c8de8ec45869f9144584d929, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: carSpawnChance
+      value: 0.6
+      objectReference: {fileID: 0}
     - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
       propertyPath: vehicles.Array.size
@@ -1855,7 +1838,7 @@ PrefabInstance:
     - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
       propertyPath: residentialZones.Array.size
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
@@ -1905,17 +1888,42 @@ PrefabInstance:
     - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
       propertyPath: residentialZones.Array.data[2].x
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: residentialZones.Array.data[2].y
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
       propertyPath: residentialZones.Array.data[3].x
-      value: 30
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
       propertyPath: residentialZones.Array.data[3].y
-      value: 5
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: residentialZones.Array.data[4].x
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: residentialZones.Array.data[4].y
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: residentialZones.Array.data[5].x
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: residentialZones.Array.data[5].y
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
@@ -1981,7 +1989,12 @@ PrefabInstance:
         type: 3}
       propertyPath: commercialBuildings.Array.data[12]
       value: 
-      objectReference: {fileID: 100000, guid: 260808cfd9b21994d8c3007a7bc9934c, type: 3}
+      objectReference: {fileID: 100000, guid: cc0981408e7c8db4f9f80a57938fd5e3, type: 3}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
+        type: 3}
+      propertyPath: commercialBuildings.Array.data[13]
+      value: 
+      objectReference: {fileID: 100000, guid: cc0981408e7c8db4f9f80a57938fd5e3, type: 3}
     - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
       propertyPath: residentialBuildings.Array.data[0]
@@ -2035,17 +2048,17 @@ PrefabInstance:
     - target: {fileID: 8431953022651722976, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 8431953022651722976, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 8431953022651722976, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 8431953022651722976, guid: 21231be6d89b11f4a858cc33bee8babf,
         type: 3}
@@ -2236,7 +2249,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1106720277}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 201434209780947531, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
         type: 3}
@@ -2256,7 +2269,7 @@ PrefabInstance:
     - target: {fileID: 6112790598335588479, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8877309999387384984, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
         type: 3}
@@ -2321,7 +2334,7 @@ PrefabInstance:
     - target: {fileID: 9160176589043218222, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2331,12 +2344,6 @@ PrefabInstance:
 --- !u!1 &722435370 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9111155519951986677, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
-    type: 3}
-  m_PrefabInstance: {fileID: 722435369}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &722435371 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8877309999387384984, guid: 8ef9c07713f8df24fa4ab40d6e23dc7f,
     type: 3}
   m_PrefabInstance: {fileID: 722435369}
   m_PrefabAsset: {fileID: 0}
@@ -2432,7 +2439,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1106720277}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &960081866
 GameObject:
@@ -2467,42 +2474,6 @@ Transform:
   - {fileID: 1595991265}
   - {fileID: 277400185}
   m_Father: {fileID: 1807026345}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1106720276
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1106720277}
-  m_Layer: 0
-  m_Name: ParentForScalingDownTheWorldInsteadOfScalingUpThePlayer(DoesntSeemToWorkProperly)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1106720277
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1106720276}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 571018746}
-  - {fileID: 767212293}
-  - {fileID: 484981465}
-  - {fileID: 722435371}
-  - {fileID: 209994553}
-  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1206247978 stripped
 MonoBehaviour:
@@ -4019,5 +3990,8 @@ SceneRoots:
   - {fileID: 20564948}
   - {fileID: 1359938289}
   - {fileID: 439946493}
-  - {fileID: 1106720277}
-  - {fileID: 211123555}
+  - {fileID: 571018741}
+  - {fileID: 767212293}
+  - {fileID: 579501607}
+  - {fileID: 722435369}
+  - {fileID: 209994553}

@@ -9,12 +9,7 @@ using UnityEngine;
 public class CityGenerator : MonoBehaviour
 {
     public int chunkRadius = 3;
-    public float blockSize = 20;
     public float carSpawnChance = 0.5f;
-
-    private float chunkSize = 2;
-    private float stride;
-    private long chunks = 0;
 
     public Transform player;
 
@@ -24,14 +19,21 @@ public class CityGenerator : MonoBehaviour
     public GameObject floorConcrete;
     public GameObject floorGrass;
 
+    public GameObject streetLight;
+    public GameObject tree;
+
     public GameObject[] commercialBuildings;
     public GameObject[] residentialBuildings;
-    public GameObject[] sidewalkObjects;
     public GameObject[] vehicles;
 
+    [Tooltip("Demarcacao de areas dedicadas a predios residenciais (aka casas). Para cada area sao necessarios exatamente dois pontos, que devem definir, respectivamente, o comeco (canto inferior esquerdo) e o fim (canto superior direito) das areas, respectivamente.")]
     public Vector2Int[] residentialZones;
-    private (int X1, int Y1, int X2, int Y2)[] commercialZone;
 
+    private const float originalBlockSize = 20;
+    private const float chunkSize = 2;
+    private float blockSize;
+    private float stride;
+    private long chunks = 0;
 
     private bool generatingCity = true;
     private GameObject surroundingLanes;
@@ -41,11 +43,11 @@ public class CityGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        stride = (chunkSize * blockSize + blockSize) * this.transform.localScale.x;
-        this.blockSize *= this.transform.localScale.x;
-        Debug.Log(stride);
-        Debug.Log(this.transform.localScale.x);
-        Debug.Log((chunkSize * blockSize + blockSize));
+        // redimensiona o tamanho do bloco para que seja condizente com a escala da cidade
+
+        this.blockSize = originalBlockSize * this.transform.localScale.x;
+        stride = chunkSize * blockSize + blockSize;
+
         cityParentTransform = new GameObject("CityParent").transform;
         //cityParentTransform.parent = this.transform;
         cityParentTransform.SetParent(this.transform, false);
@@ -55,20 +57,28 @@ public class CityGenerator : MonoBehaviour
         // surroundingLanes.transform.parent = cityParentTransform;
         surroundingLanes.transform.SetParent(cityParentTransform, false);
 
-        Instantiate(laneRegular, new Vector3(0, 0, -1 * (stride - blockSize)), Quaternion.identity, surroundingLanes.transform);
-        Instantiate(laneRegular, new Vector3(0, 0, -1 * (stride - (blockSize * 2))), Quaternion.identity, surroundingLanes.transform);
-        // postes de luz (nao emitem luz alguma, mas existem)
-        Instantiate(sidewalkObjects[1], new Vector3(52.0f * this.transform.localScale.x, 0, -1 * (stride - blockSize) - 11.5f * this.transform.localScale.x), Quaternion.AngleAxis(90, Vector3.up), surroundingLanes.transform);
-        Instantiate(sidewalkObjects[1], new Vector3(52.0f * this.transform.localScale.x, 0, -1 * (stride - blockSize) - 11.5f * this.transform.localScale.x), Quaternion.identity, surroundingLanes.transform);
-        Instantiate(sidewalkObjects[1], new Vector3(8.5f * this.transform.localScale.x, 0, -1 * (stride - (blockSize * 2)) + 11.5f * this.transform.localScale.x), Quaternion.AngleAxis(-180, Vector3.up), surroundingLanes.transform);
-        Instantiate(sidewalkObjects[1], new Vector3(8.5f * this.transform.localScale.x, 0, -1 * (stride - (blockSize * 2)) + 11.5f * this.transform.localScale.x), Quaternion.AngleAxis(-90, Vector3.up), surroundingLanes.transform);
+        // 11.5f == pouco mais da metade do comprimento do lado da estrada, dado um tamanho igual a 20 (ou do bloco)
+        float offset = 11.5f;
+        Vector3 bottomRight = new Vector3((stride - this.blockSize) + offset * this.transform.localScale.x, 0, -1 * (stride - this.blockSize) - offset * this.transform.localScale.x);
+        Vector3 topLeft = new Vector3((stride - (this.blockSize * 2)) - offset * this.transform.localScale.x, 0, -1 * (stride - (this.blockSize * 2)) + offset * this.transform.localScale.x);
+        Vector3 bottomLeft = new Vector3((stride - (this.blockSize * 2)) - offset * this.transform.localScale.x, 0, -1 * (stride - this.blockSize) - offset * this.transform.localScale.x);
+        Vector3 topRight = new Vector3((stride - this.blockSize) + offset * this.transform.localScale.x, 0, -1 * (stride - (this.blockSize * 2)) + offset * this.transform.localScale.x);
 
-        Instantiate(laneRegular, new Vector3((stride - blockSize), 0, 0), Quaternion.AngleAxis(90, Vector3.up), surroundingLanes.transform);
-        Instantiate(laneRegular, new Vector3((stride - (blockSize * 2)), 0, 0), Quaternion.AngleAxis(90, Vector3.up), surroundingLanes.transform);
-        // arvrinha :3
-        Instantiate(sidewalkObjects[0], new Vector3((stride - blockSize) + 11.5f * this.transform.localScale.x, 0, -8.5f * this.transform.localScale.x), Quaternion.identity, surroundingLanes.transform);
-
+        Instantiate(laneRegular, new Vector3(0, 0, -1 * (stride - this.blockSize)), Quaternion.identity, surroundingLanes.transform);
+        Instantiate(laneRegular, new Vector3(0, 0, -1 * (stride - (this.blockSize * 2))), Quaternion.identity, surroundingLanes.transform);
+        Instantiate(laneRegular, new Vector3((stride - this.blockSize), 0, 0), Quaternion.AngleAxis(90, Vector3.up), surroundingLanes.transform);
+        Instantiate(laneRegular, new Vector3((stride - (this.blockSize * 2)), 0, 0), Quaternion.AngleAxis(90, Vector3.up), surroundingLanes.transform);
         Instantiate(laneIntersection, new Vector3(0, 0, 0), Quaternion.identity, surroundingLanes.transform);
+
+        // postes de luz (nao emitem luz alguma, mas existem)
+        Instantiate(streetLight, bottomRight, Quaternion.AngleAxis(90, Vector3.up), surroundingLanes.transform);
+        Instantiate(streetLight, bottomRight, Quaternion.identity, surroundingLanes.transform);
+        Instantiate(streetLight, topLeft, Quaternion.AngleAxis(-180, Vector3.up), surroundingLanes.transform);
+        Instantiate(streetLight, topLeft, Quaternion.AngleAxis(-90, Vector3.up), surroundingLanes.transform);
+
+        // arvrinha :3
+        Instantiate(tree, topRight, Quaternion.identity, surroundingLanes.transform);
+        Instantiate(tree, bottomLeft, Quaternion.identity, surroundingLanes.transform);
 
         surroundingLanes.transform.position = new Vector3(0, -100000, 0);
 
@@ -169,58 +179,65 @@ public class CityGenerator : MonoBehaviour
                     //bool isCommercial = CheckIfCommercialZone(j, i) || true;
                     bool isResidential = CheckIfResidentialZone((int)intendedGridCoords.x, (int)intendedGridCoords.z);
                     GameObject building = InstantiateBuilding(j, i, isResidential, chunkParent.transform, addedBuildings);
-                    GameObject floor = (GameObject) Instantiate(isResidential ? this.floorGrass : this.floorConcrete, new Vector3(j * 20, 0, i * 20) * this.transform.localScale.x, Quaternion.identity, chunkParent.transform);
+                    GameObject floor = (GameObject) Instantiate(isResidential ? this.floorGrass : this.floorConcrete, new Vector3(j * blockSize, 0, i * blockSize), Quaternion.identity, chunkParent.transform);
 
                     if (building.name.Contains("Gas"))
                     {
-                        Instantiate(vehicles[Random.Range(0, 2)], floor.transform.position + new Vector3((building.transform.eulerAngles.y == 90 ? 6.5f : -6.5f) * this.transform.localScale.x, 0, 0), Quaternion.identity, floor.transform);
+                        float gasCarOffset = 6.5f;
+                        Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], floor.transform.position + new Vector3((building.transform.eulerAngles.y == 90 ? gasCarOffset : -gasCarOffset) * this.transform.localScale.x, 0, 0), Quaternion.identity, floor.transform);
                     }
                 }
             }
         }
         // veiculos B)
         // vias "verticais"
+        float carOffset = 4.6f;
         if (Random.value < carSpawnChance)
         {
-            Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(4.6f * this.transform.localScale.x, 0, 1 * (stride - (blockSize * 2))), Quaternion.identity, chunkParent.transform);
+            Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(carOffset * this.transform.localScale.x, 0, 1 * (stride - (this.blockSize * 2))), Quaternion.identity, chunkParent.transform);
         }
         if (Random.value < carSpawnChance)
         {
-            Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(-4.6f * this.transform.localScale.x, 0, 1 * (stride - blockSize)), Quaternion.AngleAxis(180, Vector3.up), chunkParent.transform);
+            Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(-carOffset * this.transform.localScale.x, 0, 1 * (stride - this.blockSize)), Quaternion.AngleAxis(180, Vector3.up), chunkParent.transform);
         }
         // vias "horizontais"
         if (Random.value < carSpawnChance)
         {
-            Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(1 * (stride - blockSize), 0, 4.6f * this.transform.localScale.x + stride), Quaternion.AngleAxis(-90, Vector3.up), chunkParent.transform);
+            Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(1 * (stride - this.blockSize), 0, carOffset * this.transform.localScale.x + stride), Quaternion.AngleAxis(-90, Vector3.up), chunkParent.transform);
         }
         if (Random.value < carSpawnChance)
         {
-            Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(-1 * (stride - blockSize) + stride, 0, -4.6f * this.transform.localScale.x + stride), Quaternion.AngleAxis(90, Vector3.up), chunkParent.transform);
+            Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(-1 * (stride - this.blockSize) + stride, 0, -carOffset * this.transform.localScale.x + stride), Quaternion.AngleAxis(90, Vector3.up), chunkParent.transform);
         }
         return chunkParent;
     }
 
-    // TODO - verificar se ja foi posta no bloco, talvez? evitar haverem multiplas construcoes num bloco?
     private GameObject InstantiateBuilding(float x, float y, bool isResidential, Transform parentObject, HashSet<string> addedBuildings)
     {
         GameObject[] objects = isResidential ? residentialBuildings : commercialBuildings;
         int idx = Random.Range(0, objects.Length - 1);
         float angle = 90;
+        // basicamente, por padrao, os predios sao rotacionados em 90 graus.
+        // caso o predio se encontre mais a direita da chunk, o angulo sera de -90 (270)
         if (((int)x - 1) % 3 == 0)
         {
             angle = 270;
         }
         // deslocar o posto de gasolina soh um pouquinho para nao ficar em cima da calcada
+        // o calculo eh realizado considerando o tamanho real do bloco, e nao o tamanho
+        // calculado com base na escala da cidade. Este eh usado na hora de instanciar o objeto,
+        // para que assim este seja instanciado na posicao correta
         if ("Building_Gas Station".IndexOf(objects[idx].name) >= 0)
         {
+            float offset = 2.5f;
             if (angle == 90)
-                x = ((x * 20) - 2.5f) / 20;
+                x = ((x * originalBlockSize) - offset) / originalBlockSize;
             else
-                x = ((x * 20) + 2.5f) / 20;
-            
+                x = ((x * originalBlockSize) + offset) / originalBlockSize;
+
         }
 
-        if (!isResidential && !Regex.IsMatch(objects[idx].name, "Building_Residential.*"))
+        if (!isResidential)
         {
             while (addedBuildings.Contains(objects[idx].name))
             {
@@ -228,7 +245,7 @@ public class CityGenerator : MonoBehaviour
             }
         }
         addedBuildings.Add(objects[idx].name);
-        return (GameObject) Instantiate(objects[idx], new Vector3(x * 20, 0, y * 20) * this.transform.localScale.x, Quaternion.AngleAxis(angle, Vector3.up), parentObject);
+        return (GameObject) Instantiate(objects[idx], new Vector3(x * this.blockSize, 0, y * this.blockSize), Quaternion.AngleAxis(angle, Vector3.up), parentObject);
     }
 
     private bool CheckIfResidentialZone(int x, int y)
