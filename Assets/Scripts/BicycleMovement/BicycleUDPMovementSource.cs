@@ -1,36 +1,16 @@
+using System.Globalization;
 using System.Collections;
 using System.Collections.Generic;
-using System.Net.Sockets;
 using UnityEngine;
 
 using UDPListener;
-using System.Globalization;
-using UnityEngine.InputSystem;
-using TMPro;
-using System.Xml;
-using UnityEngine.Events;
 
 public class BicycleUDPMovementSource : MonoBehaviour, IBicycleMovementSource
 {
-    [Header("Network")]
-    public int listenPortAngle = 5000;
-
-    [Header("Speed")]
-    public bool _useKeyboardForSpeed = false;
-
-    [Header("Rotation")]
-    public float _minAngle = -80f;
-    public float _maxAngle = 80f;
-    public bool _invertSide = false;
-    public bool _useKeyboardForRotation = false;
-
-    [Header("Events")]
-    public UnityEvent<float> OnMinAngleChanged;
-    public UnityEvent<float> OnMaxAngleChanged;
-    public UnityEvent<float> OnSpeedChanged;
-    public UnityEvent<float> OnAngleChanged;
-    public UnityEvent<float> OnSpeedMultiplierChanged;
-    public UnityEvent<float> OnHandleSensibility;
+    public int listenPortSpeed = 8000;
+    public int listenPortAngle = 8001;
+    [Tooltip("1 - eixo X; 2 - eixo Y; 3 - eixo Z")]
+    public int gyroAxis = 3;
 
     private UDPDataListener dataSource;
 
@@ -38,20 +18,9 @@ public class BicycleUDPMovementSource : MonoBehaviour, IBicycleMovementSource
     private float handlebarRotation;
     private Vector2 direction;
 
-    public float _fakeAngle = 0;
-    public float _fakeSpeed = 0;
-
-    public bool _useFakeData = false;
-
     public float GetHandlebarRotation() { return this.handlebarRotation; }
     public Vector2 GetFrontWheelDirection() { return this.direction; }
     public float GetSpeed() { return this.speed; }
-
-    private bool _wKeyPressed = false;
-
-    private string _defaultSpeed = "0";
-    private float _rawAngle = 0f;
-    private bool _useDefaultSpeed = false;
 
     // Start is called before the first frame update
     void Start()
@@ -59,7 +28,8 @@ public class BicycleUDPMovementSource : MonoBehaviour, IBicycleMovementSource
         this.speed = 0;
         this.handlebarRotation = 0;
         this.direction = Vector2.zero;
-        this.dataSource = new UDPDataListener(this.listenPortAngle);
+        //this.direction = Vector2.forward;
+        this.dataSource = new UDPDataListener(this.listenPortSpeed, this.listenPortAngle);
         bool success = this.dataSource.Init();
         if (!success)
         {
@@ -68,101 +38,51 @@ public class BicycleUDPMovementSource : MonoBehaviour, IBicycleMovementSource
                 Debug.Log("It was not possible to open the UDP ports.");
             }
         }
+        if (this.gyroAxis < 0 || this.gyroAxis > 3)
+        {
+            this.gyroAxis = 3;
+        }
     }
 
-    public void SetDefaultSpeed(float speed)
-    {
-        _defaultSpeed = speed.ToString();
-        _useDefaultSpeed = speed == 0.0 ? false : true;
-    }
+    public bool _useFakeData = true;
+    public float _angle = 0;
+    public float _speed = 0;
 
     // Update is called once per frame
     void Update()
     {
-        string data = _useFakeData ? $"{_fakeAngle};{_fakeSpeed}" : this.dataSource.GetData();
+        string angleStr = this.dataSource.GetAngleData();
+        string speedStr = this.dataSource.GetSpeedData();
 
-        //Debug.Log(data);
-
-        string[] dataSplit = data.Split(';');
-
-
-
-        if (dataSplit.Length != 2) return;
-
-        string angleStr = dataSplit[0];
-        string speedStr = _useDefaultSpeed ? _defaultSpeed : dataSplit[1];
-        speedStr = speedStr.Replace(',', '.');
-
-
-        float speed = 0;
-
-        var angle = HandleAngle;
-        var newRawAngle = float.Parse(angleStr, NumberStyles.Number, CultureInfo.InvariantCulture);
-
-        if (Mathf.Abs(_rawAngle - newRawAngle) >= AngleThreshold)
+        if (_useFakeData)
         {
-            _rawAngle = newRawAngle;
-
-            angle = AppUtils.Map(_rawAngle, MinAngle, MaxAngle, -1, 1);
-
-            angle = angle * _maxAngle;
-
-            angle = Mathf.Abs((MaxAngle - MinAngle) / 2f - _rawAngle) > AngleThreshold ? angle : 0;
+            angleStr = $"0;0;{_angle}";
+            speedStr = _speed.ToString("0.00");
         }
 
-        speed = float.Parse(speedStr, NumberStyles.Number, CultureInfo.InvariantCulture) * SpeedMultiplier;
+        if (Debug.isDebugBuild)
+        {
+            Debug.Log(angleStr);
+            Debug.Log(speedStr);
+        }
 
-        //Debug.Log($"Final Angle {angle}  |  Speed {speed}");
+        string[] gyroValuesStr = angleStr.Trim().Split(';');
+        float[] gyroValues = new float[gyroValuesStr.Length];
+        
+        // talvez só um eixo seja relevante.... 
+        for (int i = 0; i < gyroValuesStr.Length; i++)
+        {
+            gyroValues[i] = float.Parse(gyroValuesStr[i], CultureInfo.InvariantCulture);
+        }
 
-        this.handlebarRotation = angle;
-        this.speed = speed;
+        //float deltaDist = gyroValues[0] * this.dataSource.GetAngleTime();
 
-        OnAngleChanged?.Invoke(_rawAngle);
-        OnSpeedChanged?.Invoke(speed);
+        this.handlebarRotation = -gyroValues[this.gyroAxis - 1]; // TODO - considerar momentos em que o eixo parece zerar sem motivo aparente.
+        this.speed = float.Parse(speedStr.Trim()); // TODO - considerar que a velocidade virá em pulsos (0 - 1). Considerar intervalo entre pulsos.
+
+        Vector3 tmp = Vector3.forward;
+        tmp = Quaternion.AngleAxis(this.handlebarRotation, Vector3.up) * tmp;
+        this.direction.x = tmp.x;
+        this.direction.y = tmp.z;
     }
-
-    private void OnDisable()
-    {
-        dataSource.Halt();
-    }
-
-    public void SaveMinValue()
-    {
-        MinAngle = _rawAngle;
-
-        OnMinAngleChanged?.Invoke(_rawAngle);
-    }
-
-    public void SaveMaxValue()
-    {
-        MaxAngle = _rawAngle;
-
-        OnMaxAngleChanged?.Invoke(_rawAngle);
-    }
-
-    public void HandleAngleThreshold(string newValue)
-    {
-        var clenedStr = newValue.Trim();
-        AngleThreshold = float.Parse(clenedStr, NumberStyles.Number, CultureInfo.InvariantCulture);
-
-        OnHandleSensibility?.Invoke(AngleThreshold);
-    }
-
-    public void HandleSpeedMultplierChanged(string newValue)
-    {
-        var clenedStr = newValue.Trim();
-        SpeedMultiplier = float.Parse(clenedStr, NumberStyles.Number, CultureInfo.InvariantCulture);
-
-        OnSpeedMultiplierChanged?.Invoke(SpeedMultiplier);
-    }
-
-    public float MinAngle { get; set; }
-    public float MaxAngle { get; set; }
-    public float AngleThreshold { get; set; }
-
-    public float SpeedMultiplier { get; set; }
-    public float Speed => speed;
-
-    public float RawAngle => _rawAngle;
-    public float HandleAngle => handlebarRotation;
 }

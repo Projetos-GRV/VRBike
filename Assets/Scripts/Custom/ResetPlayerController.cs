@@ -12,6 +12,7 @@ public class ResetPlayerController : MonoBehaviour
     [SerializeField] private Transform _cameraReference;
 
     [SerializeField] private SyncVirtualObjectController _temp;
+    [SerializeField] private CustomBikeMovement _customBikeMovement;
 
     [Header("Parameters")]
     [SerializeField] private int _timeToReset = 3;
@@ -36,6 +37,7 @@ public class ResetPlayerController : MonoBehaviour
 
     public void StartResetProcess()
     {
+        /*
         if (_resetCoroutine != null)
             StopCoroutine(_resetCoroutine);
 
@@ -44,6 +46,15 @@ public class ResetPlayerController : MonoBehaviour
         {
             StartCoroutine(ResetCoroutine());
         }, null);
+
+        */
+
+        if (_customBikeMovement.IsMoving) return;
+
+        if (_resetCoroutine != null)
+            StopCoroutine(_resetCoroutine);
+
+        StartCoroutine(ResetCoroutine());
     }
 
     private IEnumerator ResetCoroutine()

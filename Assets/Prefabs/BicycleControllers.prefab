@@ -206,6 +206,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   listenPortSpeed: 8000
   listenPortAngle: 8001
+  gyroAxis: 3
 --- !u!1 &6112790598335588479
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,8 +317,8 @@ Transform:
   m_Children:
   - {fileID: 637481541620438779}
   - {fileID: 5018076723211144240}
-  - {fileID: 419577587084444991}
   - {fileID: 7874253667044482423}
+  - {fileID: 419577587084444991}
   - {fileID: 810219483458319970}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -367,6 +368,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHandlebarAngle: 80
+  wheelRadius: 0
 --- !u!114 &2907597043881909420
 MonoBehaviour:
   m_ObjectHideFlags: 0

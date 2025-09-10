@@ -20,7 +20,9 @@ public class ResetTriggerController : MonoBehaviour
     [SerializeField] private GameObject _uiInstance;
     [SerializeField] private GameObject _uiView;
     [SerializeField] private Slider _sliderProgress;
-    
+
+    private bool _leftTrigger = false;
+    private bool _rightTrigger = false;
 
     private float _gazeTimer = 0f;            // Contador interno
 
@@ -28,7 +30,7 @@ public class ResetTriggerController : MonoBehaviour
     {
         _uiView.SetActive(false);
     }
-
+    /*
     void Update()
     {
         // Faz o raycast a partir da posição da cabeça, na direção do olhar
@@ -59,6 +61,34 @@ public class ResetTriggerController : MonoBehaviour
         _gazeTimer = 0f;
         _sliderProgress.value = 0f;
         _uiView.SetActive(false);
+    }
+    */
+    public void HandleLeftTrigger(bool newValue)
+    {
+        _leftTrigger = newValue;
+
+        Debug.Log($"Left  {newValue}");
+
+        if (_leftTrigger && _rightTrigger)
+        {
+            onGazeTrigger?.Invoke();
+
+            _leftTrigger = _rightTrigger = false;
+        }
+    }
+
+    public void HandleRightTrigger(bool newValue)
+    {
+        _rightTrigger = newValue;
+
+        Debug.Log($"Right  {newValue}");
+
+        if (_leftTrigger && _rightTrigger)
+        {
+            onGazeTrigger?.Invoke();
+
+            _leftTrigger = _rightTrigger = false;
+        }
     }
 
     private void OnDrawGizmos()

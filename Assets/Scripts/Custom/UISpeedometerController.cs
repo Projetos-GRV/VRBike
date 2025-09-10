@@ -7,7 +7,7 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 public class UISpeedometerController : MonoBehaviour
 {
     [Header("Reference")]
-    [SerializeField] private BicycleUDPMovementSource _dataSource;
+    [SerializeField] private CustomBikeMovimentSource _dataSource;
 
     [Header("Virtual Buttons")]
     [SerializeField] private FingerButtonController _btnToggleSpeed;

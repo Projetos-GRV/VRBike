@@ -1,6 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
+/*
+using System.IO.Ports;*/
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.InputSystem; // provavelmente sera desnecessario.... ja que o movimento n�o vir� de um controle.......
@@ -9,6 +12,7 @@ using UnityEngine.InputSystem; // provavelmente sera desnecessario.... ja que o 
 public class BicycleExternalMovementSource : MonoBehaviour, IBicycleMovementSource
 {
     public float maxHandlebarAngle = 80.0f;
+    public float wheelRadius = 0;
 
     private const int baudRate = 9600;      // tenho nem ideia
     private const string portName = "COM3";      // Porta serial
@@ -59,6 +63,19 @@ public class BicycleExternalMovementSource : MonoBehaviour, IBicycleMovementSour
         }*/
     }
 
+    // para teste com o oculus de realidade virtual caso nao seja possivel pegar a velocidade pela bicicleta
+    public void SetSpeed(float speed)
+    {
+        if (speed == 0)
+        {
+            this.speed = 0;
+        }
+        else
+        {
+            this.speed += speed;
+        }
+    }
+
     // provavelmente sera aqui onde os movimentos da bicicleta serao buscados e atualizados
     void Update()
     {/*
@@ -66,32 +83,34 @@ public class BicycleExternalMovementSource : MonoBehaviour, IBicycleMovementSour
         {
             return;
         }
-
-        this.handlebarRotation = ReadHandlebarSensor();
-        this.speed = ReadSpeedSensor();
+        */
+        ReadSensors();
+        if (Debug.isDebugBuild)
+        {
+            Debug.Log(this.handlebarRotation);
+            Debug.Log(this.speed);
+        }
         
         Vector3 tmp = Vector3.forward;
         tmp = Quaternion.AngleAxis(this.handlebarRotation, Vector3.up) * tmp;
         this.direction.x = tmp.x;
-        this.direction.y = tmp.z;*/
+        this.direction.y = tmp.z;
     }
 
-    private float ReadHandlebarSensor()
+    private float ReadSensors()
     {
-        int dir = 0;
         float angle = 0;/*
+        float speed = 0;
         try
         {
-            string input = this.handlebarSensor.ReadLine();
-            int value = int.Parse(Regex.Replace(input.Trim(), "[^0-9]", ""));
-            dir = value / 100;
+            string[] inputs = Regex.Replace(this.handlebarSensor.ReadLine(), "[^0-9;]", "").Split(";");
+         
+            float speedIn = float.Parse(inputs[0], CultureInfo.InvariantCulture);
+            float angleIn = float.Parse(inputs[1], CultureInfo.InvariantCulture);
 
-            float t = (dir - angleZero) / angleZero;
-            //Debug.Log(t);
-            //float t = (dir) / (2 * angleZero); // soh sei que parece funcionar
-            //angle = -Mathf.Lerp(-maxHandlebarAngle, maxHandlebarAngle, t); // ta invertido
-            angle = Map(-80.0f, 80.0f, -0.65f, 0.65f, -t); // t precisa ser invertido
-            //Debug.Log(angle);
+            float t = angleIn;
+            angle = Map(-this.maxHandlebarAngle, this.maxHandlebarAngle, 0, 1023, t); // t NAO precisa mais ser invertido
+            speed = speedIn;
         }
         catch (System.TimeoutException e)
         {
@@ -106,13 +125,10 @@ public class BicycleExternalMovementSource : MonoBehaviour, IBicycleMovementSour
             {
                 Debug.Log(e.Message);
             }
-        }*/
+        }
+        this.handlebarRotation = angle;
+        this.speed = speed * 5.0f;*/
         return angle;
-    }
-
-    private float ReadSpeedSensor()
-    {
-        return 0.0f;
     }
 
     // alternativa pro Lerp. Retirada dos forums da Unity

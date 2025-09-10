@@ -24,8 +24,9 @@ public class MainMenuController : MonoBehaviour
 
     private void Awake()
     {
+        /*
         _menuActionReference.action.performed += Action_performed;
-        
+        */
         _view.SetActive(false);
     }
 

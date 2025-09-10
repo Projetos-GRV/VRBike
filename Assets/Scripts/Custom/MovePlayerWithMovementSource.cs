@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 [Serializable]
 public class MovePlayerWithMovementSource : MonoBehaviour
 {
-    [Tooltip("O primeiro controlador filho eh escolhido como o objeto controlador. Eh daqui que serao retirados ambos angulo do guidao e velocidade usados para movimentar a bicicleta. Todos os GameObjects filhos devem conter um script que implemente a interface IBicycleMovementSource.")]
+    [Tooltip("O primeiro controlador filho eh escolhido como o objeto controlador. Os outros serao desativados. Eh daqui que serao retirados ambos angulo do guidao e velocidade usados para movimentar a bicicleta. Todos os GameObjects filhos devem conter um script que implemente a interface IBicycleMovementSource.")]
     public GameObject bicycleControllersObject;
 
     [Tooltip("Opcional. Pode ser nulo.")]
@@ -20,16 +20,20 @@ public class MovePlayerWithMovementSource : MonoBehaviour
     public Transform pedals;
     [Tooltip("Caso habilitado, havera uma tentativa de animar os Transforms correspondentes a diferentes partes da bicicleta (ex.: as rodas). Sugere-se habilitar animacoes somente quando for utilizado o modelo de bicicleta azul (na pasta Sir_bike em assets)")]
     public bool animate = false;
-    
+    [Tooltip("Multiplicador de velocidade. Serve para aumentar/reduzir a velocidade da bicicleta para que coincida com a escala do mundo/da bicicleta.")]
+    public float speedMultiplier = 1f;
+    [Tooltip("Velocidade maxima que a bicicleta podera percorrer. Para regular o conforto da experiencia.")]
+    public float maxSpeed = Mathf.Infinity;
     private IBicycleMovementSource movementSource;
     private Rigidbody rb;
     private Vector3 handlebarDefaultRotation;
 
-    private bool _isEnabled = false;
-
     void Start()
     {
         this.rb = this.GetComponent<Rigidbody>();
+        // TODO - considerar se isso deve ser feito ou nao... evita que a bicicleta rotacione ao colidir com algo
+        rb.inertiaTensor = Vector3.zero;
+        rb.inertiaTensorRotation = Quaternion.Euler(0, 0, 0);
         if (this.rb == null)
         {
             Debug.LogError("This GameObject does not have a Rigidbody component.");
@@ -40,10 +44,13 @@ public class MovePlayerWithMovementSource : MonoBehaviour
             GameObject movementSourceObject = null;
             foreach (Transform child in this.bicycleControllersObject.transform)
             {
-                if (child.gameObject.activeSelf)
+                if (movementSourceObject != null)
+                {
+                    child.gameObject.SetActive(false);
+                }
+                else if (child.gameObject.activeSelf)
                 {
                     movementSourceObject = child.gameObject;
-                    break;
                 }
             }
             IBicycleMovementSource moveSource = movementSourceObject.GetComponent<IBicycleMovementSource>();
@@ -63,13 +70,11 @@ public class MovePlayerWithMovementSource : MonoBehaviour
     // RigidBody
     void FixedUpdate()
     {
-        /*
-        if (this.movementSource == null || !_isEnabled)
+        if (this.movementSource == null)
         {
             return;
         }
-
-        float speed = this.movementSource.GetSpeed();
+        float speed = Mathf.Min(this.maxSpeed, this.movementSource.GetSpeed()) * this.speedMultiplier;
         float rotation = this.movementSource.GetHandlebarRotation();
         //Quaternion rotationToDir = Quaternion.LookRotation(Time.fixedDeltaTime * rotated, Vector3.up);
         //rb.rotation = rotationToDir;
@@ -94,12 +99,11 @@ public class MovePlayerWithMovementSource : MonoBehaviour
             //float handleAngle = this.movementSource.GetHandlebarRotation();
             //Debug.Log("MSource angle: " + handleAngle + "\nThis angle: " + angle);
         }
-        */
     }
 
     void LateUpdate()
     {
-        if (this.animate && this.movementSource != null && _isEnabled)
+        if (this.animate && this.movementSource != null)
         {
             Animate();
         }
@@ -107,9 +111,9 @@ public class MovePlayerWithMovementSource : MonoBehaviour
 
     private void Animate()
     {
-        float speed = this.movementSource.GetSpeed();
+        float speed = this.movementSource.GetSpeed() * this.speedMultiplier;
         float angle = this.movementSource.GetHandlebarRotation();
-        float wheelRadius = 0.3f; // um chute.
+        float wheelRadius = 0.5f; // um chute.
 
         float rotSpeed = speed / (2.0f * Mathf.PI * wheelRadius); // rotacoes por segundo
         if (this.handlebar != null)
@@ -129,7 +133,8 @@ public class MovePlayerWithMovementSource : MonoBehaviour
         if (this.pedals != null)
         {
             // 0.25f ~ valor aproximado do raio da circunferencia que os pedais formam quando rotacionam (medicao tambem empirica)
-            float pedalSpeed = speed / (2.0f * Mathf.PI * 0.25f);
+            // float pedalSpeed = speed / (2.0f * Mathf.PI * 0.25f);
+            float pedalSpeed = rotSpeed;
             this.pedals.RotateAround(this.pedals.position, this.pedals.right, 360 * pedalSpeed * Time.deltaTime);
             if (this.pedals.childCount > 0)
             {
@@ -139,15 +144,5 @@ public class MovePlayerWithMovementSource : MonoBehaviour
                 }
             }
         }
-    }
-
-    public void DisableTracking()
-    {
-        _isEnabled = false;
-    }
-
-    public void EnableTracking()
-    {
-        _isEnabled = true;
     }
 }

@@ -259,9 +259,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2510993130956297639}
-  - component: {fileID: 2749841267075577737}
-  - component: {fileID: 4149755664384337393}
-  - component: {fileID: 2889019468824299187}
+  - component: {fileID: 2213531438739770070}
   m_Layer: 0
   m_Name: Bicycle
   m_TagString: Untagged
@@ -292,7 +290,7 @@ Transform:
   - {fileID: 7104902281763879652}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2749841267075577737
+--- !u!114 &2213531438739770070
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -301,65 +299,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2510993130956720519}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0081761357ac9cd4d88a7fe02e30f5df, type: 3}
+  m_Script: {fileID: 11500000, guid: 72419021866dd5247bc729fc2a84f27b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bicycleControllersObject: {fileID: 0}
-  handlebar: {fileID: 7104902281763879652}
-  backWheel: {fileID: 2510993130956297663}
-  frontWheel: {fileID: 2510993130956297661}
-  pedals: {fileID: 2510993130956297655}
-  animate: 0
---- !u!136 &4149755664384337393
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2510993130956720519}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2.5
-  m_Direction: 2
-  m_Center: {x: 0, y: 0.5, z: 0.15}
---- !u!54 &2889019468824299187
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2510993130956720519}
-  serializedVersion: 4
-  m_Mass: 2
-  m_Drag: 1
-  m_AngularDrag: 1
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 0, y: Infinity, z: Infinity}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 0
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 1
-  m_Constraints: 84
-  m_CollisionDetection: 2
+  bicycle: {fileID: 0}
 --- !u!1 &2510993130956720521
 GameObject:
   m_ObjectHideFlags: 0

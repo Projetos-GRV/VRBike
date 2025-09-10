@@ -1,6 +1,7 @@
 using TMPro;
 using Unity.XR.CoreUtils;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class SyncVirtualObjectController : MonoBehaviour
@@ -15,6 +16,9 @@ public class SyncVirtualObjectController : MonoBehaviour
 
     [Header("Objeto virtual a alinhar")]
     public Transform virtualObject;
+
+    [Header("Events")]
+    public UnityEvent OnBikeAlign;
 
     public void UpdateBikePosition()
     {
@@ -46,6 +50,8 @@ public class SyncVirtualObjectController : MonoBehaviour
             Vector3 euler = (targetRot * virtualObject.rotation).eulerAngles;
             virtualObject.rotation = Quaternion.Euler(0, euler.y, 0);
         }
+
+        OnBikeAlign?.Invoke();
     }
 
 }

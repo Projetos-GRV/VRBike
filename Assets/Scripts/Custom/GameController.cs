@@ -7,7 +7,7 @@ public class GameController : MonoBehaviour
 {
     [Header("Component to load Data")]
     [SerializeField] private UIMainMenuController _uiMainMenuController;
-    [SerializeField] private BicycleUDPMovementSource _bikeDataSource;
+    [SerializeField] private CustomBikeMovimentSource _bikeDataSource;
 
     [SerializeField] private GameSettingsSO _gameSettins;
 

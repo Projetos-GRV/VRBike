@@ -481,7 +481,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8396348978054724942}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BicycleUDPMovementSource, Assembly-CSharp
         m_MethodName: SetDefaultSpeed
         m_Mode: 4
@@ -1872,7 +1872,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8396348978054724942}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BicycleUDPMovementSource, Assembly-CSharp
         m_MethodName: SetDefaultSpeed
         m_Mode: 4
@@ -1922,6 +1922,79 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 158986878}
   m_CullTransparentMesh: 1
+--- !u!1001 &159124673
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 907372126}
+    - target: {fileID: 4315321456427786485, guid: 21231be6d89b11f4a858cc33bee8babf, type: 3}
+      propertyPath: m_Name
+      value: CityGenerator
+      objectReference: {fileID: 0}
+    - target: {fileID: 8431953022651722976, guid: 21231be6d89b11f4a858cc33bee8babf, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.675
+      objectReference: {fileID: 0}
+    - target: {fileID: 8431953022651722976, guid: 21231be6d89b11f4a858cc33bee8babf, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.675
+      objectReference: {fileID: 0}
+    - target: {fileID: 8431953022651722976, guid: 21231be6d89b11f4a858cc33bee8babf, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.675
+      objectReference: {fileID: 0}
+    - target: {fileID: 8431953022651722976, guid: 21231be6d89b11f4a858cc33bee8babf, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8431953022651722976, guid: 21231be6d89b11f4a858cc33bee8babf, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8431953022651722976, guid: 21231be6d89b11f4a858cc33bee8babf, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8431953022651722976, guid: 21231be6d89b11f4a858cc33bee8babf, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8431953022651722976, guid: 21231be6d89b11f4a858cc33bee8babf, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8431953022651722976, guid: 21231be6d89b11f4a858cc33bee8babf, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8431953022651722976, guid: 21231be6d89b11f4a858cc33bee8babf, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8431953022651722976, guid: 21231be6d89b11f4a858cc33bee8babf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8431953022651722976, guid: 21231be6d89b11f4a858cc33bee8babf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8431953022651722976, guid: 21231be6d89b11f4a858cc33bee8babf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 21231be6d89b11f4a858cc33bee8babf, type: 3}
 --- !u!1 &187256974
 GameObject:
   m_ObjectHideFlags: 0
@@ -2028,6 +2101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cameraReference: {fileID: 657184243457965209}
   _temp: {fileID: 1420800995}
+  _customBikeMovement: {fileID: 1548009470}
   _timeToReset: 3
   _uiDistanceFromHMD: 1.5
   _timeToConfirm: 5
@@ -2454,7 +2528,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8396348978054724942}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BicycleUDPMovementSource, Assembly-CSharp
         m_MethodName: SetDefaultSpeed
         m_Mode: 4
@@ -4367,7 +4441,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnRightThumbsUpEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1624030637}
+        m_TargetAssemblyTypeName: ResetTriggerController, Assembly-CSharp
+        m_MethodName: HandleRightTrigger
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnRightPalmUpEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -4379,7 +4465,19 @@ MonoBehaviour:
       m_Calls: []
   OnLeftThumbsUpEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1624030637}
+        m_TargetAssemblyTypeName: ResetTriggerController, Assembly-CSharp
+        m_MethodName: HandleLeftTrigger
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnLeftFistEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -5556,7 +5654,7 @@ MonoBehaviour:
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8396348978054724942}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BicycleUDPMovementSource, Assembly-CSharp
         m_MethodName: HandleSpeedMultplierChanged
         m_Mode: 0
@@ -5977,7 +6075,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8396348978054724942}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BicycleUDPMovementSource, Assembly-CSharp
         m_MethodName: SetDefaultSpeed
         m_Mode: 4
@@ -6258,7 +6356,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _uiMainMenuController: {fileID: 1726168286}
-  _bikeDataSource: {fileID: 8396348978054724942}
+  _bikeDataSource: {fileID: 5486209586526878830}
   _gameSettins: {fileID: 11400000, guid: f30fdda4087e58248bb0254f57101f88, type: 2}
 --- !u!1 &828827891
 GameObject:
@@ -6318,7 +6416,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!223 &828827894
 Canvas:
   m_ObjectHideFlags: 0
@@ -6350,7 +6448,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 828827891}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.5190425}
+  m_LocalPosition: {x: 0, y: 0, z: 1.8870425}
   m_LocalScale: {x: 0.001, y: 0.001, z: 0.001}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6360,7 +6458,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -3.7152157, y: 1.0458102}
+  m_AnchoredPosition: {x: -5.0192156, y: 0.045810282}
   m_SizeDelta: {x: 1000, y: 700}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &842433176
@@ -6796,7 +6894,7 @@ GameObject:
   - component: {fileID: 907372124}
   - component: {fileID: 907372123}
   m_Layer: 3
-  m_Name: Bicycle (1)
+  m_Name: Bicycle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6998,7 +7096,7 @@ RectTransform:
   m_Father: {fileID: 1870395212}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -8359,7 +8457,7 @@ Transform:
   m_GameObject: {fileID: 1133211031}
   serializedVersion: 2
   m_LocalRotation: {x: 0.18389988, y: -0, z: -0, w: 0.982945}
-  m_LocalPosition: {x: -0.321, y: 0.1157, z: 0.0714}
+  m_LocalPosition: {x: -0.321, y: 0.11, z: 0.061}
   m_LocalScale: {x: 0.051509976, y: 0.051509976, z: 0.051509976}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8778,7 +8876,7 @@ Transform:
   m_GameObject: {fileID: 1212629437}
   serializedVersion: 2
   m_LocalRotation: {x: 0.18389988, y: -0, z: -0, w: 0.982945}
-  m_LocalPosition: {x: 0.3245, y: 0.1157, z: 0.0714}
+  m_LocalPosition: {x: 0.3245, y: 0.113, z: 0.059}
   m_LocalScale: {x: 0.051509976, y: 0.051509976, z: 0.051509976}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9954,6 +10052,9 @@ MonoBehaviour:
   virtualPointA: {fileID: 1133211032}
   virtualPointB: {fileID: 1212629438}
   virtualObject: {fileID: 907372126}
+  OnBikeAlign:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1420800996
 Transform:
   m_ObjectHideFlags: 0
@@ -10594,7 +10695,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1493553987
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11046,7 +11147,7 @@ GameObject:
   - component: {fileID: 1548009471}
   - component: {fileID: 1548009470}
   m_Layer: 0
-  m_Name: Teste Custom Bike Movement
+  m_Name: Custom Bike Movement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11064,8 +11165,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcadf9eba8fb611408244bffd6f29c62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dataSource: {fileID: 8396348978054724942}
+  _dataSource: {fileID: 5486209586526878830}
   _playerParent: {fileID: 2218496724783588805}
+  _playerRotationHelper: {fileID: 6468442521682985179}
   _bikeRigidbody: {fileID: 907372123}
   _bikeParent: {fileID: 907372126}
   _handle: {fileID: 339132955}
@@ -11073,11 +11175,11 @@ MonoBehaviour:
   _backWheel: {fileID: 88863252}
   _pedal: {fileID: 383790649}
   _turnSpeed: 50
-  _handleInfluence: 1
+  _handleInfluence: 1.2
   _wheelRadius: 0.3
   _pedalMultiplier: 2
   _minHandleDiff: 2
-  _rotationSpeed: 5
+  _rotationSpeed: 1
   _speed: 0
   _handleAngle: 0
 --- !u!4 &1548009471
@@ -11691,7 +11793,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b021fd6b0309e2d4ca83deabfcc70667, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dataSource: {fileID: 8396348978054724942}
+  _dataSource: {fileID: 5486209586526878830}
   _btnToggleSpeed: {fileID: 1858327279}
   _btnDecreaseSpeed: {fileID: 4735022077540900990}
   _btnIncreaseSpeed: {fileID: 8320020762362690789}
@@ -11726,14 +11828,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1624030634}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.22625619, y: -0, z: -0, w: 0.9740679}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.119639546, y: -0, z: -0, w: 0.9928174}
+  m_LocalPosition: {x: -0.00000014901161, y: -0.22, z: -0.59078276}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1493553987}
   m_Father: {fileID: 402941656}
-  m_LocalEulerAnglesHint: {x: -26.154, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -13.743, y: 0, z: 0}
 --- !u!114 &1624030636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11769,9 +11871,9 @@ MonoBehaviour:
   onGazeTrigger:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1420800995}
-        m_TargetAssemblyTypeName: SyncVirtualObjectController, Assembly-CSharp
-        m_MethodName: UpdateBikePosition
+      - m_Target: {fileID: 192241012}
+        m_TargetAssemblyTypeName: ResetPlayerController, Assembly-CSharp
+        m_MethodName: StartResetProcess
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12297,7 +12399,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8396348978054724942}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BicycleUDPMovementSource, Assembly-CSharp
         m_MethodName: SaveMaxValue
         m_Mode: 1
@@ -12487,7 +12589,7 @@ RectTransform:
   m_Father: {fileID: 1401188160}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -13404,8 +13506,8 @@ MonoBehaviour:
   _timeBetweenEvents: 0.5
   _isToggle: 1
   _isOn: 0
---- !u!64 &1858327280
-MeshCollider:
+--- !u!65 &1858327280
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -13422,10 +13524,9 @@ MeshCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -305450652082985297, guid: 7cb593676cda1694595e9cc6c919771e, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 0.3541926, y: 0.047698002, z: 0.24574144}
+  m_Center: {x: 0.00029699822, y: 0.008988562, z: 0.49799386}
 --- !u!1 &1870395211
 GameObject:
   m_ObjectHideFlags: 0
@@ -14570,7 +14671,7 @@ MonoBehaviour:
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8396348978054724942}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BicycleUDPMovementSource, Assembly-CSharp
         m_MethodName: HandleAngleThreshold
         m_Mode: 0
@@ -14740,7 +14841,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8396348978054724942}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BicycleUDPMovementSource, Assembly-CSharp
         m_MethodName: SaveMinValue
         m_Mode: 1
@@ -16569,8 +16670,8 @@ Transform:
   m_GameObject: {fileID: 919132147554518059}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.97990507, z: -0.1994643, w: 0}
-  m_LocalPosition: {x: 0, y: 0.1418, z: 0.0858}
-  m_LocalScale: {x: 0.047335703, y: 0.047335703, z: 0.047335703}
+  m_LocalPosition: {x: 0, y: 0.1771, z: 0.0762}
+  m_LocalScale: {x: 0.07327567, y: 0.07327567, z: 0.07327567}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7240523463038599602}
@@ -18076,12 +18177,12 @@ MonoBehaviour:
       m_Name: Left Hand Move
       m_Type: 0
       m_ExpectedControlType: Vector2
-      m_Id: 16c2fabb-fb1c-4a11-94d0-0b1d894b8593
+      m_Id: 9ebbadfe-ecc7-40be-ae89-967b00604dfe
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_InputActionReference: {fileID: 6972639530819350904, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+    m_InputActionReference: {fileID: 0}
     m_ObjectReferenceObject: {fileID: 0}
     m_ManualValue: {x: 0, y: 0}
   m_RightHandMoveInput:
@@ -18090,12 +18191,12 @@ MonoBehaviour:
       m_Name: Right Hand Move
       m_Type: 0
       m_ExpectedControlType: Vector2
-      m_Id: af2e3d83-024e-4a1f-8bc1-f97f0b4ae1d5
+      m_Id: d7d1f5ee-5e9d-4aac-9153-8325b79cfd8a
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_InputActionReference: {fileID: -8198699208435500284, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+    m_InputActionReference: {fileID: 0}
     m_ObjectReferenceObject: {fileID: 0}
     m_ManualValue: {x: 0, y: 0}
   m_UseGravity: 1
@@ -21732,6 +21833,7 @@ GameObject:
   - component: {fileID: 6008492304163224164}
   - component: {fileID: 6468442521682985178}
   - component: {fileID: 5531948733094828426}
+  - component: {fileID: 6468442521682985179}
   m_Layer: 2
   m_Name: XR Origin Hands (XR Rig)
   m_TagString: Untagged
@@ -24941,7 +25043,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4598560320683227878, guid: e68d415321c105a43bd678422d5d0d10, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6692927105065456828, guid: e68d415321c105a43bd678422d5d0d10, type: 3}
       propertyPath: m_LocalPosition.x
@@ -29272,6 +29374,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHandlebarAngle: 80
+  wheelRadius: 0
 --- !u!4 &4804908331291286970
 Transform:
   m_ObjectHideFlags: 0
@@ -30643,14 +30746,53 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3314465989291322315}
-  - component: {fileID: 8396348978054724942}
+  - component: {fileID: 5486209586526878830}
   m_Layer: 0
-  m_Name: UDPController
+  m_Name: CustomUDPController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &5486209586526878830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5486209586526878829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2db237f4a99e8f14eb8914e024ff3ec5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  listenPortAngle: 5000
+  _useKeyboardForSpeed: 0
+  _minAngle: -45
+  _maxAngle: 45
+  _invertSide: 0
+  _useKeyboardForRotation: 0
+  OnMinAngleChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnMaxAngleChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSpeedChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAngleChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSpeedMultiplierChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHandleSensibility:
+    m_PersistentCalls:
+      m_Calls: []
+  _fakeAngle: 780
+  _fakeSpeed: 0
+  _useFakeData: 0
 --- !u!224 &5486579213339758856
 RectTransform:
   m_ObjectHideFlags: 0
@@ -33029,6 +33171,22 @@ MonoBehaviour:
   m_MotionControllerModeEnded:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6468442521682985179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2218496724783588806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d80cb9d1ebaefa429c1ed3684102c21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  extraRotation: {x: 0, y: 0, z: 0}
+  _rotationSpeed: 20
+  _invertSignal: 0
+  _useScript: 1
 --- !u!1 &6470874618781587748
 GameObject:
   m_ObjectHideFlags: 0
@@ -37677,45 +37835,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &8396348978054724942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5486209586526878829}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f641aeb014deec42ae105bcc5eebfda, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  listenPortAngle: 5000
-  _useKeyboardForSpeed: 0
-  _minAngle: -45
-  _maxAngle: 45
-  _invertSide: 1
-  _useKeyboardForRotation: 0
-  OnMinAngleChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  OnMaxAngleChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  OnSpeedChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  OnAngleChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  OnSpeedMultiplierChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  OnHandleSensibility:
-    m_PersistentCalls:
-      m_Calls: []
-  _fakeAngle: 50
-  _fakeSpeed: 0
-  _useFakeData: 0
 --- !u!222 &8400467603429034667
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -39518,3 +39637,4 @@ SceneRoots:
   - {fileID: 987035220}
   - {fileID: 1958262859}
   - {fileID: 258742959}
+  - {fileID: 159124673}

@@ -5,10 +5,11 @@ using UnityEngine;
 public class CustomBikeMovement : MonoBehaviour
 {
     [Header("Network")]
-    [SerializeField] private BicycleUDPMovementSource _dataSource;
+    [SerializeField] private CustomBikeMovimentSource _dataSource;
 
     [Header("Player")]
     [SerializeField] private Transform _playerParent;
+    [SerializeField] private CancelParentRotation _playerRotationHelper;
 
     [Header("Bike")]
     [SerializeField] private Rigidbody _bikeRigidbody;
@@ -53,8 +54,12 @@ public class CustomBikeMovement : MonoBehaviour
             }
             else if (!_isMoving)
             {
-                _playerParent.parent = _bikeParent;
                 _offsetYaw = _bikeParent.localEulerAngles.y;
+
+                _playerRotationHelper.SetReference(_offsetYaw);
+
+                _currentYaw = 0;
+                _playerParent.parent = _bikeParent;
 
                 _isMoving = true;
             }
@@ -89,7 +94,8 @@ public class CustomBikeMovement : MonoBehaviour
 
             // move para frente no mundo
             _bikeParent.position += _bikeParent.forward * _speed * Time.deltaTime;
-            
+
+            _playerRotationHelper.UpdateRotaion(_currentYaw);
 
             AnimateWheelsAndPedal();
         }
@@ -122,4 +128,5 @@ public class CustomBikeMovement : MonoBehaviour
     public float Speed { get => _speed; set => _speed = value; }
 
     public float HandleAngle { get => _handleAngle; set => _handleAngle = value; }
+    public bool IsMoving => _isMoving;
 }

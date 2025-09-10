@@ -63,7 +63,7 @@
                     "name": "Eye Gaze Is Tracked",
                     "type": "Button",
                     "id": "ea26ba43-844b-4585-817a-2f124b571813",
-                    "expectedControlType": "",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -1545,24 +1545,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
-                },
-                {
-                    "name": "Add Point",
-                    "type": "Button",
-                    "id": "c32c8b99-c2e4-485a-97e5-a58c4710c060",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Save",
-                    "type": "Button",
-                    "id": "21650c82-b33c-4d88-9d4f-db1eb2787269",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1970,28 +1952,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Thumbstick",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "ce9a5afc-669f-4111-a64f-12ef48766c8f",
-                    "path": "<XRInputV1::Oculus::MetaQuestTouchPlusControllerOpenXR>{RightHand}/primarybutton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Save",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "c9869cb3-90fc-4a5e-b805-b6652b2fb68f",
-                    "path": "<XRInputV1::Oculus::MetaQuestTouchPlusControllerOpenXR>{RightHand}/secondarybutton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Add Point",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -2644,15 +2604,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Menu",
-                    "type": "Button",
-                    "id": "f3cddc4f-5f5d-4350-a1c9-44d2fcac1071",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -3038,17 +2989,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Click",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "28ab448b-46e2-4c8b-9ef1-8f23ba20c469",
-                    "path": "<QuestTouchPlusController>{LeftHand}/menu",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Menu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -3455,34 +3395,6 @@
                     "action": "Spawn Object",
                     "isComposite": false,
                     "isPartOfComposite": true
-                }
-            ]
-        },
-        {
-            "name": "Custom Movement",
-            "id": "0438c9bb-da21-4847-b4ee-be3add3c7b40",
-            "actions": [
-                {
-                    "name": "CustomRotation",
-                    "type": "Value",
-                    "id": "dd0353b7-c9d0-4de3-aa47-858e90cb323a",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "089704eb-c492-42d2-9053-9d0ddc43e829",
-                    "path": "<XRController>/{Secondary2DAxisTouch}",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "CustomRotation",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 }
             ]
         }
