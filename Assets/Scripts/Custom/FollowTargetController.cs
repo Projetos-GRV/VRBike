@@ -6,25 +6,21 @@ public class FollowTargetController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Transform _target;
+    [SerializeField] private Transform _element;
 
-    [Header("Rotation Parameters")]
-    [SerializeField] private bool _followRotation;
-    [SerializeField] private bool _rotationX;
-    [SerializeField] private bool _rotationY;
-    [SerializeField] private bool _rotationZ;
-
+    [Header("Parameters")]
+    [SerializeField] private bool _useTargetLocalPosition;
+    [SerializeField] private float _distance = 1.5f;
+    [SerializeField] private float _followSpeed = 1f;
 
     private void Update()
     {
-        if (_followRotation)
-        {
-            var eulerAngles = transform.eulerAngles;
+        if (_target == null || _element == null) return;
 
-            eulerAngles.x = _rotationX ? _target.eulerAngles.x : eulerAngles.x;
-            eulerAngles.y = _rotationY ? _target.eulerAngles.y : eulerAngles.y;
-            eulerAngles.z = _rotationZ ? _target.eulerAngles.z : eulerAngles.z;
-
-            transform.eulerAngles = eulerAngles;
-        }
+        var newPosition = _target.position + _target.forward * _distance;
+        var newRotation = Quaternion.LookRotation(_element.position - _target.position, Vector3.up);
+        
+        _element.position = Vector3.Lerp(_element.position, newPosition, Time.deltaTime * _followSpeed);
+        _element.rotation = Quaternion.Lerp(_element.rotation, newRotation, Time.deltaTime * _followSpeed);
     }
 }

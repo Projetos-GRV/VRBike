@@ -8,6 +8,7 @@ public class BuildingSettingsController : MonoBehaviour
     [Header("UI")]
     [SerializeField] private List<Image> _imgBanners;
 
+
     [Header("Parameters")]
     [SerializeField] private List<ResearchGroupSO> _researchGroupsSOs;
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -27,15 +28,8 @@ public class ResetPlayerController : MonoBehaviour
 
     private Coroutine _resetCoroutine;
 
-    private void Update()
-    {
-        if (Keyboard.current.iKey.wasPressedThisFrame)
-        {
-            StartResetProcess();
-        }
-    }
 
-    public void StartResetProcess()
+    public void StartResetProcess(Action onCompleted, Action onError)
     {
         /*
         if (_resetCoroutine != null)
@@ -49,15 +43,19 @@ public class ResetPlayerController : MonoBehaviour
 
         */
 
-        if (_customBikeMovement.IsMoving) return;
+        if (_customBikeMovement.IsMoving)
+        {
+            onError?.Invoke();
+            return;
+        }
 
         if (_resetCoroutine != null)
             StopCoroutine(_resetCoroutine);
 
-        StartCoroutine(ResetCoroutine());
+        StartCoroutine(ResetCoroutine(onCompleted));
     }
 
-    private IEnumerator ResetCoroutine()
+    private IEnumerator ResetCoroutine(Action onCompleted)
     {
         _uiView.SetActive(true);
 
@@ -78,6 +76,8 @@ public class ResetPlayerController : MonoBehaviour
         } while (time > 0);
 
         _uiView.SetActive(false);
+
+        onCompleted?.Invoke();  
     }
     /*
     private void ResetPlayerPosition()
