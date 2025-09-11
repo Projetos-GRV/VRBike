@@ -12,6 +12,7 @@ public class GameOrchestrator : MonoBehaviour
     private GameObject BicycleControllersResource;
     private GameObject BicycleResource;
     private GameObject CityGeneratorResource;
+    private Material SkyboxResource;
 
 
     private GameObject XRDeviceSimulatorPrefab;
@@ -60,7 +61,7 @@ public class GameOrchestrator : MonoBehaviour
             }
         }
         InstantiateResources();
-
+        RenderSettings.skybox = this.SkyboxResource;
         //this.BicycleResource.SetActive(false);
 
         SetupPlayerAndMovement();
@@ -121,14 +122,15 @@ public class GameOrchestrator : MonoBehaviour
 
     private void LoadResources()
     {
-        this.BicycleControllersResource = (GameObject) Resources.Load("Prefabs/BicycleControllers");
-        this.BicycleResource = (GameObject) Resources.Load("Prefabs/Bicycle");
-        this.CityGeneratorResource = (GameObject) Resources.Load("Prefabs/CityGenerator");
+        this.BicycleControllersResource = (GameObject)Resources.Load("Prefabs/BicycleControllers");
+        this.BicycleResource = (GameObject)Resources.Load("Prefabs/Bicycle");
+        this.CityGeneratorResource = (GameObject)Resources.Load("Prefabs/CityGenerator");
 
-        this.XRInputActionManagerResource = (GameObject) Resources.Load("XR Input Action Manager");
-        this.XRInteractonManagerResource = (GameObject) Resources.Load("XR Interaction Manager");
-        this.XROriginResource = (GameObject) Resources.Load("XR Origin (XR Rig)");
-        this.XRDeviceSimulatorResource = (GameObject) Resources.Load("XR Device Simulator");
+        this.XRInputActionManagerResource = (GameObject)Resources.Load("XR Input Action Manager");
+        this.XRInteractonManagerResource = (GameObject)Resources.Load("XR Interaction Manager");
+        this.XROriginResource = (GameObject)Resources.Load("XR Origin (XR Rig)");
+        this.XRDeviceSimulatorResource = (GameObject)Resources.Load("XR Device Simulator");
+        this.SkyboxResource = (Material)Resources.Load("Skybox/Sky_LowPoly_01_Day_a");
     }
 
     private void UnloadResources()
@@ -141,6 +143,7 @@ public class GameOrchestrator : MonoBehaviour
         //Resources.UnloadAsset(this.XRInteractonManagerResource);
         //Resources.UnloadAsset(this.XROriginResource);
         //Resources.UnloadAsset(this.XRDeviceSimulatorResource);
+        //Resources.UnloadAsset(this.SkyboxResource);
 
     }
 
