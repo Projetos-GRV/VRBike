@@ -1934,6 +1934,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 907372126}
+    - target: {fileID: 1654380785920562686, guid: 21231be6d89b11f4a858cc33bee8babf, type: 3}
+      propertyPath: chunkRadius
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4315321456427786485, guid: 21231be6d89b11f4a858cc33bee8babf, type: 3}
       propertyPath: m_Name
       value: CityGenerator

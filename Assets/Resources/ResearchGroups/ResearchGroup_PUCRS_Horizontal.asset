@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25e0972d07742b94c936d5c4f29ff2d1, type: 3}
+  m_Name: ResearchGroup_PUCRS_Horizontal
+  m_EditorClassIdentifier: 
+  _banner: {fileID: 21300000, guid: 118d80fb699e71f40bc6ad1c11de68c8, type: 3}
