@@ -39,7 +39,6 @@ public class CityGenerator : MonoBehaviour
     private GameObject surroundingLanes;
     private Transform cityParentTransform;
     private Dictionary<Vector3, GameObject> loadedCunks = new Dictionary<Vector3, GameObject>();
-    private Dictionary<Vector2Int, GameObject> streetsRelativeToPlayer = new Dictionary<Vector2Int, GameObject>();
     // Start is called before the first frame update
     void Start()
     {
