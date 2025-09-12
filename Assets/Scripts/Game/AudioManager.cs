@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -6,6 +7,7 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     [SerializeField] private List<AudioSource> _sfxAudioSources;
+    [SerializeField] private AudioSource _themeAudioSource;
 
     private int _currentSFXAudioSourceIndex;
 
@@ -26,5 +28,14 @@ public class AudioManager : MonoBehaviour
         audioSource.Play();
 
         _currentSFXAudioSourceIndex = (_currentSFXAudioSourceIndex + 1) % _sfxAudioSources.Count;
+    }
+
+    public void PlayTheme(AudioClip themeClip, float volume, bool inLoop)
+    {
+        _themeAudioSource.clip = themeClip;
+        _themeAudioSource.volume = volume;
+        _themeAudioSource.loop = inLoop;
+
+        _themeAudioSource.Play();
     }
 }

@@ -7,12 +7,20 @@ public class GameState
     public int MaxPlayerHP;
     public int CurrentPlayerHP;
     public int Score;
+    public float CurrentTime;
+    public float MaxTime;
 
-    public GameState(int maxPlayerHP, int score)
+    private float _firstTim;
+
+    public GameState(int maxPlayerHP, float maxTime)
     {
         MaxPlayerHP = maxPlayerHP;
         CurrentPlayerHP = MaxPlayerHP;
-        Score = score;
+        Score = 0;
+        CurrentTime = 0;
+        MaxTime = maxTime;
+
+        _firstTim = Time.time;
     }
 
     public void TakeDamege()
@@ -24,6 +32,8 @@ public class GameState
     {
         Score += scoreToAdd;
     }
+
+    public float CurrentTimeNormalized => (Time.time - _firstTim) / MaxTime;
 
     public bool IsPlayerAlive() => CurrentPlayerHP > 0;
 }
