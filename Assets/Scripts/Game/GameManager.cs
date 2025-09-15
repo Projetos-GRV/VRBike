@@ -20,9 +20,11 @@ public class GameManager : MonoBehaviour
 
     [Header("Collision")]
     [SerializeField] private string _obstacleTag = "Obstable";
+    [SerializeField] private string _coinTag = "Coin";
 
     [Header("Events")]
     public UnityEvent OnGameStarted;
+    public UnityEvent OnNewGameStarted;
 
     private bool _leftHandTrigger = false;
     private bool _rightHandTrigger = false;
@@ -103,11 +105,16 @@ public class GameManager : MonoBehaviour
             _isRunning = true;
             _gameState = new GameState(_maxPlayerHP, _sessionTime);
             _uiGameHUDController.UpdateHUD(_gameState);
+
+            OnNewGameStarted?.Invoke();
         });
     }
 
     private void HandlePlayerCollision(GameObject gameObject)
     {
+        Debug.Log($"{_isRunning} {_inGaming}   {gameObject.tag}  {gameObject.tag.Equals(_coinTag)}");
+
+
         if (!_isRunning || !_inGaming) return;
 
         if (gameObject.tag.Equals(_obstacleTag) && _canTakeDamage)
@@ -127,6 +134,13 @@ public class GameManager : MonoBehaviour
             {
                 HandleGameOver();
             }
+        }else if (gameObject.tag.Equals(_coinTag))
+        {
+            CoinController collectable = gameObject.GetComponent<CoinController>();
+            _gameState.AddScore(collectable.Value);
+            _uiGameHUDController.UpdateHUD(_gameState);
+
+            collectable?.HandleObjectCollected();
         }
     }
 

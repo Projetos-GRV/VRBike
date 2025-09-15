@@ -117,7 +117,6 @@ public class UIGameHUDController : MonoBehaviour
         int minutes = (int) totalSeconds / 60;
         int seconds = (int)totalSeconds % 60;
 
-        Debug.Log($"{minutes}  {seconds}");
         _txtTimer.text = string.Format("{0}{1:00} : {2:00}", _timerPrefix, minutes, seconds);
     }
 }

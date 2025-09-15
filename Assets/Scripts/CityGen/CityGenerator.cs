@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
+using Unity.XR.CoreUtils;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.Rendering;
 
 // q bagun�a.....
 public class CityGenerator : MonoBehaviour
@@ -40,6 +44,11 @@ public class CityGenerator : MonoBehaviour
     private Transform cityParentTransform;
     private Dictionary<Vector3, GameObject> loadedCunks = new Dictionary<Vector3, GameObject>();
     private Dictionary<Vector2Int, GameObject> streetsRelativeToPlayer = new Dictionary<Vector2Int, GameObject>();
+
+    public HashSet<Transform> StreetPositions = new HashSet<Transform>();
+
+    public UnityEvent<CityGenerator> OnCityChanged;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -156,6 +165,8 @@ public class CityGenerator : MonoBehaviour
             }
         }
         generatingCity = false;
+
+        OnCityChanged?.Invoke(this);
     }
 
     // Chunks geradas por essa funcao tem sua posicao definida como (0,0,0).
@@ -167,7 +178,7 @@ public class CityGenerator : MonoBehaviour
         GameObject chunkParent = new GameObject(name);
         chunkParent.transform.SetParent(cityParentTransform, false);
 
-        Instantiate(surroundingLanes, new Vector3(0, 0, stride), Quaternion.identity, chunkParent.transform);
+        var chunkInstance = Instantiate(surroundingLanes, new Vector3(0, 0, stride), Quaternion.identity, chunkParent.transform);
         HashSet<string> addedBuildings = new HashSet<string>();
         for (int i = 0; i < 4; i++)
         {
@@ -209,6 +220,17 @@ public class CityGenerator : MonoBehaviour
         {
             Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(-1 * (stride - this.blockSize) + stride, 0, -carOffset * this.transform.localScale.x + stride), Quaternion.AngleAxis(90, Vector3.up), chunkParent.transform);
         }
+
+        // Coleta posicções das ruas
+        string childName = $"{laneRegular.name}(Clone)";
+        var lanes = chunkInstance.transform.GetChildsByName(childName);
+        lanes.ForEach(lane => StreetPositions.Add(lane.transform));
+
+        childName = $"{laneIntersection.name}(Clone)";
+        lanes = chunkInstance.transform.GetChildsByName(childName);
+
+        StreetPositions.Add(lanes[0].transform);
+
         return chunkParent;
     }
 

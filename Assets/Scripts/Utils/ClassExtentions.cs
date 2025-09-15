@@ -65,4 +65,17 @@ public static class ClassExtentions
         caller.position = posicaoDesejada;
         caller.rotation = rotacao;
     }
+
+    public static List<GameObject> GetChildsByName(this Transform instance, string childName)
+    {
+        List<GameObject> childs = new List<GameObject>();
+
+        foreach (Transform child in instance)
+        {
+            if (child.name == childName)
+                childs.Add(child.gameObject);
+        }
+
+        return childs;
+    }
 }
