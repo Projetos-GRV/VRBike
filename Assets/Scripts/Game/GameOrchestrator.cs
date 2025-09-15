@@ -12,6 +12,7 @@ public class GameOrchestrator : MonoBehaviour
     private GameObject BicycleControllersResource;
     private GameObject BicycleResource;
     private GameObject CityGeneratorResource;
+    private GameObject collectableResource;
 
 
     private GameObject XRDeviceSimulatorPrefab;
@@ -22,6 +23,7 @@ public class GameOrchestrator : MonoBehaviour
     private GameObject BicycleControllersPrefab;
     private GameObject BicyclePrefab;
     private GameObject CityGeneratorPrefab;
+    private GameObject CollectablePrefab;
 
     private readonly Vector3 Position = Vector3.zero;
     private const float BicycleScale = 0.69f;
@@ -94,6 +96,7 @@ public class GameOrchestrator : MonoBehaviour
 
         CityGenerator cityScript = this.CityGeneratorPrefab.GetComponent<CityGenerator>();
         cityScript.player = this.BicyclePrefab.transform;
+        cityScript.collectable = this.CollectablePrefab;
         cityScript.chunkRadius = ChunkRadius;
         cityScript.carSpawnChance = CarSpawnChance;
     }
@@ -129,18 +132,12 @@ public class GameOrchestrator : MonoBehaviour
         this.XRInteractonManagerResource = (GameObject) Resources.Load("XR Interaction Manager");
         this.XROriginResource = (GameObject) Resources.Load("XR Origin (XR Rig)");
         this.XRDeviceSimulatorResource = (GameObject) Resources.Load("XR Device Simulator");
+
+        this.CollectablePrefab = (GameObject)Resources.Load("Prefabs/CollectableBase");
     }
 
     private void UnloadResources()
     {
-        //Resources.UnloadAsset(this.BicycleControllersResource);
-        //Resources.UnloadAsset(this.BicycleResource);
-        //Resources.UnloadAsset(this.CityGeneratorResource);
-
-        //Resources.UnloadAsset(this.XRInputActionManagerResource);
-        //Resources.UnloadAsset(this.XRInteractonManagerResource);
-        //Resources.UnloadAsset(this.XROriginResource);
-        //Resources.UnloadAsset(this.XRDeviceSimulatorResource);
 
     }
 

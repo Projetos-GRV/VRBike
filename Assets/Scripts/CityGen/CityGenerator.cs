@@ -12,6 +12,7 @@ public class CityGenerator : MonoBehaviour
     public float carSpawnChance = 0.5f;
 
     public Transform player;
+    public GameObject collectable;
 
     public GameObject laneRegular;
     public GameObject laneBusStop;
@@ -63,11 +64,16 @@ public class CityGenerator : MonoBehaviour
         Vector3 bottomLeft = new Vector3((stride - (this.blockSize * 2)) - offset * this.transform.localScale.x, 0, -1 * (stride - this.blockSize) - offset * this.transform.localScale.x);
         Vector3 topRight = new Vector3((stride - this.blockSize) + offset * this.transform.localScale.x, 0, -1 * (stride - (this.blockSize * 2)) + offset * this.transform.localScale.x);
 
-        Instantiate(laneRegular, new Vector3(0, 0, -1 * (stride - this.blockSize)), Quaternion.identity, surroundingLanes.transform);
-        Instantiate(laneRegular, new Vector3(0, 0, -1 * (stride - (this.blockSize * 2))), Quaternion.identity, surroundingLanes.transform);
-        Instantiate(laneRegular, new Vector3((stride - this.blockSize), 0, 0), Quaternion.AngleAxis(90, Vector3.up), surroundingLanes.transform);
-        Instantiate(laneRegular, new Vector3((stride - (this.blockSize * 2)), 0, 0), Quaternion.AngleAxis(90, Vector3.up), surroundingLanes.transform);
-        Instantiate(laneIntersection, new Vector3(0, 0, 0), Quaternion.identity, surroundingLanes.transform);
+
+        GameObject lane0 = (GameObject) Instantiate(laneRegular, new Vector3(0, 0, -1 * (stride - this.blockSize)), Quaternion.identity, surroundingLanes.transform);
+        GameObject lane1 = (GameObject) Instantiate(laneRegular, new Vector3(0, 0, -1 * (stride - (this.blockSize * 2))), Quaternion.identity, surroundingLanes.transform);
+        GameObject lane2 = (GameObject) Instantiate(laneRegular, new Vector3((stride - this.blockSize), 0, 0), Quaternion.AngleAxis(90, Vector3.up), surroundingLanes.transform);
+        GameObject lane3 = (GameObject) Instantiate(laneRegular, new Vector3((stride - (this.blockSize * 2)), 0, 0), Quaternion.AngleAxis(90, Vector3.up), surroundingLanes.transform);
+        Instantiate(this.collectable, lane0.transform.position + new Vector3(0, 0.957f, 0), Quaternion.identity, lane0.transform);
+        Instantiate(this.collectable, lane1.transform.position + new Vector3(0, 0.957f, 0), Quaternion.identity, lane1.transform);
+        Instantiate(this.collectable, lane2.transform.position + new Vector3(0, 0.957f, 0), Quaternion.identity, lane2.transform);
+        Instantiate(this.collectable, lane3.transform.position + new Vector3(0, 0.957f, 0), Quaternion.identity, lane3.transform);
+        GameObject intersection = (GameObject) Instantiate(laneIntersection, new Vector3(0, 0, 0), Quaternion.identity, surroundingLanes.transform);
 
         // postes de luz (nao emitem luz alguma, mas existem)
         Instantiate(streetLight, bottomRight, Quaternion.AngleAxis(90, Vector3.up), surroundingLanes.transform);

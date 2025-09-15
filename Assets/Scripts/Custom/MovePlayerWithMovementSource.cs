@@ -109,6 +109,19 @@ public class MovePlayerWithMovementSource : MonoBehaviour
         }
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Collectable"))
+        {
+            if (Debug.isDebugBuild)
+            {
+                Debug.Log("Collected!!");
+            }
+            // TODO - CALCULAR PONTOS DO JOGADOR. SEJA AQUI OU EM OUTRO LUGAR, NAO SEI
+            other.gameObject.SetActive(false);
+        }
+    }
+
     private void Animate()
     {
         float speed = this.movementSource.GetSpeed() * this.speedMultiplier;
