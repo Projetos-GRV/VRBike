@@ -33,7 +33,7 @@ public class CityGenerator : MonoBehaviour
     private const float originalBlockSize = 20;
     private const float chunkSize = 2;
     private float blockSize;
-    private float stride;
+    public float stride { get; private set; }
     private long chunks = 0;
 
     private bool generatingCity = true;
@@ -47,6 +47,7 @@ public class CityGenerator : MonoBehaviour
 
         this.blockSize = originalBlockSize * this.transform.localScale.x;
         stride = chunkSize * blockSize + blockSize;
+        Debug.Log("Citigen Stride: " + stride);
 
         cityParentTransform = new GameObject("CityParent").transform;
         //cityParentTransform.parent = this.transform;
@@ -189,7 +190,11 @@ public class CityGenerator : MonoBehaviour
                     if (building.name.Contains("Gas"))
                     {
                         float gasCarOffset = 6.5f;
-                        Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], floor.transform.position + new Vector3((building.transform.eulerAngles.y == 90 ? gasCarOffset : -gasCarOffset) * this.transform.localScale.x, 0, 0), Quaternion.identity, floor.transform);
+                        GameObject car = (GameObject) Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], floor.transform.position + new Vector3((building.transform.eulerAngles.y == 90 ? gasCarOffset : -gasCarOffset) * this.transform.localScale.x, 0, 0), Quaternion.identity, floor.transform);
+                        if (car.TryGetComponent<MoveVehicle>(out MoveVehicle mv))
+                        {
+                            mv.enabled = false;
+                        }
                     }
                 }
             }
@@ -197,6 +202,7 @@ public class CityGenerator : MonoBehaviour
         // veiculos B)
         // vias "verticais"
         float carOffset = 4.6f;
+        // TODO - ADICIONAR PREFAB DESTE CITYGENERATOR AOS CARROS PARA QUE ESTES POSSAM DESCOBRIR EM QUE CHUNK SE ENCONTRAM.......
         if (Random.value < carSpawnChance)
         {
             Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(carOffset * this.transform.localScale.x, 0, 1 * (stride - (this.blockSize * 2))), Quaternion.identity, chunkParent.transform);

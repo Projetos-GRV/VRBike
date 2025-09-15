@@ -8,6 +8,7 @@ TagManager:
   - FingerInteractor
   - Collectable
   - PlayerTag
+  - Vehicle
   layers:
   - Default
   - TransparentFX

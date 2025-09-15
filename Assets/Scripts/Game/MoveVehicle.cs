@@ -6,6 +6,9 @@ using UnityEngine;
 public class MoveVehicle : MonoBehaviour
 {
     public float speed = 20f;
+    public GameObject cityGen = null;
+
+    private bool takeTurn;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,10 +21,19 @@ public class MoveVehicle : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        this.transform.position = Vector3.MoveTowards(this.transform.position, this.transform.position + this.transform.forward, this.speed * Time.deltaTime);
-
-        this.transform.rotation *= Quaternion.AngleAxis(90 * Time.deltaTime, Vector3.up);
+        this.transform.position = Vector3.MoveTowards(this.transform.position, this.transform.position + this.transform.forward, this.speed * Time.fixedDeltaTime);
+        if (Debug.isDebugBuild && cityGen != null)
+        {
+            CityGenerator cg = this.cityGen.GetComponent<CityGenerator>();
+            Vector3 chunk = this.transform.position;
+            chunk.x /= cg.stride;
+            chunk.y /= cg.stride;
+            chunk.z /= cg.stride;
+            Debug.Log("Chunk: " + chunk);
+            Debug.Log(cg.stride);
+        }
+        //this.transform.rotation *= Quaternion.AngleAxis(90 * Time.deltaTime, Vector3.up);
     }
 }
