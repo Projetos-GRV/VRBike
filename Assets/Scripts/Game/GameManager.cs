@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int _maxPlayerHP = 3;
     [SerializeField] private float _timeBetweenDamage = 3f;
     [SerializeField] private float _sessionTime = 3 * 60;
+    [SerializeField] private float _speedThresholdHigh = 15f;
 
     [Header("Collision")]
     [SerializeField] private string _obstacleTag = "Obstable";
@@ -26,6 +27,9 @@ public class GameManager : MonoBehaviour
     public UnityEvent OnGameStarted;
     public UnityEvent OnNewGameStarted;
     public UnityEvent<bool> OnGameViewChanged;
+    public UnityEvent OnGameOver;
+    public UnityEvent OnPlayerInHighSpeed;
+    public UnityEvent OnPlayerInLowSpeed;
 
     private bool _leftHandTrigger = false;
     private bool _rightHandTrigger = false;
@@ -121,6 +125,9 @@ public class GameManager : MonoBehaviour
 
             if (_gameState.IsPlayerAlive())
             {
+                _customBikeMovement.ResetSpeedMultiplier();
+                OnPlayerInLowSpeed?.Invoke();
+
                 _uiGameHUDController.StartTakeDamageAnimation(null);
                 _uiGameHUDController.UpdateHUD(_gameState);
 
@@ -141,6 +148,11 @@ public class GameManager : MonoBehaviour
         }else if (gameObject.TryGetComponent(out SpeedMultiplierCollectableController speedMultiplierController))
         {
             _customBikeMovement.AddMultiplier(speedMultiplierController.SpeedMultiplier);
+
+            if (_customBikeMovement.Speed>= _speedThresholdHigh)
+            {
+                OnPlayerInHighSpeed?.Invoke();
+            }
         }
 
         var collectable = gameObject.GetComponent<ICollectable>();
@@ -158,6 +170,7 @@ public class GameManager : MonoBehaviour
     {
         _isRunning = false;
         _customBikeMovement.ResetSpeedMultiplier();
+        OnGameOver?.Invoke();
 
         _uiGameHUDController.StartGameOverAnimation(() =>
         {

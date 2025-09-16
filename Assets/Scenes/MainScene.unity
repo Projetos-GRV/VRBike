@@ -3862,6 +3862,7 @@ Transform:
   - {fileID: 872231332}
   - {fileID: 1291029288}
   - {fileID: 266185547}
+  - {fileID: 773426730}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &242585269
@@ -4642,6 +4643,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 423129899}
+  - {fileID: 1553458299}
   - {fileID: 180987022}
   m_Father: {fileID: 237804568}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10868,8 +10870,8 @@ MonoBehaviour:
   threshold: 2
   expectedDistance: 40
   player: {fileID: 2218496724783588805}
-  probContinueStraight: 0.6
-  probForceTurn: 0.4
+  probContinueStraight: 0.85
+  probForceTurn: 0.15
   drawDebug: 0
   nodePrefab: {fileID: 1870289150}
   edgeMaterial: {fileID: 2100000, guid: 8d7cd0ba86cb74b78bf7e053b5e1447a, type: 2}
@@ -10883,13 +10885,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 773426728}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -1.5132289, y: 5.3932276, z: 2.6846337}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1160587477}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 237804568}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &780959309
 GameObject:
@@ -11956,6 +11958,7 @@ MonoBehaviour:
   _maxPlayerHP: 3
   _timeBetweenDamage: 3
   _sessionTime: 600
+  _speedThresholdHigh: 15
   _obstacleTag: Obstacle
   OnGameStarted:
     m_PersistentCalls:
@@ -11994,6 +11997,51 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: EnvironmentCollectableManager, Assembly-CSharp
         m_MethodName: HandleGameViewChanged
         m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnGameOver:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1868797183}
+        m_TargetAssemblyTypeName: EnvironmentCollectableManager, Assembly-CSharp
+        m_MethodName: Reset
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnPlayerInHighSpeed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1553458300}
+        m_TargetAssemblyTypeName: ThemeTriggerController, Assembly-CSharp
+        m_MethodName: PlayTheme
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnPlayerInLowSpeed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 423129900}
+        m_TargetAssemblyTypeName: ThemeTriggerController, Assembly-CSharp
+        m_MethodName: PlayTheme
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -17864,6 +17912,54 @@ Transform:
   - {fileID: 2218496724783588805}
   m_Father: {fileID: 987035220}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1553458298
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1553458299}
+  - component: {fileID: 1553458300}
+  m_Layer: 0
+  m_Name: Theme HighSpeed
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1553458299
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1553458298}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 266185547}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1553458300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1553458298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a8c41683dcd1364b909066056cbade9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioManager: {fileID: 1359611711}
+  _themeClip: {fileID: 8300000, guid: ceb354c2aa86c8a42aa2de020c3f6690, type: 3}
+  _volume: 0.1
+  _inLoop: 1
 --- !u!1 &1554842313
 GameObject:
   m_ObjectHideFlags: 0
@@ -26344,9 +26440,10 @@ MonoBehaviour:
   _pathSize: 5
   _cointOffet: {x: 0, y: 0.5, z: 0}
   _signalOffset: {x: 0, y: 4, z: 0}
-  _speedMultiplierOffset: {x: 1, y: 0.5, z: 0}
-  _nodeToCheck: 1
+  _speedMultiplierOffset: {x: 3, y: 1.2, z: 0}
+  _nodeToCheck: 2
   _coinsPerSegment: 3
+  _chanceToCreateSpeedMultiplier: 0.206
   _preafabCoin: {fileID: 2804891860182713399, guid: de4578ba0ab2df744926925096f0ef8e, type: 3}
   _prefabDirection: {fileID: 7612322070600014630, guid: a7dc6aeb7d244d34dbba6ee3baa7f85b, type: 3}
   _prefabSpeedMultiplier: {fileID: 2375501415466484929, guid: 31e82042d3a0e554c91cb15a843d6c89, type: 3}
@@ -58324,4 +58421,3 @@ SceneRoots:
   - {fileID: 159124673}
   - {fileID: 1725696090}
   - {fileID: 237804568}
-  - {fileID: 773426730}

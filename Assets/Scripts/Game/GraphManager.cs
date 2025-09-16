@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class GraphManager : MonoBehaviour
 {
@@ -128,6 +130,70 @@ public class GraphManager : MonoBehaviour
         return closest;
     }
 
+    public List<Node> GetRandomPath(Node fistNode, Vector3 direction, int length, bool ignoreFist=false)
+    {
+        List<Node> path = new List<Node>();
+
+        Node current = fistNode;
+
+        if (!ignoreFist)
+            path.Add(current);
+
+        Vector3 lastDirection = direction;
+
+        for (int i = path.Count - 1; i < length; i++)
+        {
+            List<Node> candidates = new List<Node>();
+
+            foreach (var neighbor in current.neighbors)
+            {
+                if (path.Count > 1 && neighbor == path[path.Count - 2])
+                    continue; // evita voltar
+
+                candidates.Add(neighbor);
+            }
+
+            if (candidates.Count == 0) break;
+
+            Node chosen = null;
+
+            Vector3 forwardDir = lastDirection;
+
+            Node straightCandidate = candidates.Find(n =>
+            {
+                Vector3 dir = (n.transform.position - current.transform.position).normalized;
+                return Vector3.Dot(forwardDir, dir) > 0.9f;
+            });
+
+            if (straightCandidate != null)
+            {
+                if (Random.value < probContinueStraight)
+                {
+                    chosen = straightCandidate;
+                }
+                else if (Random.value < probForceTurn)
+                {
+                    List<Node> turns = new List<Node>(candidates);
+                    turns.Remove(straightCandidate);
+                    if (turns.Count > 0)
+                        chosen = turns[Random.Range(0, turns.Count)];
+                }
+            }
+
+            if (chosen == null)
+                chosen = candidates[Random.Range(0, candidates.Count)];
+
+            lastDirection = (chosen.transform.position - current.transform.position).normalized;
+            path.Add(chosen);
+            current = chosen;
+        }
+
+        if (drawDebug)
+            DrawPath(path);
+
+        return path;
+    }
+
     /// <summary>
     /// Gera um caminho aleatório a partir do jogador com N passos.
     /// Privilegia caminhos retos conforme probabilidades configuradas.
@@ -142,7 +208,7 @@ public class GraphManager : MonoBehaviour
         Node current = currentPlayerNode;
         path.Add(current);
 
-        Vector3? lastDirection = null;
+        Vector3 lastDirection = Vector3.zero;
 
         // --- PASSO 1: tentar alinhar início com direção do jogador ---
         if (player != null && current.neighbors.Count > 0)
@@ -172,61 +238,7 @@ public class GraphManager : MonoBehaviour
             }
         }
 
-        // --- PASSO 2: continua normalmente ---
-        for (int i = path.Count - 1; i < length; i++)
-        {
-            List<Node> candidates = new List<Node>();
-
-            foreach (var neighbor in current.neighbors)
-            {
-                if (path.Count > 1 && neighbor == path[path.Count - 2])
-                    continue; // evita voltar
-
-                candidates.Add(neighbor);
-            }
-
-            if (candidates.Count == 0) break;
-
-            Node chosen = null;
-
-            if (lastDirection.HasValue)
-            {
-                Vector3 forwardDir = lastDirection.Value;
-
-                Node straightCandidate = candidates.Find(n =>
-                {
-                    Vector3 dir = (n.transform.position - current.transform.position).normalized;
-                    return Vector3.Dot(forwardDir, dir) > 0.9f;
-                });
-
-                if (straightCandidate != null)
-                {
-                    if (Random.value < probContinueStraight)
-                    {
-                        chosen = straightCandidate;
-                    }
-                    else if (Random.value < probForceTurn)
-                    {
-                        List<Node> turns = new List<Node>(candidates);
-                        turns.Remove(straightCandidate);
-                        if (turns.Count > 0)
-                            chosen = turns[Random.Range(0, turns.Count)];
-                    }
-                }
-            }
-
-            if (chosen == null)
-                chosen = candidates[Random.Range(0, candidates.Count)];
-
-            lastDirection = (chosen.transform.position - current.transform.position).normalized;
-            path.Add(chosen);
-            current = chosen;
-        }
-
-        if (drawDebug)
-            DrawPath(path);
-
-        return path;
+        return GetRandomPath(current, lastDirection, length);
     }
 
     // ---------- DEBUG VISUAL ----------

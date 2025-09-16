@@ -100,7 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _audioManager: {fileID: 0}
   _audioClip: {fileID: 8300000, guid: 70a103ca5e12cd84e8d18009e1346243, type: 3}
-  _volume: 0.1
+  _volume: 0.05
 --- !u!1001 &7498017958447697187
 PrefabInstance:
   m_ObjectHideFlags: 0

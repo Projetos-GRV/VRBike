@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2974097540739969873}
   - component: {fileID: 968349217688005082}
   - component: {fileID: 883094062899564194}
+  - component: {fileID: 938556575780860497}
   m_Layer: 0
   m_Name: Speed Multiplier Collectable
   m_TagString: Untagged
@@ -50,7 +51,19 @@ MonoBehaviour:
   _destroyOnCollect: 1
   OnCollected:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 938556575780860497}
+        m_TargetAssemblyTypeName: SFXTriggerController, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _speedMultiplier: 0.085
 --- !u!65 &968349217688005082
 BoxCollider:
@@ -94,6 +107,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &938556575780860497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2375501415466484929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d87b0f3255de735489bc5f849b1fcbb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioManager: {fileID: 0}
+  _audioClip: {fileID: 8300000, guid: 43399ed94fd5ae744ad9a55d4f6824ae, type: 3}
+  _volume: 0.2
 --- !u!1 &8968584349135257683
 GameObject:
   m_ObjectHideFlags: 0
