@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private HandGesturesManager _handGesturesManager;
     [SerializeField] private ResetPlayerController _resetPlayerController;
     [SerializeField] private PlayerCollisionDetectorController _playerCollisionDetectorController;
+    [SerializeField] private CustomBikeMovement _customBikeMovement;
 
     [Header("Game Parameters")]
     [SerializeField] private int _maxPlayerHP = 3;
@@ -20,11 +21,11 @@ public class GameManager : MonoBehaviour
 
     [Header("Collision")]
     [SerializeField] private string _obstacleTag = "Obstable";
-    [SerializeField] private string _coinTag = "Coin";
 
     [Header("Events")]
     public UnityEvent OnGameStarted;
     public UnityEvent OnNewGameStarted;
+    public UnityEvent<bool> OnGameViewChanged;
 
     private bool _leftHandTrigger = false;
     private bool _rightHandTrigger = false;
@@ -112,9 +113,6 @@ public class GameManager : MonoBehaviour
 
     private void HandlePlayerCollision(GameObject gameObject)
     {
-        Debug.Log($"{_isRunning} {_inGaming}   {gameObject.tag}  {gameObject.tag.Equals(_coinTag)}");
-
-
         if (!_isRunning || !_inGaming) return;
 
         if (gameObject.tag.Equals(_obstacleTag) && _canTakeDamage)
@@ -134,14 +132,19 @@ public class GameManager : MonoBehaviour
             {
                 HandleGameOver();
             }
-        }else if (gameObject.tag.Equals(_coinTag))
+
+        }else if (gameObject.TryGetComponent(out CoinCollectableController cointController))
         {
-            CoinController collectable = gameObject.GetComponent<CoinController>();
-            _gameState.AddScore(collectable.Value);
+            _gameState.AddScore(cointController.Value);
             _uiGameHUDController.UpdateHUD(_gameState);
 
-            collectable?.HandleObjectCollected();
+        }else if (gameObject.TryGetComponent(out SpeedMultiplierCollectableController speedMultiplierController))
+        {
+            _customBikeMovement.AddMultiplier(speedMultiplierController.SpeedMultiplier);
         }
+
+        var collectable = gameObject.GetComponent<ICollectable>();
+        collectable?.HandleObjectCollected();
     }
 
     private IEnumerator WaitForSeconds(float seconds, Action callback)
@@ -154,6 +157,7 @@ public class GameManager : MonoBehaviour
     private void HandleGameOver()
     {
         _isRunning = false;
+        _customBikeMovement.ResetSpeedMultiplier();
 
         _uiGameHUDController.StartGameOverAnimation(() =>
         {
@@ -164,9 +168,14 @@ public class GameManager : MonoBehaviour
 
     public void ToggleGameView()
     {
+        if (_resetPlayerController.InResetProcess) return;
+
         _inGaming = !_inGaming;
 
         _uiGameController.SetActive(_inGaming);
         _uiGameHUDController.SetActive(_inGaming);
+        _customBikeMovement.ResetSpeedMultiplier();
+
+        OnGameViewChanged?.Invoke(_inGaming);
     }
 }

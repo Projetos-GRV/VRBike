@@ -3,19 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CoinController : MonoBehaviour, ICollectable
+public class CoinCollectableController: SimpleCollectableController
 {
     [SerializeField] private float _rotationSpeed = 100f;
     [SerializeField] private int _value = 10;
-
-
-    public UnityEvent<CoinController> OnCollected;
-
-    public void HandleObjectCollected()
-    {
-        IsCollected = true;
-        OnCollected?.Invoke(this);
-    }
 
     private void Update()
     {
@@ -23,5 +14,4 @@ public class CoinController : MonoBehaviour, ICollectable
     }
 
     public int Value => _value;
-    public bool IsCollected { get; private set; } = false;
 }

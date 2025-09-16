@@ -2113,6 +2113,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: -8, y: -5, z: -8, w: -5}
   m_Softness: {x: 0, y: 0}
+--- !u!1 &125697886
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 125697887}
+  m_Layer: 0
+  m_Name: Collectables Parent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &125697887
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125697886}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1868797182}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &127006679
 GameObject:
   m_ObjectHideFlags: 0
@@ -5610,37 +5641,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &412968820
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 412968821}
-  m_Layer: 0
-  m_Name: Chunk26
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &412968821
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 412968820}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &415501273
 GameObject:
   m_ObjectHideFlags: 0
@@ -10866,7 +10866,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transforms: []
   threshold: 2
-  expectedDistance: 13
+  expectedDistance: 40
   player: {fileID: 2218496724783588805}
   probContinueStraight: 0.6
   probForceTurn: 0.4
@@ -10874,7 +10874,7 @@ MonoBehaviour:
   nodePrefab: {fileID: 1870289150}
   edgeMaterial: {fileID: 2100000, guid: 8d7cd0ba86cb74b78bf7e053b5e1447a, type: 2}
   pathMaterial: {fileID: 2100000, guid: 08d0ccc4a501e6645be0c3ee36d0cd20, type: 2}
-  pathSize: 15
+  pathSize: 4
 --- !u!4 &773426730
 Transform:
   m_ObjectHideFlags: 0
@@ -11952,11 +11952,11 @@ MonoBehaviour:
   _handGesturesManager: {fileID: 510629553}
   _resetPlayerController: {fileID: 192241012}
   _playerCollisionDetectorController: {fileID: 907372128}
+  _customBikeMovement: {fileID: 1548009470}
   _maxPlayerHP: 3
   _timeBetweenDamage: 3
-  _sessionTime: 60
+  _sessionTime: 600
   _obstacleTag: Obstacle
-  _coinTag: Coin
   OnGameStarted:
     m_PersistentCalls:
       m_Calls:
@@ -11979,6 +11979,21 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: EnvironmentCollectableManager, Assembly-CSharp
         m_MethodName: CreateCollectables
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnGameViewChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1868797183}
+        m_TargetAssemblyTypeName: EnvironmentCollectableManager, Assembly-CSharp
+        m_MethodName: HandleGameViewChanged
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -12493,6 +12508,37 @@ MonoBehaviour:
   _audioManager: {fileID: 1359611711}
   _audioClip: {fileID: 8300000, guid: b98d3081156435e478229edd58520260, type: 3}
   _volume: 0.4
+--- !u!1 &987024880
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 987024881}
+  m_Layer: 0
+  m_Name: Signal Parent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &987024881
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 987024880}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1868797182}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &987035219
 GameObject:
   m_ObjectHideFlags: 0
@@ -26275,7 +26321,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 125697887}
+  - {fileID: 987024881}
   m_Father: {fileID: 872231332}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1868797183
@@ -26291,11 +26339,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _graphManager: {fileID: 773426729}
-  _collectablesParent: {fileID: 1868797182}
-  _pathSize: 15
+  _collectablesParent: {fileID: 125697887}
+  _signalParent: {fileID: 987024881}
+  _pathSize: 5
   _cointOffet: {x: 0, y: 0.5, z: 0}
-  _nodeToCheck: 3
+  _signalOffset: {x: 0, y: 4, z: 0}
+  _speedMultiplierOffset: {x: 1, y: 0.5, z: 0}
+  _nodeToCheck: 1
+  _coinsPerSegment: 3
   _preafabCoin: {fileID: 2804891860182713399, guid: de4578ba0ab2df744926925096f0ef8e, type: 3}
+  _prefabDirection: {fileID: 7612322070600014630, guid: a7dc6aeb7d244d34dbba6ee3baa7f85b, type: 3}
+  _prefabSpeedMultiplier: {fileID: 2375501415466484929, guid: 31e82042d3a0e554c91cb15a843d6c89, type: 3}
 --- !u!1 &1870289150
 GameObject:
   m_ObjectHideFlags: 0
@@ -58271,4 +58325,3 @@ SceneRoots:
   - {fileID: 1725696090}
   - {fileID: 237804568}
   - {fileID: 773426730}
-  - {fileID: 412968821}

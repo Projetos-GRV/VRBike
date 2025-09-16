@@ -27,6 +27,7 @@ public class ResetPlayerController : MonoBehaviour
     [SerializeField] private UIConfirmationScreenController _confirmationScreenController;
 
     private Coroutine _resetCoroutine;
+    private bool _inResetPreocess = false;
 
 
     public void StartResetProcess(Action onCompleted, Action onError)
@@ -57,6 +58,8 @@ public class ResetPlayerController : MonoBehaviour
 
     private IEnumerator ResetCoroutine(Action onCompleted)
     {
+        _inResetPreocess = true;
+
         _uiView.SetActive(true);
 
         yield return null;
@@ -77,6 +80,8 @@ public class ResetPlayerController : MonoBehaviour
 
         _uiView.SetActive(false);
 
+        _inResetPreocess = false;
+
         onCompleted?.Invoke();  
     }
     /*
@@ -91,4 +96,6 @@ public class ResetPlayerController : MonoBehaviour
 
         _cameraOffsetChild.localPosition = _cameraReference.localPosition * -1;
     }*/
+
+    public bool InResetProcess => _inResetPreocess;
 }

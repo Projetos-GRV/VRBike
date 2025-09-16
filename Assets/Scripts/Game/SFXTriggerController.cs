@@ -8,6 +8,12 @@ public class SFXTriggerController : MonoBehaviour
     [SerializeField] private AudioClip _audioClip;
     [SerializeField] private float _volume = 1f;
 
+    private void Awake()
+    {
+        if (_audioManager == null && AudioManager.Instance != null)
+            _audioManager = AudioManager.Instance;
+    }
+
     public void PlaySFX()
     {
         _audioManager.PlaySFX(_audioClip, _volume); 

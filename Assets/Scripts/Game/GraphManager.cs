@@ -57,11 +57,6 @@ public class GraphManager : MonoBehaviour
     {
         if (player != null)
             currentPlayerNode = GetClosestNode(player.position);
-
-        if (Keyboard.current.pKey.wasPressedThisFrame)
-        {
-            GetRandomPath(pathSize);
-        }
     }
 
     void BuildGraph()

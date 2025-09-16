@@ -222,12 +222,14 @@ public class CityGenerator : MonoBehaviour
         }
 
         // Coleta posicções das ruas
+        /*
         string childName = $"{laneRegular.name}(Clone)";
+
         var lanes = chunkInstance.transform.GetChildsByName(childName);
         lanes.ForEach(lane => StreetPositions.Add(lane.transform));
-
-        childName = $"{laneIntersection.name}(Clone)";
-        lanes = chunkInstance.transform.GetChildsByName(childName);
+        */
+        string childName = $"{laneIntersection.name}(Clone)";
+        var lanes = chunkInstance.transform.GetChildsByName(childName);
 
         StreetPositions.Add(lanes[0].transform);
 

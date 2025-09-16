@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,9 +38,11 @@ public class CustomBikeMovement : MonoBehaviour
     private float _prevHandleAngle = 0f;
     private bool _isMoving = false;
 
+    private float _speedMultiplier = 1f;
+
     private void Update()
     {
-        _speed = _dataSource.Speed;
+        _speed = _dataSource.Speed * _speedMultiplier;
         _handleAngle = _dataSource.HandleAngle;
     }
     
@@ -123,6 +126,20 @@ public class CustomBikeMovement : MonoBehaviour
         // Pedal (mais rápido)
         if (_pedal != null)
             _pedal.Rotate(Vector3.right, wheelRotationDegrees * _pedalMultiplier, Space.Self);
+    }
+
+    public void AddMultiplier(float speedMultiplier)
+    {
+        _speedMultiplier += speedMultiplier;
+
+        _dataSource.HandleSpeedMultplierChanged(_speedMultiplier.ToString());
+    }
+
+    public void ResetSpeedMultiplier()
+    {
+        _speedMultiplier = 1f;
+
+        _dataSource.HandleSpeedMultplierChanged(_speedMultiplier.ToString());
     }
 
     public float Speed { get => _speed; set => _speed = value; }

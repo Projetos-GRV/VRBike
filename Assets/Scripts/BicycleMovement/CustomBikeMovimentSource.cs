@@ -119,7 +119,7 @@ public class CustomBikeMovimentSource: MonoBehaviour, IBicycleMovementSource
         this.direction.y = tmp.z;
 
         OnAngleChanged?.Invoke(_rawAngle);
-        OnSpeedChanged?.Invoke(speed);
+        OnSpeedChanged?.Invoke(Speed);
     }
 
     private void OnDisable()
@@ -151,7 +151,9 @@ public class CustomBikeMovimentSource: MonoBehaviour, IBicycleMovementSource
 
     public void HandleSpeedMultplierChanged(string newValue)
     {
-        var clenedStr = newValue.Trim();
+        var clenedStr = newValue.Trim().Replace(",", ".");
+
+        Debug.Log($"Multiplier  {newValue}  {clenedStr} {float.Parse(clenedStr, NumberStyles.Number, CultureInfo.InvariantCulture)}");
         SpeedMultiplier = float.Parse(clenedStr, NumberStyles.Number, CultureInfo.InvariantCulture);
 
         OnSpeedMultiplierChanged?.Invoke(SpeedMultiplier);
@@ -162,7 +164,8 @@ public class CustomBikeMovimentSource: MonoBehaviour, IBicycleMovementSource
     public float AngleThreshold { get; set; }
 
     public float SpeedMultiplier { get; set; }
-    public float Speed => speed;
+    public float RawSpeed => speed;
+    public float Speed => speed * SpeedMultiplier;
 
     public float RawAngle => _rawAngle;
     public float HandleAngle => handlebarRotation;
