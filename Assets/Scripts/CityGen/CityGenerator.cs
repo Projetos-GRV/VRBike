@@ -39,7 +39,8 @@ public class CityGenerator : MonoBehaviour
     private bool generatingCity = true;
     private GameObject surroundingLanes;
     private Transform cityParentTransform;
-    private Dictionary<Vector3, GameObject> loadedCunks = new Dictionary<Vector3, GameObject>();
+    public Dictionary<Vector3, GameObject> loadedChunks  = new Dictionary<Vector3, GameObject>();
+    private List<GameObject> instantiatedCars = new List<GameObject>();
     // Start is called before the first frame update
     void Start()
     {
@@ -92,8 +93,7 @@ public class CityGenerator : MonoBehaviour
         GenInfinite();
     }
 
-    // Update is called once per frame
-
+    // TODO - GERAR CARROS EM CHUNKS JA CARREGADAS DADA UMA CERTA PROBABILIDADE... preferencialmente nao direto na frente do jogador
     void Update()
     {
         // caso usada geracao um pouco mais procedural, usar transform do jogador para atualizar chunks
@@ -105,7 +105,7 @@ public class CityGenerator : MonoBehaviour
             y = Mathf.RoundToInt(playerPos.z / stride)
         };
 
-        if (!generatingCity)
+        //if (!generatingCity)
         {
             // guarda as chunks proximas ao jogador
             HashSet<Vector3> needed = new HashSet<Vector3>();
@@ -116,21 +116,25 @@ public class CityGenerator : MonoBehaviour
                 {
                     Vector3 cc = new Vector3(pChunk.x + dx, 0, pChunk.y + dy);
                     needed.Add(cc);
-                    if (!loadedCunks.ContainsKey(cc))
+                    if (!loadedChunks.ContainsKey(cc))
                     {
-                        GameObject chunk = GenerateChunk(string.Format("Chunk{0}", this.chunks++), cc);
+                        GameObject chunk = GenerateChunk(string.Format("Chunk{0}", this.chunks++), cc, 0.95f);
                         chunk.transform.position = new Vector3(cc.x * stride, 0, cc.z * stride);
-                        loadedCunks.Add(cc, chunk);
+                        loadedChunks.Add(cc, chunk);
                     }
-                    else if (!loadedCunks[cc].activeSelf)
+                    else if (!loadedChunks[cc].activeSelf)
                     {
-                        loadedCunks[cc].SetActive(true);
+                        GameObject ck = loadedChunks[cc];
+                        // FIX - Problema! Descomentar essa linha faz com que os carros reapareçam numa unica chunk
+                        // especifica, perto do spawnpoint do jogador. Faz os carros voarem que nem brinquedo
+                        //SpawnCars(ck, 0.95f);
+                        ck.SetActive(true);
                     }
                     // Instantiate(chunkParent, new Vector3((cc + 3) * 20, 0, 0), Quaternion.identity);
                 }
             }
 
-            foreach (var pair in this.loadedCunks)
+            foreach (var pair in this.loadedChunks)
             {
                 if (!needed.Contains(pair.Key))
                 {
@@ -155,20 +159,25 @@ public class CityGenerator : MonoBehaviour
             for (int dy = -chunkRadius; dy <= chunkRadius; dy++)
             {
                 Vector3 cc = new Vector3(pChunk.x + dx, 0, pChunk.y + dy);
-                GameObject chunk = GenerateChunk(string.Format("Chunk{0}", chunks++), cc);
+                GameObject chunk = GenerateChunk(string.Format("Chunk{0}", chunks++), cc, this.carSpawnChance);
                 chunk.transform.position = new Vector3(cc.x * stride, 0, cc.z * stride);
-                loadedCunks.Add(cc, chunk);
+                loadedChunks.Add(cc, chunk);
                 await Task.Yield();
             }
         }
-        generatingCity = false;
+        //generatingCity = false;
+    }
+
+    public bool IsChunkLoaded(Vector3 chunk)
+    {
+        return this.loadedChunks.ContainsKey(chunk);
     }
 
     // Chunks geradas por essa funcao tem sua posicao definida como (0,0,0).
     // A posicao desta deve ser definida por fora
     // intendedGridCoords serve apenas para verificar se o chunk se encontra em uma 
     // zona residencial.
-    private GameObject GenerateChunk(string name, Vector3 intendedGridCoords)
+    private GameObject GenerateChunk(string name, Vector3 intendedGridCoords, float carSpawnChance)
     {
         GameObject chunkParent = new GameObject(name);
         chunkParent.transform.SetParent(cityParentTransform, false);
@@ -199,28 +208,55 @@ public class CityGenerator : MonoBehaviour
                 }
             }
         }
+
         // veiculos B)
-        // vias "verticais"
-        float carOffset = 4.6f;
-        // TODO - ADICIONAR PREFAB DESTE CITYGENERATOR AOS CARROS PARA QUE ESTES POSSAM DESCOBRIR EM QUE CHUNK SE ENCONTRAM.......
-        if (Random.value < carSpawnChance)
-        {
-            Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(carOffset * this.transform.localScale.x, 0, 1 * (stride - (this.blockSize * 2))), Quaternion.identity, chunkParent.transform);
-        }
-        if (Random.value < carSpawnChance)
-        {
-            Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(-carOffset * this.transform.localScale.x, 0, 1 * (stride - this.blockSize)), Quaternion.AngleAxis(180, Vector3.up), chunkParent.transform);
-        }
-        // vias "horizontais"
-        if (Random.value < carSpawnChance)
-        {
-            Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(1 * (stride - this.blockSize), 0, carOffset * this.transform.localScale.x + stride), Quaternion.AngleAxis(-90, Vector3.up), chunkParent.transform);
-        }
-        if (Random.value < carSpawnChance)
-        {
-            Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(-1 * (stride - this.blockSize) + stride, 0, -carOffset * this.transform.localScale.x + stride), Quaternion.AngleAxis(90, Vector3.up), chunkParent.transform);
-        }
+        SpawnCars(chunkParent, carSpawnChance);
         return chunkParent;
+    }
+
+    private void SpawnCars(GameObject chunkParent, float spawnChance)
+    {
+        //float carOffset = 4.6f;
+        float carOffset = 3f;
+        // vias "verticais"
+        if (Random.value < spawnChance)
+        {
+            float extraOffset = Random.value > 0.5f ? 6 : -6;
+            GameObject car = (GameObject)Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(carOffset * this.transform.localScale.x, 0, 1 * (stride - (this.blockSize * 2)) + extraOffset), Quaternion.identity, chunkParent.transform);
+            if (car.TryGetComponent<MoveVehicle>(out MoveVehicle mv))
+            {
+                mv.cityGen = this.gameObject;
+            }
+        }
+        if (Random.value < spawnChance)
+        {
+            float extraOffset = Random.value > 0.5f ? 6 : -6;
+            GameObject car = (GameObject)Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(-carOffset * this.transform.localScale.x, 0, 1 * (stride - this.blockSize) + extraOffset), Quaternion.AngleAxis(180, Vector3.up), chunkParent.transform);
+            if (car.TryGetComponent<MoveVehicle>(out MoveVehicle mv))
+            {
+                mv.cityGen = this.gameObject;
+            }
+        }
+
+        // vias "horizontais"
+        if (Random.value < spawnChance)
+        {
+            float extraOffset = Random.value > 0.5f ? 6 : -6;
+            GameObject car = (GameObject)Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(1 * (stride - this.blockSize) + extraOffset, 0, carOffset * this.transform.localScale.x + stride), Quaternion.AngleAxis(-90, Vector3.up), chunkParent.transform);
+            if (car.TryGetComponent<MoveVehicle>(out MoveVehicle mv))
+            {
+                mv.cityGen = this.gameObject;
+            }
+        }
+        if (Random.value < spawnChance)
+        {
+            float extraOffset = Random.value > 0.5f ? 6 : -6;
+            GameObject car = (GameObject)Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(-1 * (stride - this.blockSize) + stride + extraOffset, 0, -carOffset * this.transform.localScale.x + stride), Quaternion.AngleAxis(90, Vector3.up), chunkParent.transform);
+            if (car.TryGetComponent<MoveVehicle>(out MoveVehicle mv))
+            {
+                mv.cityGen = this.gameObject;
+            }
+        }
     }
 
     private GameObject InstantiateBuilding(float x, float y, bool isResidential, Transform parentObject, HashSet<string> addedBuildings)

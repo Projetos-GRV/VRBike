@@ -10,6 +10,9 @@ public class MovePlayerWithMovementSource : MonoBehaviour
     [Tooltip("O primeiro controlador filho eh escolhido como o objeto controlador. Os outros serao desativados. Eh daqui que serao retirados ambos angulo do guidao e velocidade usados para movimentar a bicicleta. Todos os GameObjects filhos devem conter um script que implemente a interface IBicycleMovementSource.")]
     public GameObject bicycleControllersObject;
 
+    //public ICollectableCallback collectableCallback;
+    //public ICollisionCallback collisionCallback;
+
     [Tooltip("Opcional. Pode ser nulo.")]
     public Transform handlebar;
     [Tooltip("Opcional. Pode ser nulo.")]
@@ -119,6 +122,14 @@ public class MovePlayerWithMovementSource : MonoBehaviour
             }
             // TODO - CALCULAR PONTOS DO JOGADOR. SEJA AQUI OU EM OUTRO LUGAR, NAO SEI
             other.gameObject.SetActive(false);
+        }
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (!collision.gameObject.CompareTag("Road"))
+        {
+            Debug.Log("Player collision");
         }
     }
 

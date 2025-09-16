@@ -87,8 +87,8 @@ public class BicycleExternalMovementSource : MonoBehaviour, IBicycleMovementSour
         ReadSensors();
         if (Debug.isDebugBuild)
         {
-            Debug.Log(this.handlebarRotation);
-            Debug.Log(this.speed);
+            //Debug.Log(this.handlebarRotation);
+            //Debug.Log(this.speed);
         }
         
         Vector3 tmp = Vector3.forward;

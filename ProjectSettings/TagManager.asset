@@ -9,6 +9,8 @@ TagManager:
   - Collectable
   - PlayerTag
   - Vehicle
+  - Road
+  - Prop
   layers:
   - Default
   - TransparentFX

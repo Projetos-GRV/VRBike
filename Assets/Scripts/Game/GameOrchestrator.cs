@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameOrchestrator : MonoBehaviour
 {
@@ -43,7 +44,7 @@ public class GameOrchestrator : MonoBehaviour
         "ExternalController",           // 3
         "UDPController",                // 4
     };
-    private readonly string ControllerName = ControllersNames[3];
+    private readonly string ControllerName = ControllersNames[2];
 
     // Start is called before the first frame update
     void Start()
@@ -149,6 +150,6 @@ public class GameOrchestrator : MonoBehaviour
         this.XRInputActionManagerPrefab = Instantiate(this.XRInputActionManagerResource, Vector3.zero, Quaternion.identity, this.transform);
         this.XRInteractonManagerPrefab = Instantiate(this.XRInteractonManagerResource, Vector3.zero, Quaternion.identity, this.transform);
         this.XROriginPrefab = Instantiate(this.XROriginResource, Vector3.zero, Quaternion.identity, this.transform);
-        this.XRDeviceSimulatorPrefab = Instantiate(this.XRDeviceSimulatorResource, Vector3.zero, Quaternion.identity, this.transform);
+        //this.XRDeviceSimulatorPrefab = Instantiate(this.XRDeviceSimulatorResource, Vector3.zero, Quaternion.identity, this.transform);
     }
 }
