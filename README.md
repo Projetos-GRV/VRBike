@@ -31,3 +31,8 @@ Inside the VR headset, a Unity application simulates the 3D bicycle, updating it
 ### Goal
 
 The project combines hardware integration, real-time data streaming, and VR development to create a fun and immersive experience of riding a bicycle inside a virtual world.
+
+
+# Authors
+
+Mauricio Luz (mauricio.luz22@edu.pucrs.br), Piedro Rockembach Nunes (piedro.n@edu.pucrs.br) e Vinicius Chrisosthemos Teixeira (Vinicius.Teixeira99@edu.pucrs.br)
