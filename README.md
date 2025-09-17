@@ -1,4 +1,4 @@
-# Virtual Reality Bicycle Simulator
+# Virtual Reality Bicycle Simulator (Developing)
 
 This project is a Virtual Reality application that simulates riding a bicycle using real-world sensors and a 3D environment built in Unity for the Meta Quest 3.
 
