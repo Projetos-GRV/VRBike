@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -20,6 +19,7 @@ public class EnvironmentCollectableManager : MonoBehaviour
     [SerializeField] private int _nodeToCheck = 1;
     [SerializeField] private int _coinsPerSegment = 3;
     [SerializeField, Range(0, 1)] private float _chanceToCreateSpeedMultiplier = 0.4f;
+
 
     [Header("Prefabs")]
     [SerializeField] private GameObject _preafabCoin;

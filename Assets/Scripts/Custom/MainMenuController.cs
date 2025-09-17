@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 public class MainMenuController : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private InputActionReference _menuActionReference;
     [SerializeField] private Transform _playerFootPivot;
     [SerializeField] private Transform _origin;
     [SerializeField] private GameObject _instance;
@@ -24,9 +24,6 @@ public class MainMenuController : MonoBehaviour
 
     private void Awake()
     {
-        /*
-        _menuActionReference.action.performed += Action_performed;
-        */
         _view.SetActive(false);
     }
 
@@ -36,12 +33,7 @@ public class MainMenuController : MonoBehaviour
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
 
-        _environmentListController.Init(_environmentsSO, HandleEnvironmentSelected);
-    }
-
-    private void Action_performed(InputAction.CallbackContext obj)
-    {
-        _view.SetActive(!_view.activeSelf);
+        //_environmentListController.Init(_environmentsSO, HandleEnvironmentSelected);
     }
 
     private void HandleEnvironmentSelected(object item, GameObject instance)
