@@ -40,4 +40,9 @@ The project combines hardware integration, real-time data streaming, and VR deve
 
 # Authors
 
-Mauricio Luz (mauricio.luz22@edu.pucrs.br), Piedro Rockembach Nunes (piedro.n@edu.pucrs.br) e Vinicius Chrisosthemos Teixeira (Vinicius.Teixeira99@edu.pucrs.br)
+- Mauricio Luz (mauricio.luz22@edu.pucrs.br)
+- Piedro Rockembach Nunes (piedro.n@edu.pucrs.br)
+- Vinicius Chrisosthemos Teixeira (Vinicius.Teixeira99@edu.pucrs.br)
+- Henrique Gabriel Cabral
+- Thiago Almeida Mocinho
+- Valdemir Fernando Braga Pereira
