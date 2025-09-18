@@ -65,6 +65,12 @@ public class MoveVehicle : MonoBehaviour
 
         this.currSpeed = CheckIfShouldBrake() ? 0 : this.speed;
 
+        if (itControl != null && !itControl.IsRedLight(this.transform))
+        {
+            itControl = null;
+            this.redlight = false;
+        }
+
         rb.MovePosition(transform.position + this.currSpeed * this.scale * Time.fixedDeltaTime * transform.forward);
         if (cityGen != null)
         {

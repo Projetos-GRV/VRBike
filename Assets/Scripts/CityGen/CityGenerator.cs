@@ -38,6 +38,7 @@ public class CityGenerator : MonoBehaviour
     private bool generatingCity = true;
     private GameObject surroundingLanes;
     private Transform cityParentTransform;
+    private Transform carsTransform;
     public Dictionary<Vector3, GameObject> loadedChunks  = new Dictionary<Vector3, GameObject>();
     private List<GameObject> instantiatedCars = new List<GameObject>();
     // Start is called before the first frame update
@@ -52,6 +53,9 @@ public class CityGenerator : MonoBehaviour
         cityParentTransform = new GameObject("CityParent").transform;
         //cityParentTransform.parent = this.transform;
         cityParentTransform.SetParent(this.transform, false);
+
+        carsTransform = new GameObject("Vehicles").transform;
+        carsTransform.SetParent(this.transform, false);
 
         // cria as vias em um canto pra instanciar numa unica chamada de funcao depois em GenerateChunk
         surroundingLanes = new GameObject("Lanes");
@@ -116,6 +120,16 @@ public class CityGenerator : MonoBehaviour
                         GameObject chunk = GenerateChunk(string.Format("Chunk{0}", this.chunks++), cc, 0.95f);
                         chunk.transform.position = new Vector3(cc.x * stride, 0, cc.z * stride);
                         loadedChunks.Add(cc, chunk);
+                        foreach (Transform child in chunk.transform)
+                        {
+                            if (child.name.Contains("Vehicle"))
+                            {
+                                Vector3 pos = child.position;
+                                child.position = Vector3.zero;
+                                child.SetParent(this.carsTransform, false);
+                                child.position = pos;
+                            }
+                        }
                     }
                     else if (!loadedChunks[cc].activeSelf)
                     {
@@ -125,6 +139,16 @@ public class CityGenerator : MonoBehaviour
                         SpawnCars(ck, 0.95f);
                         ck.transform.position = pos;
                         ck.SetActive(true);
+                        foreach (Transform child in ck.transform)
+                        {
+                            if (child.name.Contains("Vehicle"))
+                            {
+                                Vector3 vpos = child.position;
+                                child.position = Vector3.zero;
+                                child.SetParent(this.carsTransform, false);
+                                child.position = vpos;
+                            }
+                        }
                     }
                     // Instantiate(chunkParent, new Vector3((cc + 3) * 20, 0, 0), Quaternion.identity);
                 }
@@ -158,6 +182,16 @@ public class CityGenerator : MonoBehaviour
                 GameObject chunk = GenerateChunk(string.Format("Chunk{0}", chunks++), cc, this.carSpawnChance);
                 chunk.transform.position = new Vector3(cc.x * stride, 0, cc.z * stride);
                 loadedChunks.Add(cc, chunk);
+                foreach (Transform child in chunk.transform)
+                {
+                    if (child.name.Contains("Vehicle"))
+                    {
+                        Vector3 pos = child.position;
+                        child.position = Vector3.zero;
+                        child.SetParent(this.carsTransform, false);
+                        child.position = pos;
+                    }
+                }
                 await Task.Yield();
             }
         }
