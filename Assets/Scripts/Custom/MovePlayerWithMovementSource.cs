@@ -120,7 +120,6 @@ public class MovePlayerWithMovementSource : MonoBehaviour
             {
                 Debug.Log("Collected!!");
             }
-            // TODO - CALCULAR PONTOS DO JOGADOR. SEJA AQUI OU EM OUTRO LUGAR, NAO SEI
             other.gameObject.SetActive(false);
         }
     }

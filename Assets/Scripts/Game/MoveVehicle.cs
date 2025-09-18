@@ -9,7 +9,12 @@ public class MoveVehicle : MonoBehaviour
     public GameObject cityGen = null;
 
     private bool destroy = false;
+    private bool redlight = false; // de momento, so serve para indicar que o objeto itControl existe (evita NullException)
+    private bool braking = false;
     private Rigidbody rb;
+    private CityGenerator cg;
+    private float currSpeed = 0;
+    private float scale = 1f;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +24,15 @@ public class MoveVehicle : MonoBehaviour
         rb = this.AddComponent<Rigidbody>(); 
         rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+        rb.isKinematic = false;
+
+        this.cg = this.cityGen.GetComponent<CityGenerator>();
+        this.currSpeed = this.speed;
+
+        if (cityGen != null)
+        {
+            scale = cityGen.transform.localScale.x;
+        }
         //rb.constraints = RigidbodyConstraints.FreezePositionY;
     }
 
@@ -26,10 +40,12 @@ public class MoveVehicle : MonoBehaviour
     private float timer = 5f;
     private bool applyForce = true;
     private Vector3 collisionDir = Vector3.zero;
+    private IntersectionController itControl = null;
     void FixedUpdate()
     {
         if (this.destroy)
         {
+            this.currSpeed = 0;
             // Afasta o carro do objeto com o qual este colidiu... pode ser removido se julgado bobo ou desnecessario
             // ... ou ajustado para ser melhor
             // forças absolutamente arbitrárias
@@ -44,35 +60,54 @@ public class MoveVehicle : MonoBehaviour
                 this.transform.parent = null;
                 Destroy(this.gameObject);
             }
+            return;
         }
-        float scale = 1f;
+
+        this.currSpeed = CheckIfShouldBrake() ? 0 : this.speed;
+
+        rb.MovePosition(transform.position + this.currSpeed * this.scale * Time.fixedDeltaTime * transform.forward);
         if (cityGen != null)
         {
-            scale = cityGen.transform.localScale.x;
-        }
-        //this.transform.position = Vector3.MoveTowards(this.transform.position, this.transform.position + this.transform.forward, this.speed * Time.fixedDeltaTime);
-        rb.MovePosition(transform.position + speed * scale * Time.fixedDeltaTime * transform.forward);
-        if (cityGen != null)
-        {
-            CityGenerator cg = this.cityGen.GetComponent<CityGenerator>();
-            Vector3 chunk = this.transform.position;
-            chunk.x = Mathf.RoundToInt(chunk.x / cg.stride);
-            chunk.y = 0f;
-            chunk.z = Mathf.RoundToInt(chunk.z / cg.stride);
-            if (!cg.IsChunkLoaded(chunk))
+            if (this.transform.position.y < -0.01f)
             {
-                Debug.Log("Unloaded vehicle script");
+                this.destroy = true;
+                this.applyForce = false;
+                this.timer = 0;
             }
         }
         //this.transform.rotation *= Quaternion.AngleAxis(90 * Time.deltaTime, Vector3.up);
     }
 
+    private bool CheckIfShouldBrake()
+    {
+        if (Physics.Raycast(this.transform.position, this.transform.forward, out RaycastHit carHit, 5.0f))
+        {
+            if (carHit.collider.CompareTag("Vehicle"))
+            {
+                return true;
+            }
+            else
+            {
+                return this.redlight && itControl.IsRedLight(this.transform);
+            }
+        }
+        return this.redlight && itControl.IsRedLight(this.transform);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Intersection"))
+        {
+            itControl = other.gameObject.GetComponent<IntersectionController>();
+            this.redlight = itControl.IsRedLight(this.transform);
+        }
+    }
+
     void OnCollisionEnter(Collision collision)
     {
-        if (!collision.gameObject.CompareTag("Road"))
+        if (!(collision.gameObject.CompareTag("Road") || collision.gameObject.CompareTag("Intersection")))
         {
-            destroy = true;
-            this.speed = 0;
+            this.destroy = true;
             if (collision.gameObject.CompareTag("Vehicle") || collision.gameObject.CompareTag("PlayerTag"))
             {
                 collisionDir = collision.transform.forward;
@@ -81,7 +116,6 @@ public class MoveVehicle : MonoBehaviour
             {
                 collisionDir = this.transform.forward * -1;
             }
-            Debug.Log("Collision!!");
         }
     }
 }

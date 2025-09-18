@@ -12,7 +12,6 @@ public class CityGenerator : MonoBehaviour
     public float carSpawnChance = 0.5f;
 
     public Transform player;
-    public GameObject collectable;
 
     public GameObject laneRegular;
     public GameObject laneBusStop;
@@ -71,10 +70,6 @@ public class CityGenerator : MonoBehaviour
         GameObject lane1 = (GameObject) Instantiate(laneRegular, new Vector3(0, 0, -1 * (stride - (this.blockSize * 2))), Quaternion.identity, surroundingLanes.transform);
         GameObject lane2 = (GameObject) Instantiate(laneRegular, new Vector3((stride - this.blockSize), 0, 0), Quaternion.AngleAxis(90, Vector3.up), surroundingLanes.transform);
         GameObject lane3 = (GameObject) Instantiate(laneRegular, new Vector3((stride - (this.blockSize * 2)), 0, 0), Quaternion.AngleAxis(90, Vector3.up), surroundingLanes.transform);
-        Instantiate(this.collectable, lane0.transform.position + new Vector3(0, 0.957f, 0), Quaternion.identity, lane0.transform);
-        Instantiate(this.collectable, lane1.transform.position + new Vector3(0, 0.957f, 0), Quaternion.identity, lane1.transform);
-        Instantiate(this.collectable, lane2.transform.position + new Vector3(0, 0.957f, 0), Quaternion.identity, lane2.transform);
-        Instantiate(this.collectable, lane3.transform.position + new Vector3(0, 0.957f, 0), Quaternion.identity, lane3.transform);
         GameObject intersection = (GameObject) Instantiate(laneIntersection, new Vector3(0, 0, 0), Quaternion.identity, surroundingLanes.transform);
 
         // postes de luz (nao emitem luz alguma, mas existem)
@@ -105,7 +100,7 @@ public class CityGenerator : MonoBehaviour
             y = Mathf.RoundToInt(playerPos.z / stride)
         };
 
-        //if (!generatingCity)
+        if (!generatingCity)
         {
             // guarda as chunks proximas ao jogador
             HashSet<Vector3> needed = new HashSet<Vector3>();
@@ -125,9 +120,10 @@ public class CityGenerator : MonoBehaviour
                     else if (!loadedChunks[cc].activeSelf)
                     {
                         GameObject ck = loadedChunks[cc];
-                        // FIX - Problema! Descomentar essa linha faz com que os carros reapareçam numa unica chunk
-                        // especifica, perto do spawnpoint do jogador. Faz os carros voarem que nem brinquedo
-                        //SpawnCars(ck, 0.95f);
+                        Vector3 pos = ck.transform.position;
+                        ck.transform.position = Vector3.zero;
+                        SpawnCars(ck, 0.95f);
+                        ck.transform.position = pos;
                         ck.SetActive(true);
                     }
                     // Instantiate(chunkParent, new Vector3((cc + 3) * 20, 0, 0), Quaternion.identity);
@@ -165,7 +161,7 @@ public class CityGenerator : MonoBehaviour
                 await Task.Yield();
             }
         }
-        //generatingCity = false;
+        generatingCity = false;
     }
 
     public bool IsChunkLoaded(Vector3 chunk)
