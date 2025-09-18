@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2057876699780607147}
   - component: {fileID: 878071497904938854}
   - component: {fileID: 7108522620408456321}
+  - component: {fileID: -3600031408521727160}
   m_Layer: 0
   m_Name: Direction Signal
   m_TagString: Untagged
@@ -75,8 +76,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 6.9571385, y: 12.493551, z: 9.052257}
-  m_Center: {x: 0.20580792, y: -2.920825, z: 0.09499884}
+  m_Size: {x: 12.471789, y: 12.493551, z: 13.425766}
+  m_Center: {x: 0.17083311, y: -2.920825, z: 0.01177597}
 --- !u!114 &7108522620408456321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,6 +90,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6b291d3c49a7514f858b46974e3011f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _destroyOnCollect: 0
+  OnCollected:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &-3600031408521727160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7612322070600014630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d87b0f3255de735489bc5f849b1fcbb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioManager: {fileID: 0}
+  _audioClip: {fileID: 8300000, guid: 47ef2966fc7a0ed44adb1dc79f56befb, type: 3}
+  _volume: 0.2
 --- !u!1001 &1161384597888806044
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -12,13 +12,10 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameSettingsSO _gameSettins;
 
     private string _gameDataFile = "gameData.txt";
-    private string _gameDataPath;
 
 
-    private void Awake()
+    private void Start()
     {
-        _gameDataPath = Path.Combine(Application.persistentDataPath, _gameDataFile);
-
         LoadData();
 
         _bikeDataSource.MinAngle = _gameSettins.MinRawAngle;
@@ -28,18 +25,21 @@ public class GameController : MonoBehaviour
 
         _uiMainMenuController.UpdateHandleThresholdDisplay(_bikeDataSource.AngleThreshold);
         _uiMainMenuController.UpdateSpeedMultiplierDisplay(_bikeDataSource.SpeedMultiplier);
+        _uiMainMenuController.UpdateMinValueDisplay(_bikeDataSource.MinAngle);
+        _uiMainMenuController.UpdateMaxValueDisplay(_bikeDataSource.MaxAngle);
 
         _bikeDataSource.OnMinAngleChanged.AddListener(args => { _gameSettins.MinRawAngle = args; SaveData(); });
         _bikeDataSource.OnMaxAngleChanged.AddListener(args => { _gameSettins.MaxRawAngle = args; SaveData(); });
-        _bikeDataSource.OnSpeedMultiplierChanged.AddListener(args => { _gameSettins.SpeedMultiplier = args; SaveData(); });
         _bikeDataSource.OnHandleSensibility.AddListener(args => { _gameSettins.HandleSensibility = args; SaveData(); });
     }
 
     public void LoadData()
     {
-        if (!File.Exists(_gameDataPath)) return;
+        var path = Path.Combine(Application.persistentDataPath, _gameDataFile);
 
-        var content = File.ReadAllText(_gameDataPath);
+        if (!File.Exists(path)) return;
+
+        var content = File.ReadAllText(path);
 
         var gameData = JsonUtility.FromJson<GameData>(content);
 
@@ -54,6 +54,8 @@ public class GameController : MonoBehaviour
 
     public void SaveData()
     {
+        var path = Path.Combine(Application.persistentDataPath, _gameDataFile);
+
         var gameData = new GameData(
             _gameSettins.MinRawAngle,
             _gameSettins.MaxRawAngle,
@@ -64,8 +66,8 @@ public class GameController : MonoBehaviour
 
         var content = JsonUtility.ToJson( gameData );
 
-        File.WriteAllText( _gameDataPath, content );
-
+        File.WriteAllText(path, content );
+        
         Debug.Log($"[{GetType()}][SaveData] Configuracoes salvas!");
     }
 

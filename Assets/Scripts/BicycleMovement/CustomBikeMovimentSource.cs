@@ -14,6 +14,7 @@ public class CustomBikeMovimentSource: MonoBehaviour, IBicycleMovementSource
     public bool _useKeyboardForSpeed = false;
 
     [Header("Rotation")]
+    public bool _useLimitInRatation = false;
     public float _minAngle = -80f;
     public float _maxAngle = 80f;
     public bool _invertSide = false;
@@ -99,11 +100,18 @@ public class CustomBikeMovimentSource: MonoBehaviour, IBicycleMovementSource
         {
             _rawAngle = newRawAngle;
 
-            angle = AppUtils.Map(_rawAngle, MinAngle, MaxAngle, -1, 1);
+            if (_useLimitInRatation)
+            {
+                angle = AppUtils.Map(_rawAngle, MinAngle, MaxAngle, -1, 1);
 
-            angle = angle * _maxAngle;
+                angle = angle * _maxAngle;
 
-            angle = Mathf.Abs((MaxAngle - MinAngle) / 2f - _rawAngle) > AngleThreshold ? angle : 0;
+                angle = Mathf.Abs((MaxAngle - MinAngle) / 2f - _rawAngle) > AngleThreshold ? angle : 0;
+            }
+            else
+            {
+                angle = AppUtils.Map(_rawAngle, MinAngle, MaxAngle, -90, 90);
+            }
         }
 
         speed = float.Parse(speedStr, NumberStyles.Number, CultureInfo.InvariantCulture) * SpeedMultiplier;
@@ -153,8 +161,8 @@ public class CustomBikeMovimentSource: MonoBehaviour, IBicycleMovementSource
     {
         var clenedStr = newValue.Trim().Replace(",", ".");
 
-        Debug.Log($"Multiplier  {newValue}  {clenedStr} {float.Parse(clenedStr, NumberStyles.Number, CultureInfo.InvariantCulture)}");
         SpeedMultiplier = float.Parse(clenedStr, NumberStyles.Number, CultureInfo.InvariantCulture);
+        Debug.Log($"[{GetType()}][HandleSpeedMultplierChanged] Multiplier  {newValue}  {clenedStr} {SpeedMultiplier}");
 
         OnSpeedMultiplierChanged?.Invoke(SpeedMultiplier);
     }

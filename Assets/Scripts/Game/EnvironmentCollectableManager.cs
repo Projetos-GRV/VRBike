@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,7 +9,6 @@ public class EnvironmentCollectableManager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private GraphManager _graphManager;
-    [SerializeField] private Transform _collectablesParent;
     [SerializeField] private Transform _signalParent;
 
     [Header("Parameters")]
@@ -19,7 +19,7 @@ public class EnvironmentCollectableManager : MonoBehaviour
     [SerializeField] private int _nodeToCheck = 1;
     [SerializeField] private int _coinsPerSegment = 3;
     [SerializeField, Range(0, 1)] private float _chanceToCreateSpeedMultiplier = 0.4f;
-
+    [SerializeField] private int _signalsActiveInSameTime = 3;
 
     [Header("Prefabs")]
     [SerializeField] private GameObject _preafabCoin;
@@ -27,8 +27,10 @@ public class EnvironmentCollectableManager : MonoBehaviour
     [SerializeField] private GameObject _prefabSpeedMultiplier;
 
     private List<Vector2> _currentPath;
-    private GraphManager.Node _lastNode;
-    private Vector3 _lastDirection;
+    private GameObject _nextSignal;
+
+    private List<GameObject> _signals;
+    private int _signalIndex = 0;
 
     private void Update()
     {
@@ -40,18 +42,13 @@ public class EnvironmentCollectableManager : MonoBehaviour
 
     public void CreateCollectables()
     {
+        Debug.Log($"[{GetType()}][CreateCollectables] Cria caminho");
+        _signalParent.ClearChilds();
+
         _currentPath = new List<Vector2>();
+        _signals = new List<GameObject>();
 
-        var path = new List<GraphManager.Node>();
-
-        if (_lastNode == null)
-        {
-            path = _graphManager.GetRandomPath(_pathSize);
-        }
-        else
-        {
-            path = _graphManager.GetRandomPath(_lastNode, _lastDirection, _pathSize - 1, true);
-        }
+        var path = _graphManager.GetRandomPath(_pathSize);
 
         for (int i = 0; i < path.Count; i++)
         {
@@ -65,6 +62,9 @@ public class EnvironmentCollectableManager : MonoBehaviour
             {
                 controller.OnCollected.AddListener(HandleSignalCollected);
             }
+
+            signal.SetActive(false);
+            _signals.Add(signal);
 
             // Se não for o último nó, ajusta a rotação do sinal e instancia moedas no caminho
             if (i < path.Count - 1)
@@ -84,43 +84,53 @@ public class EnvironmentCollectableManager : MonoBehaviour
                     float t = (float)c / (numCoins + 1); // fração ao longo do segmento
                     Vector3 coinPos = Vector3.Lerp(node.transform.position, nextNode.transform.position, t);
 
-                    var coin = Instantiate(_preafabCoin, _collectablesParent);
+                    var coin = Instantiate(_preafabCoin, signal.transform);
                     coin.transform.position = coinPos + _cointOffet;
 
                     if ((c - 1) == indexToCreateSpeedMultiplier)
                     {
-                        Instantiate(_prefabSpeedMultiplier, coinPos + _speedMultiplierOffset, Quaternion.identity, _collectablesParent);
+                        var speedMultiplierInstance = Instantiate(_prefabSpeedMultiplier, coinPos + _speedMultiplierOffset, Quaternion.identity, signal.transform);
                     }
                 }
-
-
-                _lastDirection = dir;
             }
 
             // Registrar posição 2D no caminho
             _currentPath.Add(new Vector2(node.transform.position.x, node.transform.position.z));
+        }
 
-            _lastNode = node;
+        _signalIndex = 0;
+
+        UpdateSignals();
+    }
+
+    private void UpdateSignals()
+    {
+        int beginIndex = Mathf.Min(_signalIndex, _signals.Count - 1);
+        int endIndex = Mathf.Min(_signalIndex + _signalsActiveInSameTime, _signals.Count);
+        
+        for(int i =0; i<_signals.Count; i++)
+        {
+            _signals[i].SetActive(i >= beginIndex && i <  endIndex);
         }
     }
 
     private void HandleSignalCollected(GameObject signalInstance)
     {
         bool createMoreCoins = false;
-        var pos2DCoin = new Vector2(signalInstance.transform.position.x, signalInstance.transform.position.z);
 
-        for (int i = 0; i < _nodeToCheck; i++)
+        var rest = _signals.Count - (_signalIndex);
+        var count = rest > _signalsActiveInSameTime ? _signalsActiveInSameTime : rest;
+        var signalInstanceIndex = _signals.FindIndex(_signalIndex, count, s => s == signalInstance);
+
+        if (signalInstanceIndex >= 0)
         {
-            var node = _currentPath[_currentPath.Count - i - 1];
+            _signalIndex = signalInstanceIndex;
+            UpdateSignals();
 
-            if (Vector2.Distance(pos2DCoin, node) < 0.1f)
-            {
-                createMoreCoins = true;
-                break;
-            }
+            createMoreCoins = _signalIndex >= (_signals.Count - 1);
+
+            Debug.Log($"[{GetType()}][HandleSignalCollected] Index {_signalIndex} de {_signals.Count-1}");
         }
-
-        Destroy(signalInstance);
 
         if (createMoreCoins)
             CreateCollectables();
@@ -129,10 +139,9 @@ public class EnvironmentCollectableManager : MonoBehaviour
     public void Reset()
     {
         _signalParent.ClearChilds();
-        _collectablesParent.ClearChilds();
 
-        _lastNode = null;
-        _lastDirection = Vector3.zero;
+        _nextSignal = null;
+        _signals.Clear();
     }
 
     public void HandleGameViewChanged(bool isActive)

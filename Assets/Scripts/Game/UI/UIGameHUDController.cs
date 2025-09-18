@@ -28,6 +28,9 @@ public class UIGameHUDController : MonoBehaviour
     [SerializeField] private float _takeDamageAnimationDuration = 0.83f;
     [SerializeField] private string _timerPrefix = "Tempo restante:\n";
 
+    [Header("Game Over Paramters")]
+    [SerializeField] private TextMeshProUGUI _txtGameOverScore;
+
     [Header("Events")]
     public UnityEvent OnStartGameAnimation;
     public UnityEvent OnStartGameOverAnimation;
@@ -76,11 +79,13 @@ public class UIGameHUDController : MonoBehaviour
         }));
     }
 
-    public void StartGameOverAnimation(Action callback)
+    public void StartGameOverAnimation(GameState gameState, Action callback)
     {
         _gameView.SetActive(false);
         _startGameView.SetActive(false);
         _gameOverView.SetActive(true);
+
+        _txtGameOverScore.text = $"Sua pontuação\n{gameState.Score.ToString(_scoreFormat)}";
 
         _animator.SetTrigger("GameOver");
 

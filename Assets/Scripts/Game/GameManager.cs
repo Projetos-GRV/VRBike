@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ResetPlayerController _resetPlayerController;
     [SerializeField] private PlayerCollisionDetectorController _playerCollisionDetectorController;
     [SerializeField] private CustomBikeMovement _customBikeMovement;
+    [SerializeField] private LeaderBoardController _leaderBoardController;
 
     [Header("Game Parameters")]
     [SerializeField] private int _maxPlayerHP = 3;
@@ -38,7 +39,7 @@ public class GameManager : MonoBehaviour
     private bool _canTakeDamage = true;
     private bool _inGaming = false;
     private bool _isRunning = false;
-
+    private bool _inHighSpeed = false;
 
     private void Awake()
     {
@@ -107,6 +108,7 @@ public class GameManager : MonoBehaviour
         _uiGameHUDController.SetActive(true);
         _uiGameHUDController.StartGameAnimation(() =>
         {
+            _inHighSpeed = false;
             _isRunning = true;
             _gameState = new GameState(_maxPlayerHP, _sessionTime);
             _uiGameHUDController.UpdateHUD(_gameState);
@@ -125,6 +127,7 @@ public class GameManager : MonoBehaviour
 
             if (_gameState.IsPlayerAlive())
             {
+                _inHighSpeed = false;
                 _customBikeMovement.ResetSpeedMultiplier();
                 OnPlayerInLowSpeed?.Invoke();
 
@@ -147,11 +150,14 @@ public class GameManager : MonoBehaviour
 
         }else if (gameObject.TryGetComponent(out SpeedMultiplierCollectableController speedMultiplierController))
         {
+            Debug.Log($"[{GetType()}][HandlePlayerCollision] Speed Multiplier Collected = {speedMultiplierController.SpeedMultiplier}");
+
             _customBikeMovement.AddMultiplier(speedMultiplierController.SpeedMultiplier);
 
-            if (_customBikeMovement.Speed>= _speedThresholdHigh)
+            if (_customBikeMovement.Speed>= _speedThresholdHigh && !_inHighSpeed)
             {
                 OnPlayerInHighSpeed?.Invoke();
+                _inHighSpeed = true;
             }
         }
 
@@ -169,13 +175,16 @@ public class GameManager : MonoBehaviour
     private void HandleGameOver()
     {
         _isRunning = false;
+        _inHighSpeed = false;
         _customBikeMovement.ResetSpeedMultiplier();
         OnGameOver?.Invoke();
 
-        _uiGameHUDController.StartGameOverAnimation(() =>
+        _uiGameHUDController.StartGameOverAnimation(_gameState, () =>
         {
             _uiGameHUDController.SetActive(false);
             _uiGameController.SetActive(true);
+
+            _leaderBoardController.AddEntry(_gameState.Score, "Player");
         });
     }
 

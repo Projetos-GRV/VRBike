@@ -45,6 +45,8 @@ public class GraphManager : MonoBehaviour
 
     public int pathSize = 15;
 
+    public Transform _playerDebug;
+
     public void HandleCityChanged(CityGenerator cityGenerator)
     {
         transforms = cityGenerator.StreetPositions.ToList();
@@ -58,7 +60,15 @@ public class GraphManager : MonoBehaviour
     void Update()
     {
         if (player != null)
+        {
             currentPlayerNode = GetClosestNode(player.position);
+            
+            if (drawDebug && currentPlayerNode != null)
+            {
+                _playerDebug.gameObject.SetActive(true);
+                _playerDebug.position = currentPlayerNode.transform.position;
+            }
+        }
     }
 
     void BuildGraph()

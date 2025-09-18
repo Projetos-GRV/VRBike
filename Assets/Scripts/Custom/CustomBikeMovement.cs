@@ -132,14 +132,14 @@ public class CustomBikeMovement : MonoBehaviour
     {
         _speedMultiplier += speedMultiplier;
 
-        _dataSource.HandleSpeedMultplierChanged(_speedMultiplier.ToString());
+        _dataSource.HandleSpeedMultplierChanged(_speedMultiplier.ToString("0.000"));
     }
 
     public void ResetSpeedMultiplier()
     {
         _speedMultiplier = 1f;
 
-        _dataSource.HandleSpeedMultplierChanged(_speedMultiplier.ToString());
+        _dataSource.HandleSpeedMultplierChanged(_speedMultiplier.ToString("0.000"));
     }
 
     public float Speed { get => _speed; set => _speed = value; }
