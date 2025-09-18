@@ -38,11 +38,9 @@ public class CustomBikeMovement : MonoBehaviour
     private float _prevHandleAngle = 0f;
     private bool _isMoving = false;
 
-    private float _speedMultiplier = 1f;
-
     private void Update()
     {
-        _speed = _dataSource.Speed * _speedMultiplier;
+        _speed = _dataSource.Speed;
         _handleAngle = _dataSource.HandleAngle;
     }
     
@@ -128,18 +126,14 @@ public class CustomBikeMovement : MonoBehaviour
             _pedal.Rotate(Vector3.right, wheelRotationDegrees * _pedalMultiplier, Space.Self);
     }
 
-    public void AddMultiplier(float speedMultiplier)
+    public void AddMultiplier(float valueToAdd)
     {
-        _speedMultiplier += speedMultiplier;
-
-        _dataSource.HandleSpeedMultplierChanged(_speedMultiplier.ToString("0.000"));
+        _dataSource.IncreaseSpeedMultiplier(valueToAdd);
     }
 
     public void ResetSpeedMultiplier()
     {
-        _speedMultiplier = 1f;
-
-        _dataSource.HandleSpeedMultplierChanged(_speedMultiplier.ToString("0.000"));
+        _dataSource.ResetSpeedMultiplier();
     }
 
     public float Speed { get => _speed; set => _speed = value; }

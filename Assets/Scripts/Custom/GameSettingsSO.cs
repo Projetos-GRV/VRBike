@@ -5,6 +5,6 @@ public class GameSettingsSO : ScriptableObject
 {
     public float MinRawAngle;
     public float MaxRawAngle;
-    public float SpeedMultiplier;
+    public float BaseSpeedMultiplier;
     public float HandleSensibility;
 }

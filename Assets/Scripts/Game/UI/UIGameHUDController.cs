@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class UIGameHUDController : MonoBehaviour
 {
@@ -26,10 +27,14 @@ public class UIGameHUDController : MonoBehaviour
     [SerializeField] private float _startAnimationDuration = 5f;
     [SerializeField] private float _gameOverAnimationDuration = 4.5f;
     [SerializeField] private float _takeDamageAnimationDuration = 0.83f;
+    [SerializeField] private float _getRankAnimationDuration = 0.83f;
     [SerializeField] private string _timerPrefix = "Tempo restante:\n";
 
     [Header("Game Over Paramters")]
     [SerializeField] private TextMeshProUGUI _txtGameOverScore;
+    [SerializeField] private Image _imgFirstPlace;
+    [SerializeField] private Image _imgSecondPlace;
+    [SerializeField] private TextMeshProUGUI _txtPlace;
 
     [Header("Events")]
     public UnityEvent OnStartGameAnimation;
@@ -79,7 +84,7 @@ public class UIGameHUDController : MonoBehaviour
         }));
     }
 
-    public void StartGameOverAnimation(GameState gameState, Action callback)
+    public void StartGameOverAnimation(GameState gameState, Action<string> callback)
     {
         _gameView.SetActive(false);
         _startGameView.SetActive(false);
@@ -87,14 +92,35 @@ public class UIGameHUDController : MonoBehaviour
 
         _txtGameOverScore.text = $"Sua pontuação\n{gameState.Score.ToString(_scoreFormat)}";
 
-        _animator.SetTrigger("GameOver");
-
         OnStartGameOverAnimation?.Invoke();
 
-        StartCoroutine(WaitForSeconds(_gameOverAnimationDuration, () =>
+        if (gameState.InLeaderBoard)
         {
-            callback?.Invoke();
-        }));
+            _animator.SetTrigger("NewRank");
+
+            _imgFirstPlace.gameObject.SetActive(gameState.Rank == 1);
+            _imgSecondPlace.gameObject.SetActive(gameState.Rank == 2);
+            _txtPlace.text = $"{gameState.Rank}º";
+            _txtPlace.gameObject.SetActive(gameState.Rank > 2);
+
+            StartCoroutine(WaitForSeconds(_getRankAnimationDuration, () =>
+            {
+                KeyboardManager.Instance.GetInput(result =>
+                {
+                    _animator.SetTrigger("Restart");
+                    callback?.Invoke(result);
+                });
+            }));
+        }
+        else
+        {
+            _animator.SetTrigger("GameOver");
+
+            StartCoroutine(WaitForSeconds(_gameOverAnimationDuration, () =>
+            {
+                callback?.Invoke(string.Empty);
+            }));
+        }
     }
 
     public void StartTakeDamageAnimation(Action callback)

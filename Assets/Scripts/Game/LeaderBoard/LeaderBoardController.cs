@@ -56,6 +56,21 @@ public class LeaderBoardController : MonoBehaviour
         return score > _leaderboardData.Entries[_maxEntries - 1].Score;
     }
 
+    public int GetPositionForScore(int score)
+    {
+        if (!_allowNewRecords) return -1;
+
+        // Sempre cabe se ainda não preencheu tudo
+        if (_leaderboardData.Entries.Count < _maxEntries) return -1;
+
+        for (int i = 0; i < _leaderboardData.Entries.Count; i++)
+        {
+            if (score > _leaderboardData.Entries[i].Score) return i + 1;
+        }
+
+        return -1;
+    }
+
     /// <summary>
     /// Adiciona um novo registro ao leaderboard (se permitido)
     /// </summary>

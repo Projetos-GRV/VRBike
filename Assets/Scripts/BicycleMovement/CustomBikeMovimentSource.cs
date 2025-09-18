@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
@@ -27,6 +28,7 @@ public class CustomBikeMovimentSource: MonoBehaviour, IBicycleMovementSource
     public UnityEvent<float> OnAngleChanged;
     public UnityEvent<float> OnSpeedMultiplierChanged;
     public UnityEvent<float> OnHandleSensibility;
+    public UnityEvent<float> OnBaseSpeedMultiplierChanged;
 
     private CustomUDPDataListener dataSource;
 
@@ -48,6 +50,7 @@ public class CustomBikeMovimentSource: MonoBehaviour, IBicycleMovementSource
     private string _defaultSpeed = "0";
     private float _rawAngle = 0f;
     private bool _useDefaultSpeed = false;
+    private float _baseSpeedMultiplier = 1f;
 
     // Start is called before the first frame update
     void Start()
@@ -161,8 +164,25 @@ public class CustomBikeMovimentSource: MonoBehaviour, IBicycleMovementSource
     {
         var clenedStr = newValue.Trim().Replace(",", ".");
 
-        SpeedMultiplier = float.Parse(clenedStr, NumberStyles.Number, CultureInfo.InvariantCulture);
-        Debug.Log($"[{GetType()}][HandleSpeedMultplierChanged] Multiplier  {newValue}  {clenedStr} {SpeedMultiplier}");
+        _baseSpeedMultiplier = float.Parse(clenedStr, NumberStyles.Number, CultureInfo.InvariantCulture);
+        Debug.Log($"[{GetType()}][HandleSpeedMultplierChanged] Multiplier  {newValue}  {clenedStr} {_baseSpeedMultiplier}");
+
+        SpeedMultiplier = _baseSpeedMultiplier;
+
+        OnSpeedMultiplierChanged?.Invoke(SpeedMultiplier);
+        OnBaseSpeedMultiplierChanged?.Invoke(_baseSpeedMultiplier);
+    }
+
+    public void IncreaseSpeedMultiplier(float valueToAdd)
+    {
+        SpeedMultiplier += valueToAdd;
+
+        OnSpeedMultiplierChanged?.Invoke(SpeedMultiplier);
+    }
+
+    internal void ResetSpeedMultiplier()
+    {
+        SpeedMultiplier = _baseSpeedMultiplier;
 
         OnSpeedMultiplierChanged?.Invoke(SpeedMultiplier);
     }

@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
 
         if (_leftHandTrigger && _rightHandTrigger)
         {
-            if (_inGaming)
+            if (_inGaming && !_isRunning)
             {
                 StartNewGame();
             }
@@ -179,12 +179,17 @@ public class GameManager : MonoBehaviour
         _customBikeMovement.ResetSpeedMultiplier();
         OnGameOver?.Invoke();
 
-        _uiGameHUDController.StartGameOverAnimation(_gameState, () =>
+        _gameState.SetLeaderBoardStatus(_leaderBoardController.CanEnterLeaderboard(_gameState.Score), _leaderBoardController.GetPositionForScore(_gameState.Score));
+
+        _uiGameHUDController.StartGameOverAnimation(_gameState, (playerName) =>
         {
+            if (_gameState.InLeaderBoard)
+            {
+                _leaderBoardController.AddEntry(_gameState.Score, playerName);
+            }
+
             _uiGameHUDController.SetActive(false);
             _uiGameController.SetActive(true);
-
-            _leaderBoardController.AddEntry(_gameState.Score, "Player");
         });
     }
 

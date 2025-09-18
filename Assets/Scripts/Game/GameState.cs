@@ -9,6 +9,8 @@ public class GameState
     public int Score;
     public float CurrentTime;
     public float MaxTime;
+    public bool InLeaderBoard;
+    public int Rank;
 
     private float _firstTim;
 
@@ -21,6 +23,12 @@ public class GameState
         MaxTime = maxTime;
 
         _firstTim = Time.time;
+    }
+
+    public void SetLeaderBoardStatus(bool inLeaderBoard, int rank = 0)
+    {
+        InLeaderBoard = inLeaderBoard;
+        Rank = rank;
     }
 
     public void TakeDamege()
