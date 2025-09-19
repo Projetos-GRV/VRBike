@@ -11,7 +11,7 @@ A potentiometer is attached to the real bicycle’s handlebar axis using a custo
 A bicycle speedometer sensor with a magnet detects when the wheel completes one rotation. From this, the system calculates the current speed.
 
 - Data Processing:
-Both steering and speed data are collected by a notebook, formatted, and transmitted to the Meta Quest 3 via Sockets.
+Both steering and speed data are collected by a server, formatted, and transmitted to the Meta Quest 3 via Sockets.
 
 - Virtual Simulation:
 Inside the VR headset, a Unity application simulates the 3D bicycle, updating its rotation and movement based on real sensor inputs.
