@@ -42,7 +42,7 @@ public class GameOrchestrator : MonoBehaviour
         "ExternalController",           // 3
         "UDPController",                // 4
     };
-    private readonly string ControllerName = ControllersNames[2];
+    private readonly string ControllerName = ControllersNames[3];
 
     // Start is called before the first frame update
     void Start()

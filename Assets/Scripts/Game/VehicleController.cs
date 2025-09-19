@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class MoveVehicle : MonoBehaviour
+public class VehicleController : MonoBehaviour
 {
     public float speed = 20f;
-    public GameObject cityGen = null;
+    public GameObject cityGen = null; // setado em CityGenerator, em SpawnCars
 
     private bool destroy = false;
     private bool redlight = false; // de momento, so serve para indicar que o objeto itControl existe (evita NullException)
@@ -57,6 +57,8 @@ public class MoveVehicle : MonoBehaviour
             timer -= Time.fixedDeltaTime;
             if (this.timer <= 0)
             {
+                // TODO - reconsiderar... seria melhor se desse pra reaproveitar os carros em vez de ficar
+                // recriando e destruindo
                 this.transform.parent = null;
                 Destroy(this.gameObject);
             }
@@ -67,6 +69,7 @@ public class MoveVehicle : MonoBehaviour
 
         if (itControl != null && !itControl.IsRedLight(this.transform))
         {
+            // pro carro nao parar no meio da via porque o sinal anterior fechou..
             itControl = null;
             this.redlight = false;
         }

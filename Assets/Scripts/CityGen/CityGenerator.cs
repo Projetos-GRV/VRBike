@@ -40,7 +40,9 @@ public class CityGenerator : MonoBehaviour
     private Transform cityParentTransform;
     private Transform carsTransform;
     public Dictionary<Vector3, GameObject> loadedChunks  = new Dictionary<Vector3, GameObject>();
-    private List<GameObject> instantiatedCars = new List<GameObject>();
+    // no momento, nao eh usado. a ideia era instanciar um numero fixo de carros que ficam andando pela cidade,
+    // de maneira que pudessem ser reaproveitados depois.
+    private List<GameObject> instantiatedCars = new List<GameObject>(); 
     // Start is called before the first frame update
     void Start()
     {
@@ -69,12 +71,11 @@ public class CityGenerator : MonoBehaviour
         Vector3 bottomLeft = new Vector3((stride - (this.blockSize * 2)) - offset * this.transform.localScale.x, 0, -1 * (stride - this.blockSize) - offset * this.transform.localScale.x);
         Vector3 topRight = new Vector3((stride - this.blockSize) + offset * this.transform.localScale.x, 0, -1 * (stride - (this.blockSize * 2)) + offset * this.transform.localScale.x);
 
-
-        GameObject lane0 = (GameObject) Instantiate(laneRegular, new Vector3(0, 0, -1 * (stride - this.blockSize)), Quaternion.identity, surroundingLanes.transform);
-        GameObject lane1 = (GameObject) Instantiate(laneRegular, new Vector3(0, 0, -1 * (stride - (this.blockSize * 2))), Quaternion.identity, surroundingLanes.transform);
-        GameObject lane2 = (GameObject) Instantiate(laneRegular, new Vector3((stride - this.blockSize), 0, 0), Quaternion.AngleAxis(90, Vector3.up), surroundingLanes.transform);
-        GameObject lane3 = (GameObject) Instantiate(laneRegular, new Vector3((stride - (this.blockSize * 2)), 0, 0), Quaternion.AngleAxis(90, Vector3.up), surroundingLanes.transform);
-        GameObject intersection = (GameObject) Instantiate(laneIntersection, new Vector3(0, 0, 0), Quaternion.identity, surroundingLanes.transform);
+        Instantiate(laneRegular, new Vector3(0, 0, -1 * (stride - this.blockSize)), Quaternion.identity, surroundingLanes.transform);
+        Instantiate(laneRegular, new Vector3(0, 0, -1 * (stride - (this.blockSize * 2))), Quaternion.identity, surroundingLanes.transform);
+        Instantiate(laneRegular, new Vector3((stride - this.blockSize), 0, 0), Quaternion.AngleAxis(90, Vector3.up), surroundingLanes.transform);
+        Instantiate(laneRegular, new Vector3((stride - (this.blockSize * 2)), 0, 0), Quaternion.AngleAxis(90, Vector3.up), surroundingLanes.transform);
+        Instantiate(laneIntersection, new Vector3(0, 0, 0), Quaternion.identity, surroundingLanes.transform);
 
         // postes de luz (nao emitem luz alguma, mas existem)
         Instantiate(streetLight, bottomRight, Quaternion.AngleAxis(90, Vector3.up), surroundingLanes.transform);
@@ -92,10 +93,8 @@ public class CityGenerator : MonoBehaviour
         GenInfinite();
     }
 
-    // TODO - GERAR CARROS EM CHUNKS JA CARREGADAS DADA UMA CERTA PROBABILIDADE... preferencialmente nao direto na frente do jogador
     void Update()
     {
-        // caso usada geracao um pouco mais procedural, usar transform do jogador para atualizar chunks
         Vector3 playerPos = player.position;
         // chunk onde o jogador se encontra... aproximadamente
         Vector2Int pChunk = new Vector2Int(0, 0)
@@ -120,6 +119,8 @@ public class CityGenerator : MonoBehaviour
                         GameObject chunk = GenerateChunk(string.Format("Chunk{0}", this.chunks++), cc, 0.95f);
                         chunk.transform.position = new Vector3(cc.x * stride, 0, cc.z * stride);
                         loadedChunks.Add(cc, chunk);
+                        // pode ser comentado. serve para que os carros nao desaparecam na frente do jogador
+                        // quando a chunk eh desativada
                         foreach (Transform child in chunk.transform)
                         {
                             if (child.name.Contains("Vehicle"))
@@ -139,6 +140,8 @@ public class CityGenerator : MonoBehaviour
                         SpawnCars(ck, 0.95f);
                         ck.transform.position = pos;
                         ck.SetActive(true);
+                        // pode ser comentado. serve para que os carros nao desaparecam na frente do jogador
+                        // quando a chunk eh desativada
                         foreach (Transform child in ck.transform)
                         {
                             if (child.name.Contains("Vehicle"))
@@ -182,6 +185,8 @@ public class CityGenerator : MonoBehaviour
                 GameObject chunk = GenerateChunk(string.Format("Chunk{0}", chunks++), cc, this.carSpawnChance);
                 chunk.transform.position = new Vector3(cc.x * stride, 0, cc.z * stride);
                 loadedChunks.Add(cc, chunk);
+                // pode ser comentado. serve para que os carros nao desaparecam na frente do jogador
+                // quando a chunk eh desativada
                 foreach (Transform child in chunk.transform)
                 {
                     if (child.name.Contains("Vehicle"))
@@ -230,7 +235,7 @@ public class CityGenerator : MonoBehaviour
                     {
                         float gasCarOffset = 6.5f;
                         GameObject car = (GameObject) Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], floor.transform.position + new Vector3((building.transform.eulerAngles.y == 90 ? gasCarOffset : -gasCarOffset) * this.transform.localScale.x, 0, 0), Quaternion.identity, floor.transform);
-                        if (car.TryGetComponent<MoveVehicle>(out MoveVehicle mv))
+                        if (car.TryGetComponent<VehicleController>(out VehicleController mv))
                         {
                             mv.enabled = false;
                         }
@@ -253,7 +258,7 @@ public class CityGenerator : MonoBehaviour
         {
             float extraOffset = Random.value > 0.5f ? 6 : -6;
             GameObject car = (GameObject)Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(carOffset * this.transform.localScale.x, 0, 1 * (stride - (this.blockSize * 2)) + extraOffset), Quaternion.identity, chunkParent.transform);
-            if (car.TryGetComponent<MoveVehicle>(out MoveVehicle mv))
+            if (car.TryGetComponent<VehicleController>(out VehicleController mv))
             {
                 mv.cityGen = this.gameObject;
             }
@@ -262,7 +267,7 @@ public class CityGenerator : MonoBehaviour
         {
             float extraOffset = Random.value > 0.5f ? 6 : -6;
             GameObject car = (GameObject)Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(-carOffset * this.transform.localScale.x, 0, 1 * (stride - this.blockSize) + extraOffset), Quaternion.AngleAxis(180, Vector3.up), chunkParent.transform);
-            if (car.TryGetComponent<MoveVehicle>(out MoveVehicle mv))
+            if (car.TryGetComponent<VehicleController>(out VehicleController mv))
             {
                 mv.cityGen = this.gameObject;
             }
@@ -273,7 +278,7 @@ public class CityGenerator : MonoBehaviour
         {
             float extraOffset = Random.value > 0.5f ? 6 : -6;
             GameObject car = (GameObject)Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(1 * (stride - this.blockSize) + extraOffset, 0, carOffset * this.transform.localScale.x + stride), Quaternion.AngleAxis(-90, Vector3.up), chunkParent.transform);
-            if (car.TryGetComponent<MoveVehicle>(out MoveVehicle mv))
+            if (car.TryGetComponent<VehicleController>(out VehicleController mv))
             {
                 mv.cityGen = this.gameObject;
             }
@@ -282,7 +287,7 @@ public class CityGenerator : MonoBehaviour
         {
             float extraOffset = Random.value > 0.5f ? 6 : -6;
             GameObject car = (GameObject)Instantiate(vehicles[Random.Range(0, vehicles.Length - 1)], new Vector3(-1 * (stride - this.blockSize) + stride + extraOffset, 0, -carOffset * this.transform.localScale.x + stride), Quaternion.AngleAxis(90, Vector3.up), chunkParent.transform);
-            if (car.TryGetComponent<MoveVehicle>(out MoveVehicle mv))
+            if (car.TryGetComponent<VehicleController>(out VehicleController mv))
             {
                 mv.cityGen = this.gameObject;
             }
