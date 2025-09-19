@@ -48,6 +48,7 @@ public class CityGenerator : MonoBehaviour
     public HashSet<Transform> StreetPositions = new HashSet<Transform>();
 
     public UnityEvent<CityGenerator> OnCityChanged;
+    private bool _needToUpdateStreets = false;
 
     // Start is called before the first frame update
     void Start()
@@ -124,6 +125,8 @@ public class CityGenerator : MonoBehaviour
                         GameObject chunk = GenerateChunk(string.Format("Chunk{0}", this.chunks++), cc);
                         chunk.transform.position = new Vector3(cc.x * stride, 0, cc.z * stride);
                         loadedCunks.Add(cc, chunk);
+
+                        _needToUpdateStreets = true;
                     }
                     else if (!loadedCunks[cc].activeSelf)
                     {
@@ -141,6 +144,12 @@ public class CityGenerator : MonoBehaviour
                     pair.Value.SetActive(false);
                 }
             }
+        }
+
+        if (_needToUpdateStreets)
+        {
+            OnCityChanged?.Invoke(this);
+            _needToUpdateStreets = false;
         }
     }
 

@@ -21,9 +21,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float _sessionTime = 3 * 60;
     [SerializeField] private float _speedThresholdHigh = 15f;
 
-    [Header("Collision")]
-    [SerializeField] private string _obstacleTag = "Obstable";
-
     [Header("Events")]
     public UnityEvent OnGameStarted;
     public UnityEvent OnNewGameStarted;
@@ -40,6 +37,8 @@ public class GameManager : MonoBehaviour
     private bool _inGaming = false;
     private bool _isRunning = false;
     private bool _inHighSpeed = false;
+
+    private ICollectable _lastCollectable;
 
     private void Awake()
     {
@@ -121,7 +120,7 @@ public class GameManager : MonoBehaviour
     {
         if (!_isRunning || !_inGaming) return;
 
-        if (gameObject.tag.Equals(_obstacleTag) && _canTakeDamage)
+        if (gameObject.TryGetComponent(out CarCollctablController carCollctablController) && _canTakeDamage)
         {
             _gameState.TakeDamege();
 
@@ -162,7 +161,12 @@ public class GameManager : MonoBehaviour
         }
 
         var collectable = gameObject.GetComponent<ICollectable>();
-        collectable?.HandleObjectCollected();
+
+        if (_lastCollectable != collectable)
+        {
+            collectable?.HandleObjectCollected();
+            _lastCollectable = collectable;
+        }
     }
 
     private IEnumerator WaitForSeconds(float seconds, Action callback)

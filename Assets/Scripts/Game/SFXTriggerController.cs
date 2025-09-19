@@ -18,4 +18,10 @@ public class SFXTriggerController : MonoBehaviour
     {
         _audioManager.PlaySFX(_audioClip, _volume); 
     }
+
+
+    public void PlaySFX(AudioClip audioClip)
+    {
+        _audioManager.PlaySFX(audioClip, _volume);
+    }
 }

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MinRawAngle: 596
   MaxRawAngle: 959
-  SpeedMultiplier: 1
+  BaseSpeedMultiplier: 1
   HandleSensibility: 2

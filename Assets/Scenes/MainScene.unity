@@ -8483,6 +8483,7 @@ MonoBehaviour:
   probContinueStraight: 0.85
   probForceTurn: 0.15
   drawDebug: 0
+  trackPlayerDebug: 0
   nodePrefab: {fileID: 1870289150}
   edgeMaterial: {fileID: 2100000, guid: 8d7cd0ba86cb74b78bf7e053b5e1447a, type: 2}
   pathMaterial: {fileID: 2100000, guid: 08d0ccc4a501e6645be0c3ee36d0cd20, type: 2}
@@ -8667,7 +8668,7 @@ MonoBehaviour:
   _speedLineParticles: {fileID: 1940886600}
   _maxEmission: 300
   _maxSpeed: 20
-  _minSpeed: 5
+  _minSpeed: 14
 --- !u!1 &789237452
 GameObject:
   m_ObjectHideFlags: 0
@@ -9514,9 +9515,8 @@ MonoBehaviour:
   _leaderBoardController: {fileID: 1357962784}
   _maxPlayerHP: 3
   _timeBetweenDamage: 3
-  _sessionTime: 120
-  _speedThresholdHigh: 11
-  _obstacleTag: Obstacle
+  _sessionTime: 90
+  _speedThresholdHigh: 14
   OnGameStarted:
     m_PersistentCalls:
       m_Calls:
@@ -42449,6 +42449,9 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   OnHandleSensibility:
+    m_PersistentCalls:
+      m_Calls: []
+  OnBaseSpeedMultiplierChanged:
     m_PersistentCalls:
       m_Calls: []
   _fakeAngle: 780

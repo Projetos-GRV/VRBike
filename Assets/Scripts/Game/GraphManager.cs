@@ -36,6 +36,7 @@ public class GraphManager : MonoBehaviour
 
     [Header("Debug Settings")]
     public bool drawDebug = true;
+    public bool trackPlayerDebug = true;
     public GameObject nodePrefab;
     public Material edgeMaterial;
     public Material pathMaterial;
@@ -63,7 +64,7 @@ public class GraphManager : MonoBehaviour
         {
             currentPlayerNode = GetClosestNode(player.position);
             
-            if (drawDebug && currentPlayerNode != null)
+            if (trackPlayerDebug && currentPlayerNode != null)
             {
                 _playerDebug.gameObject.SetActive(true);
                 _playerDebug.position = currentPlayerNode.transform.position;
@@ -75,13 +76,24 @@ public class GraphManager : MonoBehaviour
     {
         graph.Clear();
 
+        var playerMinDistance = float.PositiveInfinity;
+
         // Cria nós
         foreach (Transform t in transforms)
         {
             Vector3 pos = RoundVector(t.position);
             if (!graph.ContainsKey(pos))
             {
-                graph.Add(pos, new Node(t));
+                Node node = new Node(t);
+                graph.Add(pos, node);
+
+                var dist = Vector3.Distance(pos, player.position);
+
+                if (dist < playerMinDistance)
+                {
+                    playerMinDistance = dist;
+                    currentPlayerNode = node;
+                }
             }
         }
 
