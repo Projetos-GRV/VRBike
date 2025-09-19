@@ -29,6 +29,11 @@ public class ResetPlayerController : MonoBehaviour
     private Coroutine _resetCoroutine;
     private bool _inResetPreocess = false;
 
+    private void Start()
+    {
+        _uiView.SetActive(false);
+    }
+
 
     public void StartResetProcess(Action onCompleted, Action onError)
     {

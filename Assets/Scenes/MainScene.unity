@@ -5502,18 +5502,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1267365262}
-        m_TargetAssemblyTypeName: Temp, Assembly-CSharp
-        m_MethodName: LoadData
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   OnRightPalmUpEvent:
     m_PersistentCalls:
       m_Calls:
@@ -5566,18 +5554,6 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UIDebbugerController, Assembly-CSharp
         m_MethodName: ToggleVisibity
         m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1267365262}
-        m_TargetAssemblyTypeName: Temp, Assembly-CSharp
-        m_MethodName: SaveData
-        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -8667,6 +8643,7 @@ MonoBehaviour:
   _bikeMovementSource: {fileID: 5486209586526878830}
   _speedLineParticles: {fileID: 1940886600}
   _maxEmission: 300
+  _minEmisson: 100
   _maxSpeed: 20
   _minSpeed: 14
 --- !u!1 &789237452
@@ -9515,8 +9492,9 @@ MonoBehaviour:
   _leaderBoardController: {fileID: 1357962784}
   _maxPlayerHP: 3
   _timeBetweenDamage: 3
-  _sessionTime: 90
-  _speedThresholdHigh: 14
+  _sessionTime: 60
+  _speedThresholdHigh: 15
+  _maxNickNameLength: 5
   OnGameStarted:
     m_PersistentCalls:
       m_Calls:
@@ -42429,7 +42407,19 @@ MonoBehaviour:
         m_CallState: 2
   OnSpeedChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 872231333}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: HandleSpeedChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnAngleChanged:
     m_PersistentCalls:
       m_Calls: []

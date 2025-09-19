@@ -192,6 +192,12 @@ public class CustomBikeMovimentSource: MonoBehaviour, IBicycleMovementSource
     public float AngleThreshold { get; set; }
 
     public float SpeedMultiplier { get; set; }
+    public float BaseSpeedMultiplier { get => _baseSpeedMultiplier; set
+        {
+            _baseSpeedMultiplier = value;
+            SpeedMultiplier = _baseSpeedMultiplier;
+        }
+    }
     public float RawSpeed => speed;
     public float Speed => speed * SpeedMultiplier;
 

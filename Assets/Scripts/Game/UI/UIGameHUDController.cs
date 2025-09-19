@@ -41,7 +41,17 @@ public class UIGameHUDController : MonoBehaviour
     public UnityEvent OnStartGameOverAnimation;
     public UnityEvent OnStartTakeDamageAnimation;
 
-    public void SetActive(bool isActive) => _view.SetActive(isActive);
+    public void SetActive(bool isActive)
+    {
+        _view.SetActive(isActive);
+
+        if (!isActive)
+        {
+            _startGameView.SetActive(false);
+            _gameOverView.SetActive(false);
+            _gameView.SetActive(false);
+        }
+    }
 
     private void Awake()
     {

@@ -26,7 +26,7 @@ public class GameController : MonoBehaviour
         _bikeDataSource.MinAngle = _gameSettins.MinRawAngle;
         _bikeDataSource.MaxAngle = _gameSettins.MaxRawAngle;
         _bikeDataSource.AngleThreshold = _gameSettins.HandleSensibility;
-        _bikeDataSource.SpeedMultiplier = _gameSettins.BaseSpeedMultiplier;
+        _bikeDataSource.BaseSpeedMultiplier = _gameSettins.BaseSpeedMultiplier;
 
         _uiMainMenuController.UpdateHandleThresholdDisplay(_bikeDataSource.AngleThreshold);
         _uiMainMenuController.UpdateSpeedMultiplierDisplay(_bikeDataSource.SpeedMultiplier);

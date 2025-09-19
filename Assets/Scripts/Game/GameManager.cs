@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float _timeBetweenDamage = 3f;
     [SerializeField] private float _sessionTime = 3 * 60;
     [SerializeField] private float _speedThresholdHigh = 15f;
+    [SerializeField] private int _maxNickNameLength = 5;
 
     [Header("Events")]
     public UnityEvent OnGameStarted;
@@ -176,6 +177,15 @@ public class GameManager : MonoBehaviour
         callback?.Invoke();
     }
 
+    public void HandleSpeedChanged(float speed)
+    {
+        if (speed < _speedThresholdHigh && _inHighSpeed)
+        {
+            _inHighSpeed = false;
+            OnPlayerInLowSpeed?.Invoke();
+        }
+    }
+
     private void HandleGameOver()
     {
         _isRunning = false;
@@ -189,6 +199,13 @@ public class GameManager : MonoBehaviour
         {
             if (_gameState.InLeaderBoard)
             {
+                if (playerName.Length > _maxNickNameLength)
+                {
+                    playerName = playerName.Substring(0, _maxNickNameLength);
+                }
+
+                playerName = playerName.ToUpper();
+
                 _leaderBoardController.AddEntry(_gameState.Score, playerName);
             }
 
@@ -202,7 +219,9 @@ public class GameManager : MonoBehaviour
         if (_resetPlayerController.InResetProcess) return;
 
         _inGaming = !_inGaming;
+        _isRunning = false;
 
+        _uiGameHUDController.SetActive(false);
         _uiGameController.SetActive(_inGaming);
         _uiGameHUDController.SetActive(_inGaming);
         _customBikeMovement.ResetSpeedMultiplier();
