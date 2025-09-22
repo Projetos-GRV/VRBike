@@ -138,6 +138,8 @@ public class CustomBikeMovement : MonoBehaviour
 
     public float Speed { get => _speed; set => _speed = value; }
 
+    public float SpeedMultiplier { get => _dataSource.SpeedMultiplier; }
+
     public float HandleAngle { get => _handleAngle; set => _handleAngle = value; }
     public bool IsMoving => _isMoving;
 }

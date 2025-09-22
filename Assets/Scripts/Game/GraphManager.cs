@@ -346,4 +346,6 @@ public class GraphManager : MonoBehaviour
             Mathf.Round(v.z * 10f) / 10f
         );
     }
+
+    public Node GetPlayerNode() => currentPlayerNode;
 }

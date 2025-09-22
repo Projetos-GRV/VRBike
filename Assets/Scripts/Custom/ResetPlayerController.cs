@@ -1,12 +1,8 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
-using Unity.XR.CoreUtils;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.HID;
+using UnityEngine.Events;
 
 public class ResetPlayerController : MonoBehaviour
 {
@@ -25,6 +21,9 @@ public class ResetPlayerController : MonoBehaviour
     [SerializeField] private GameObject _uiView;
     [SerializeField] private TextMeshProUGUI _txtTimer;
     [SerializeField] private UIConfirmationScreenController _confirmationScreenController;
+
+    [Header("Events")]
+    public UnityEvent OnStartResetPlayer;
 
     private Coroutine _resetCoroutine;
     private bool _inResetPreocess = false;
@@ -63,6 +62,8 @@ public class ResetPlayerController : MonoBehaviour
 
     private IEnumerator ResetCoroutine(Action onCompleted)
     {
+        OnStartResetPlayer?.Invoke();
+
         _inResetPreocess = true;
 
         _uiView.SetActive(true);

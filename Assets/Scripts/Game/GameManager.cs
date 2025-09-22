@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int _maxPlayerHP = 3;
     [SerializeField] private float _timeBetweenDamage = 3f;
     [SerializeField] private float _sessionTime = 3 * 60;
-    [SerializeField] private float _speedThresholdHigh = 15f;
+    [SerializeField] private float _speedMultiplierThresholdHigh = 1.8f;
     [SerializeField] private int _maxNickNameLength = 5;
 
     [Header("Events")]
@@ -127,8 +127,8 @@ public class GameManager : MonoBehaviour
 
             if (_gameState.IsPlayerAlive())
             {
-                _inHighSpeed = false;
                 _customBikeMovement.ResetSpeedMultiplier();
+                _inHighSpeed = false;
                 OnPlayerInLowSpeed?.Invoke();
 
                 _uiGameHUDController.StartTakeDamageAnimation(null);
@@ -154,7 +154,7 @@ public class GameManager : MonoBehaviour
 
             _customBikeMovement.AddMultiplier(speedMultiplierController.SpeedMultiplier);
 
-            if (_customBikeMovement.Speed>= _speedThresholdHigh && !_inHighSpeed)
+            if (_customBikeMovement.SpeedMultiplier >= _speedMultiplierThresholdHigh && !_inHighSpeed)
             {
                 OnPlayerInHighSpeed?.Invoke();
                 _inHighSpeed = true;
@@ -177,9 +177,9 @@ public class GameManager : MonoBehaviour
         callback?.Invoke();
     }
 
-    public void HandleSpeedChanged(float speed)
+    public void HandleSpeedMultiplierChanged(float speedMultiplier)
     {
-        if (speed < _speedThresholdHigh && _inHighSpeed)
+        if (speedMultiplier < _speedMultiplierThresholdHigh && _inHighSpeed)
         {
             _inHighSpeed = false;
             OnPlayerInLowSpeed?.Invoke();
@@ -202,6 +202,10 @@ public class GameManager : MonoBehaviour
                 if (playerName.Length > _maxNickNameLength)
                 {
                     playerName = playerName.Substring(0, _maxNickNameLength);
+                }
+                else if (playerName.Length == 0)
+                {
+                    playerName = "UNK";
                 }
 
                 playerName = playerName.ToUpper();

@@ -2018,6 +2018,21 @@ MonoBehaviour:
   _uiView: {fileID: 828827891}
   _txtTimer: {fileID: 1720154209}
   _confirmationScreenController: {fileID: 1191962515}
+  OnStartResetPlayer:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 624447392}
+        m_TargetAssemblyTypeName: ResetPlayerPositionController, Assembly-CSharp
+        m_MethodName: ResetPlayerPosition
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &192241013
 Transform:
   m_ObjectHideFlags: 0
@@ -6763,6 +6778,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 570963722}
   m_CullTransparentMesh: 1
+--- !u!1 &624447390
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 624447391}
+  - component: {fileID: 624447392}
+  m_Layer: 0
+  m_Name: '[ ResetPlayerPositionController ] '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &624447391
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 624447390}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 872231332}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &624447392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 624447390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98cdd38c8219a6c4c9d69dc11fe9e7cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerTransform: {fileID: 2218496724783588805}
+  _bikeTransform: {fileID: 907372126}
+  _graphManager: {fileID: 773426729}
 --- !u!1 &625138258
 GameObject:
   m_ObjectHideFlags: 0
@@ -8434,7 +8496,7 @@ GameObject:
   - component: {fileID: 773426730}
   - component: {fileID: 773426729}
   m_Layer: 0
-  m_Name: GraphManager
+  m_Name: '[ GraphManager ]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9469,6 +9531,7 @@ Transform:
   m_Children:
   - {fileID: 1868797182}
   - {fileID: 1357962783}
+  - {fileID: 624447391}
   m_Father: {fileID: 237804568}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &872231333
@@ -9493,7 +9556,7 @@ MonoBehaviour:
   _maxPlayerHP: 3
   _timeBetweenDamage: 3
   _sessionTime: 60
-  _speedThresholdHigh: 15
+  _speedMultiplierThresholdHigh: 1.8
   _maxNickNameLength: 5
   OnGameStarted:
     m_PersistentCalls:
@@ -42429,6 +42492,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1726168286}
         m_TargetAssemblyTypeName: UIMainMenuController, Assembly-CSharp
         m_MethodName: UpdateSpeedMultiplierDisplay
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 872231333}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: HandleSpeedMultiplierChanged
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
