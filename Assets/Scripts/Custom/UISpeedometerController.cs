@@ -56,11 +56,14 @@ public class UISpeedometerController : MonoBehaviour
         {
             _currentSpeed = 1;
             _dataSource.SetDefaultSpeed(_currentSpeed);
+
         }
         else
         {
             _dataSource.SetDefaultSpeed(0);
         }
+
+        _btnToggleSpeed.SetActiveWithoutNotify(_isContantSpeedEnabled);
     }
 
     public void IncreaseSpeed()

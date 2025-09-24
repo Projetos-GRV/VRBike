@@ -90,4 +90,25 @@ public class FingerButtonController : MonoBehaviour
     {
         _renderer.material.color = _defaultColor;
     }
+
+    public void SetActiveWithoutNotify(bool isContantSpeedEnabled)
+    {
+        if (_isToggle)
+        {
+            _isOn = !_isOn;
+
+            if (_isOn)
+            {
+                SetButtonActivated();
+            }
+            else
+            {
+                SetButtonDeactivated();
+            }
+        }
+        else
+        {
+            SetButtonActivated();
+        }
+    }
 }

@@ -32,6 +32,12 @@ public class EnvironmentCollectableManager : MonoBehaviour
     private List<GameObject> _signals;
     private int _signalIndex = 0;
 
+    private void Awake()
+    {
+        _currentPath = new List<Vector2>();
+        _signals = new List<GameObject>();
+    }
+
     private void Update()
     {
         if (Keyboard.current.pKey.wasPressedThisFrame)

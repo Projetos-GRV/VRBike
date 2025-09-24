@@ -146,6 +146,8 @@ public class LeaderBoardController : MonoBehaviour
         _leaderboardData = new LeaderboardData();
         FillEmptyEntries();
         SaveLeaderboard();
+
+        OnEntriesChanged?.Invoke(_leaderboardData);
     }
 }
 

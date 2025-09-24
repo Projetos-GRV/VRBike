@@ -5519,37 +5519,13 @@ MonoBehaviour:
         m_CallState: 2
   OnRightPalmUpEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 265766296}
-        m_TargetAssemblyTypeName: WaitToActive, Assembly-CSharp
-        m_MethodName: SetWaitingState
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   OnRightFistEvent:
     m_PersistentCalls:
       m_Calls: []
   OnLeftPalmUpEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1726168287}
-        m_TargetAssemblyTypeName: WaitToActive, Assembly-CSharp
-        m_MethodName: SetWaitingState
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   OnLeftThumbsUpEvent:
     m_PersistentCalls:
       m_Calls:
@@ -6203,6 +6179,39 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 558264167}
   m_CullTransparentMesh: 1
+--- !u!1 &559674176
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 559674177}
+  m_Layer: 0
+  m_Name: ---- SettingsManager ----
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &559674177
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 559674176}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.7666656, y: 0.22340143, z: 0.663201}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1965720923}
+  - {fileID: 613884462}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &562346416
 GameObject:
   m_ObjectHideFlags: 0
@@ -6498,19 +6507,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnFingerEnter:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 872231333}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: ToggleGameView
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
   OnFingerExit:
     m_PersistentCalls:
       m_Calls: []
@@ -6778,6 +6775,38 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 570963722}
   m_CullTransparentMesh: 1
+--- !u!1 &613884461
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 613884462}
+  m_Layer: 0
+  m_Name: SettingsReceivers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &613884462
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613884461}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 664373949}
+  m_Father: {fileID: 559674177}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &624447390
 GameObject:
   m_ObjectHideFlags: 0
@@ -7204,6 +7233,54 @@ MonoBehaviour:
   m_Spacing: {x: 30, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!1 &664373948
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 664373949}
+  - component: {fileID: 664373950}
+  m_Layer: 0
+  m_Name: '[ AppSettingsServerManager ]'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &664373949
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 664373948}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 613884462}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &664373950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 664373948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3af3d8a466256a34897530dfa134c4c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameManager: {fileID: 872231333}
+  _resetPlayerPositionController: {fileID: 624447392}
+  _customBikeMovimentSource: {fileID: 5486209586526878830}
+  _uiSpeedometerController: {fileID: 1621899645}
 --- !u!1 &668600001
 GameObject:
   m_ObjectHideFlags: 0
@@ -9553,6 +9630,7 @@ MonoBehaviour:
   _playerCollisionDetectorController: {fileID: 907372128}
   _customBikeMovement: {fileID: 1548009470}
   _leaderBoardController: {fileID: 1357962784}
+  _fingerButtonGameController: {fileID: 566133727}
   _maxPlayerHP: 3
   _timeBetweenDamage: 3
   _sessionTime: 60
@@ -11956,7 +12034,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 55fa12dc7870f1e46b6a7f8617949a86, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -12801,7 +12879,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 55fa12dc7870f1e46b6a7f8617949a86, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -24766,6 +24844,76 @@ Transform:
   - {fileID: 5556398551348383682}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1965720922
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 559674177}
+    m_Modifications:
+    - target: {fileID: 4345092184410773235, guid: ed5da58e9252e274dbf1be05f410952e, type: 3}
+      propertyPath: m_Name
+      value: '[ SettingsServerManager ]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4745670350443401740, guid: ed5da58e9252e274dbf1be05f410952e, type: 3}
+      propertyPath: _settingsReceivers.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4745670350443401740, guid: ed5da58e9252e274dbf1be05f410952e, type: 3}
+      propertyPath: _settingsReceivers.Array.data[0]
+      value: 
+      objectReference: {fileID: 664373948}
+    - target: {fileID: 4944389780658516337, guid: ed5da58e9252e274dbf1be05f410952e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944389780658516337, guid: ed5da58e9252e274dbf1be05f410952e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944389780658516337, guid: ed5da58e9252e274dbf1be05f410952e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944389780658516337, guid: ed5da58e9252e274dbf1be05f410952e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944389780658516337, guid: ed5da58e9252e274dbf1be05f410952e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944389780658516337, guid: ed5da58e9252e274dbf1be05f410952e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944389780658516337, guid: ed5da58e9252e274dbf1be05f410952e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944389780658516337, guid: ed5da58e9252e274dbf1be05f410952e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944389780658516337, guid: ed5da58e9252e274dbf1be05f410952e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4944389780658516337, guid: ed5da58e9252e274dbf1be05f410952e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ed5da58e9252e274dbf1be05f410952e, type: 3}
+--- !u!4 &1965720923 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4944389780658516337, guid: ed5da58e9252e274dbf1be05f410952e, type: 3}
+  m_PrefabInstance: {fileID: 1965720922}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1967145735
 GameObject:
   m_ObjectHideFlags: 0
@@ -42470,19 +42618,7 @@ MonoBehaviour:
         m_CallState: 2
   OnSpeedChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 872231333}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: HandleSpeedChanged
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   OnAngleChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -51558,3 +51694,4 @@ SceneRoots:
   - {fileID: 159124673}
   - {fileID: 237804568}
   - {fileID: 78082790}
+  - {fileID: 559674177}

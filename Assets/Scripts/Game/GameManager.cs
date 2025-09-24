@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CustomBikeMovement _customBikeMovement;
     [SerializeField] private LeaderBoardController _leaderBoardController;
 
+    [Header("UI")]
+    [SerializeField] private FingerButtonController _fingerButtonGameController;
+
     [Header("Game Parameters")]
     [SerializeField] private int _maxPlayerHP = 3;
     [SerializeField] private float _timeBetweenDamage = 3f;
@@ -58,6 +61,8 @@ public class GameManager : MonoBehaviour
         _isRunning = false;
         _uiGameHUDController.SetActive(false);
         _uiGameController.SetActive(false);
+
+        _fingerButtonGameController.OnFingerEnter.AddListener(ToggleGameView);
     }
 
     private void Start()
@@ -84,14 +89,19 @@ public class GameManager : MonoBehaviour
 
         if (_leftHandTrigger && _rightHandTrigger)
         {
-            if (_inGaming && !_isRunning)
-            {
-                StartNewGame();
-            }
-            else
-            {
-                _resetPlayerController.StartResetProcess(null, null);
-            }
+            HandleResetEvent();
+        }
+    }
+
+    public void HandleResetEvent()
+    {
+        if (_inGaming && !_isRunning)
+        {
+            StartNewGame();
+        }
+        else
+        {
+            _resetPlayerController.StartResetProcess(null, null);
         }
     }
 
@@ -231,5 +241,12 @@ public class GameManager : MonoBehaviour
         _customBikeMovement.ResetSpeedMultiplier();
 
         OnGameViewChanged?.Invoke(_inGaming);
+
+        _fingerButtonGameController.SetActiveWithoutNotify(_inGaming);
+    }
+
+    public void ResetLeaderBoard()
+    {
+        _leaderBoardController.ClearLeaderboard();
     }
 }
