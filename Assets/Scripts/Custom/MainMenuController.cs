@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,7 +16,11 @@ public class MainMenuController : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private GameObject _view;
+    [SerializeField] private GameObject _animationView;
     [SerializeField] private UIListDisplayController _environmentListController;
+
+    [Header("Animation")]
+    [SerializeField] private Animator _animator;
 
     [Header("Parameters")]
     [SerializeField] private List<EnvironmentSO> _environmentsSO;
@@ -25,6 +31,7 @@ public class MainMenuController : MonoBehaviour
     private void Awake()
     {
         _view.SetActive(false);
+        _animationView.SetActive(false);
     }
 
     private void Start()
@@ -57,13 +64,35 @@ public class MainMenuController : MonoBehaviour
         _playerFootPivot.localRotation = Quaternion.identity;
     }
 
+    public void HandleStartWaiting()
+    {
+        if (_view.activeSelf) return;
+        Debug.Log("HandleStartWaiting");
+        _animator.SetBool("Wait", true);
+    }
+
+    public void HandleStopWaiting()
+    {
+        Debug.Log("HandleStopWaiting");
+        _animator.SetBool("Wait", false);
+        _animationView.SetActive(false);
+    }
+
     public void TurnOnMenu(bool _)
     {
         _view.SetActive(true);
+        _animator.SetBool("Wait", false);
     }
 
     public void TurnOffMenu(bool _)
     {
         _view.SetActive(false);
+    }
+
+    public void ToggleView()
+    {
+        _view.SetActive(!_view.activeSelf);
+
+        _animationView.SetActive(false);
     }
 }

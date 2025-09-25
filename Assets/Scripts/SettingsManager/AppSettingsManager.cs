@@ -10,15 +10,21 @@ public class AppSettingsManager : MonoBehaviour, ISettingsReceiver
     private const string EVENT_AUTO = "auto";
     private const string EVENT_RESET_LEADERBOARD = "resetboard";
     private const string EVENT_SPEED_MULTIPLIER = "speedmultiplier";
+    private const string EVENT_MIN_ANGLE = "minangle";
+    private const string EVENT_MAX_ANGLE = "maxangle";
+    private const string EVENT_MENU = "menu";
 
     [SerializeField] private GameManager _gameManager;
     [SerializeField] private ResetPlayerPositionController _resetPlayerPositionController;
     [SerializeField] private CustomBikeMovimentSource _customBikeMovimentSource;
     [SerializeField] private UISpeedometerController _uiSpeedometerController;
+    [SerializeField] private MainMenuController _menuController;
 
     public List<string> EventsToListen()
     {
-        return new List<string> { EVENT_RESET, EVENT_GAME, EVENT_RESET_LEADERBOARD, EVENT_RESET_PLAYER, EVENT_SPEED_MULTIPLIER, EVENT_AUTO };
+        return new List<string> { EVENT_RESET, EVENT_GAME, EVENT_RESET_LEADERBOARD, EVENT_RESET_PLAYER, EVENT_SPEED_MULTIPLIER, EVENT_AUTO,
+        EVENT_MIN_ANGLE, EVENT_MAX_ANGLE, EVENT_MENU
+        };
     }
 
     public void HandleEvent(string eventID, string argType, string argValue)
@@ -31,6 +37,9 @@ public class AppSettingsManager : MonoBehaviour, ISettingsReceiver
             case EVENT_RESET_LEADERBOARD: HandleResetLeaderboard(); break;
             case EVENT_SPEED_MULTIPLIER: HandleSpeedMultiplierEvent(argValue) ; break;
             case EVENT_AUTO: HandleAutoEvent(); break;
+            case EVENT_MIN_ANGLE: HandleMinAngleEvent(); break;
+            case EVENT_MAX_ANGLE: HandleMaxAngleEvent(); break;
+            case EVENT_MENU: HandleMenuEvent(); break;
             default: break;
         }
     }
@@ -63,5 +72,20 @@ public class AppSettingsManager : MonoBehaviour, ISettingsReceiver
     private void HandleAutoEvent()
     {
         _uiSpeedometerController.ToggleConstantSpeed();
+    }
+
+    private void HandleMinAngleEvent()
+    {
+        _customBikeMovimentSource.SaveMinValue();
+    }
+
+    private void HandleMaxAngleEvent()
+    {
+        _customBikeMovimentSource.SaveMaxValue();
+    }
+
+    private void HandleMenuEvent()
+    {
+        _menuController.ToggleView();
     }
 }
